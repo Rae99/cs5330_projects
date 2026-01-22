@@ -264,3 +264,7 @@ int blur5x5_2(cv::Mat &src, cv::Mat &dst) {
 
     return 0;
 }
+
+int sobelX3x3(cv::Mat &src, cv::Mat &dst);
+
+int sobelY3x3(cv::Mat &src, cv::Mat &dst);

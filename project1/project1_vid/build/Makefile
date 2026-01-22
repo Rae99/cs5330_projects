@@ -129,12 +129,26 @@ vid/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/build
 .PHONY : vid/fast
 
+#=============================================================================
+# Target rules for targets named timeBlur
+
+# Build rule for target.
+timeBlur: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 timeBlur
+.PHONY : timeBlur
+
+# fast build rule for target.
+timeBlur/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/build
+.PHONY : timeBlur/fast
+
 src/filter.o: src/filter.cpp.o
 .PHONY : src/filter.o
 
 # target to build an object file
 src/filter.cpp.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/src/filter.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/src/filter.cpp.o
 .PHONY : src/filter.cpp.o
 
 src/filter.i: src/filter.cpp.i
@@ -143,6 +157,7 @@ src/filter.i: src/filter.cpp.i
 # target to preprocess a source file
 src/filter.cpp.i:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/src/filter.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/src/filter.cpp.i
 .PHONY : src/filter.cpp.i
 
 src/filter.s: src/filter.cpp.s
@@ -151,7 +166,32 @@ src/filter.s: src/filter.cpp.s
 # target to generate assembly for a file
 src/filter.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/src/filter.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/src/filter.cpp.s
 .PHONY : src/filter.cpp.s
+
+src/timeBlur.o: src/timeBlur.cpp.o
+.PHONY : src/timeBlur.o
+
+# target to build an object file
+src/timeBlur.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o
+.PHONY : src/timeBlur.cpp.o
+
+src/timeBlur.i: src/timeBlur.cpp.i
+.PHONY : src/timeBlur.i
+
+# target to preprocess a source file
+src/timeBlur.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/src/timeBlur.cpp.i
+.PHONY : src/timeBlur.cpp.i
+
+src/timeBlur.s: src/timeBlur.cpp.s
+.PHONY : src/timeBlur.s
+
+# target to generate assembly for a file
+src/timeBlur.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/src/timeBlur.cpp.s
+.PHONY : src/timeBlur.cpp.s
 
 src/vidDisplay.o: src/vidDisplay.cpp.o
 .PHONY : src/vidDisplay.o
@@ -185,10 +225,14 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... timeBlur"
 	@echo "... vid"
 	@echo "... src/filter.o"
 	@echo "... src/filter.i"
 	@echo "... src/filter.s"
+	@echo "... src/timeBlur.o"
+	@echo "... src/timeBlur.i"
+	@echo "... src/timeBlur.s"
 	@echo "... src/vidDisplay.o"
 	@echo "... src/vidDisplay.i"
 	@echo "... src/vidDisplay.s"

@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(OpenCV REQUIRED)
 
+# -------- vid (main app) --------
 add_executable(vid
         src/vidDisplay.cpp
         src/filter.cpp
@@ -13,6 +14,18 @@ add_executable(vid
 
 target_include_directories(vid PRIVATE ${OpenCV_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(vid PRIVATE ${OpenCV_LIBS})
+
+# -------- timeBlur (timing app) --------
+add_executable(timeBlur
+        src/timeBlur.cpp
+        src/filter.cpp
+)
+
+target_include_directories(timeBlur PRIVATE
+        ${OpenCV_INCLUDE_DIRS}
+        ${CMAKE_SOURCE_DIR}/include
+)
+target_link_libraries(timeBlur PRIVATE ${OpenCV_LIBS})
 
 # ONNX Runtime (Homebrew)
 find_path(ORT_INCLUDE_DIR onnxruntime_cxx_api.h
@@ -36,3 +49,4 @@ endif()
 
 target_include_directories(vid PRIVATE ${ORT_INCLUDE_DIR})
 target_link_libraries(vid PRIVATE ${ORT_LIB})
+

@@ -64,10 +64,12 @@ CMAKE_BINARY_DIR = /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/bu
 
 # The main recursive "all" target.
 all: CMakeFiles/vid.dir/all
+all: CMakeFiles/timeBlur.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/vid.dir/codegen
+codegen: CMakeFiles/timeBlur.dir/codegen
 .PHONY : codegen
 
 # The main recursive "preinstall" target.
@@ -76,6 +78,7 @@ preinstall:
 
 # The main recursive "clean" target.
 clean: CMakeFiles/vid.dir/clean
+clean: CMakeFiles/timeBlur.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -85,7 +88,7 @@ clean: CMakeFiles/vid.dir/clean
 CMakeFiles/vid.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=1,2,3 "Built target vid"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=4,5,6 "Built target vid"
 .PHONY : CMakeFiles/vid.dir/all
 
 # Build rule for subdir invocation for target.
@@ -102,13 +105,45 @@ vid: CMakeFiles/vid.dir/rule
 # codegen rule for target.
 CMakeFiles/vid.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target vid"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=4,5,6 "Finished codegen for target vid"
 .PHONY : CMakeFiles/vid.dir/codegen
 
 # clean rule for target.
 CMakeFiles/vid.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/clean
 .PHONY : CMakeFiles/vid.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/timeBlur.dir
+
+# All Build rule for target.
+CMakeFiles/timeBlur.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=1,2,3 "Built target timeBlur"
+.PHONY : CMakeFiles/timeBlur.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/timeBlur.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles 3
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/timeBlur.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles 0
+.PHONY : CMakeFiles/timeBlur.dir/rule
+
+# Convenience name for target.
+timeBlur: CMakeFiles/timeBlur.dir/rule
+.PHONY : timeBlur
+
+# codegen rule for target.
+CMakeFiles/timeBlur.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=1,2,3 "Finished codegen for target timeBlur"
+.PHONY : CMakeFiles/timeBlur.dir/codegen
+
+# clean rule for target.
+CMakeFiles/timeBlur.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/clean
+.PHONY : CMakeFiles/timeBlur.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

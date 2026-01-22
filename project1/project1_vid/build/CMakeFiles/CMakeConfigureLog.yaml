@@ -28,6 +28,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -51,6 +53,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/uname"
       - "/opt/homebrew/bin/uname"
       - "/Users/jrd/.codeium/windsurf/bin/uname"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/uname"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/uname"
       - "/opt/homebrew/sbin/uname"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/uname"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/uname"
@@ -66,6 +70,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -80,8 +86,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "message-v1"
     backtrace:
@@ -118,6 +132,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -141,6 +157,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/gmake"
       - "/opt/homebrew/bin/gmake"
       - "/Users/jrd/.codeium/windsurf/bin/gmake"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/gmake"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/gmake"
       - "/opt/homebrew/sbin/gmake"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/gmake"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/gmake"
@@ -163,6 +181,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/make"
       - "/opt/homebrew/bin/make"
       - "/Users/jrd/.codeium/windsurf/bin/make"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/make"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/make"
       - "/opt/homebrew/sbin/make"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/make"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/make"
@@ -178,6 +198,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -192,8 +214,118 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCompiler.cmake:73 (find_program)"
+      - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:69 (_cmake_find_compiler)"
+      - "CMakeLists.txt:2 (project)"
+    mode: "program"
+    variable: "CMAKE_CXX_COMPILER"
+    description: "CXX compiler"
+    settings:
+      SearchFramework: "FIRST"
+      SearchAppBundle: "FIRST"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "c++"
+      - "g++"
+      - "cl"
+      - "bcc"
+      - "icpx"
+      - "icx"
+      - "clang++"
+    candidate_directories:
+      - "/Users/jrd/.pyenv/shims/"
+      - "/Users/jrd/.pyenv/bin/"
+      - "/Users/jrd/.nvm/versions/node/v22.17.0/bin/"
+      - "/usr/local/bin/"
+      - "/opt/homebrew/opt/ruby/bin/"
+      - "/opt/homebrew/opt/tcl-tk/bin/"
+      - "/opt/homebrew/bin/"
+      - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
+      - "/opt/homebrew/sbin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
+      - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
+      - "/System/Cryptexes/App/usr/bin/"
+      - "/usr/bin/"
+      - "/bin/"
+      - "/usr/sbin/"
+      - "/sbin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin/"
+      - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin/"
+      - "/Library/Apple/usr/bin/"
+      - "/Users/jrd/.local/bin/"
+      - "/opt/homebrew/opt/fzf/bin/"
+    searched_directories:
+      - "/Users/jrd/.pyenv/shims/c++"
+      - "/Users/jrd/.pyenv/bin/c++"
+      - "/Users/jrd/.nvm/versions/node/v22.17.0/bin/c++"
+      - "/usr/local/bin/c++"
+      - "/opt/homebrew/opt/ruby/bin/c++"
+      - "/opt/homebrew/opt/tcl-tk/bin/c++"
+      - "/opt/homebrew/bin/c++"
+      - "/Users/jrd/.codeium/windsurf/bin/c++"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/c++"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/c++"
+      - "/opt/homebrew/sbin/c++"
+      - "/Library/Frameworks/Python.framework/Versions/3.11/bin/c++"
+      - "/Library/Frameworks/Python.framework/Versions/3.12/bin/c++"
+      - "/System/Cryptexes/App/usr/bin/c++"
+    found: "/usr/bin/c++"
+    search_context:
+      ENV{PATH}:
+        - "/Users/jrd/.pyenv/shims"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/usr/local/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/opt/homebrew/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/opt/homebrew/bin"
+        - "/opt/homebrew/sbin"
+        - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
+        - "/Library/Frameworks/Python.framework/Versions/3.12/bin"
+        - "/usr/local/bin"
+        - "/System/Cryptexes/App/usr/bin"
+        - "/usr/bin"
+        - "/bin"
+        - "/usr/sbin"
+        - "/sbin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
+        - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
+        - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/.local/bin"
+        - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -229,6 +361,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -243,8 +377,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "message-v1"
     backtrace:
@@ -254,7 +396,7 @@ events:
       - "CMakeLists.txt:2 (project)"
     message: |
       Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
-      Compiler: /usr/bin/clang++ 
+      Compiler: /usr/bin/c++ 
       Build flags: 
       Id flags:  
       
@@ -274,7 +416,7 @@ events:
       - "/opt/homebrew/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:125 (CMAKE_DETERMINE_COMPILER_ID)"
       - "CMakeLists.txt:2 (project)"
     message: |
-      Detecting CXX compiler apple sysroot: "/usr/bin/clang++" "-E" "apple-sdk.cpp"
+      Detecting CXX compiler apple sysroot: "/usr/bin/c++" "-E" "apple-sdk.cpp"
         # 1 "apple-sdk.cpp"
         # 1 "<built-in>" 1
         # 1 "<built-in>" 3
@@ -329,6 +471,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -353,6 +497,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -367,8 +513,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -398,6 +552,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -422,6 +578,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -436,8 +594,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -467,6 +633,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -491,6 +659,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -505,8 +675,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -536,6 +714,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -560,6 +740,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -574,8 +756,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -605,6 +795,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -629,6 +821,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -643,8 +837,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -674,6 +876,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -698,6 +902,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -712,8 +918,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -743,6 +957,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -766,6 +982,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/objcopy"
       - "/opt/homebrew/bin/objcopy"
       - "/Users/jrd/.codeium/windsurf/bin/objcopy"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/objcopy"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/objcopy"
       - "/opt/homebrew/sbin/objcopy"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/objcopy"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/objcopy"
@@ -790,6 +1008,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -804,8 +1024,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -835,6 +1063,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -858,6 +1088,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/readelf"
       - "/opt/homebrew/bin/readelf"
       - "/Users/jrd/.codeium/windsurf/bin/readelf"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/readelf"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/readelf"
       - "/opt/homebrew/sbin/readelf"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/readelf"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/readelf"
@@ -882,6 +1114,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -896,8 +1130,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -927,6 +1169,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -950,6 +1194,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/dlltool"
       - "/opt/homebrew/bin/dlltool"
       - "/Users/jrd/.codeium/windsurf/bin/dlltool"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/dlltool"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/dlltool"
       - "/opt/homebrew/sbin/dlltool"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/dlltool"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/dlltool"
@@ -974,6 +1220,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -988,8 +1236,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -1019,6 +1275,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -1042,6 +1300,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/addr2line"
       - "/opt/homebrew/bin/addr2line"
       - "/Users/jrd/.codeium/windsurf/bin/addr2line"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/addr2line"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/addr2line"
       - "/opt/homebrew/sbin/addr2line"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/addr2line"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/addr2line"
@@ -1066,6 +1326,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -1080,8 +1342,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -1111,6 +1381,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -1134,6 +1406,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/tapi"
       - "/opt/homebrew/bin/tapi"
       - "/Users/jrd/.codeium/windsurf/bin/tapi"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/tapi"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/tapi"
       - "/opt/homebrew/sbin/tapi"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/tapi"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/tapi"
@@ -1158,6 +1432,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -1172,8 +1448,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
   -
     kind: "find-v1"
     backtrace:
@@ -1202,6 +1486,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/"
@@ -1225,6 +1511,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/install_name_tool"
       - "/opt/homebrew/bin/install_name_tool"
       - "/Users/jrd/.codeium/windsurf/bin/install_name_tool"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/install_name_tool"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/install_name_tool"
       - "/opt/homebrew/sbin/install_name_tool"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/install_name_tool"
       - "/Library/Frameworks/Python.framework/Versions/3.12/bin/install_name_tool"
@@ -1240,6 +1528,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -1254,8 +1544,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
   -
     kind: "try_compile-v1"
@@ -1266,8 +1564,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-bHfQ9z"
-      binary: "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-bHfQ9z"
+      source: "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-krJ5V9"
+      binary: "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-krJ5V9"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -1280,19 +1578,19 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-bHfQ9z'
+        Change Dir: '/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-krJ5V9'
         
-        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_7a58a/fast
-        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_7a58a.dir/build.make CMakeFiles/cmTC_7a58a.dir/build
-        Building CXX object CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/clang++   -arch arm64   -v -Wl,-v -MD -MT CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_74ca5/fast
+        /Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_74ca5.dir/build.make CMakeFiles/cmTC_74ca5.dir/build
+        Building CXX object CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -arch arm64   -v -Wl,-v -MD -MT CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Apple clang version 16.0.0 (clang-1600.0.26.6)
         Target: arm64-apple-darwin24.6.0
         Thread model: posix
         InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
         clang++: warning: -Wl,-v: 'linker' input unused [-Wunused-command-line-argument]
         ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"
-         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx15.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=15.2 -fvisibility-inlines-hidden-static-local-var -fno-modulemap-allow-subdirectory-search -target-cpu apple-m1 -target-feature +v8.5a -target-feature +aes -target-feature +crc -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +sha2 -target-feature +sha3 -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-abi darwinpcs -debugger-tuning=lldb -target-linker-version 1115.7.3 -v -fcoverage-compilation-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-bHfQ9z -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16 -dependency-file CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1 -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdeprecated-macro -fdebug-compilation-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-bHfQ9z -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fno-cxx-modules -fcxx-exceptions -fexceptions -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -clang-vendor-feature=+disableAtImportPrivateFrameworkInImplementationError -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx15.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=15.2 -fvisibility-inlines-hidden-static-local-var -fno-modulemap-allow-subdirectory-search -target-cpu apple-m1 -target-feature +v8.5a -target-feature +aes -target-feature +crc -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +sha2 -target-feature +sha3 -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-abi darwinpcs -debugger-tuning=lldb -target-linker-version 1115.7.3 -v -fcoverage-compilation-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-krJ5V9 -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16 -dependency-file CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1 -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdeprecated-macro -fdebug-compilation-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-krJ5V9 -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fno-cxx-modules -fcxx-exceptions -fexceptions -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -clang-vendor-feature=+disableAtImportPrivateFrameworkInImplementationError -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         clang -cc1 version 16.0.0 (clang-1600.0.26.6) default target arm64-apple-darwin24.6.0
         ignoring nonexistent directory "/usr/local/include"
         ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"
@@ -1305,13 +1603,13 @@ events:
          /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
          /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)
         End of search list.
-        Linking CXX executable cmTC_7a58a
-        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7a58a.dir/link.txt --verbose=1
+        Linking CXX executable cmTC_74ca5
+        /opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_74ca5.dir/link.txt --verbose=1
         Apple clang version 16.0.0 (clang-1600.0.26.6)
         Target: arm64-apple-darwin24.6.0
         Thread model: posix
         InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
-         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 15.0.0 15.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -mllvm -enable-linkonceodr-outlining -o cmTC_7a58a -L/opt/homebrew/opt/tcl-tk/lib -L/usr/local/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.osx.a
+         "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 15.0.0 15.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -mllvm -enable-linkonceodr-outlining -o cmTC_74ca5 -L/opt/homebrew/opt/tcl-tk/lib -L/usr/local/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.osx.a
         @(#)PROGRAM:ld PROJECT:ld-1115.7.3
         BUILD 23:52:02 Dec  5 2024
         configured to support archs: armv6 armv7 armv7s arm64 arm64e arm64_32 i386 x86_64 x86_64h armv6m armv7k armv7m armv7em
@@ -1324,7 +1622,7 @@ events:
         	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/lib/swift
         Framework search paths:
         	/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks
-        /usr/bin/clang++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/homebrew/opt/tcl-tk/lib -v -Wl,-v CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_7a58a
+        /usr/bin/c++  -arch arm64 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/opt/homebrew/opt/tcl-tk/lib -v -Wl,-v CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_74ca5
         
       exitCode: 0
   -
@@ -1368,19 +1666,19 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|"|[0-9]+>[ 	-]*Build:[ 	0-9]+ ms[ 	]*)?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-bHfQ9z']
+        ignore line: [Change Dir: '/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-krJ5V9']
         ignore line: []
-        ignore line: [Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_7a58a/fast]
-        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_7a58a.dir/build.make CMakeFiles/cmTC_7a58a.dir/build]
-        ignore line: [Building CXX object CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/clang++   -arch arm64   -v -Wl -v -MD -MT CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /opt/homebrew/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_74ca5/fast]
+        ignore line: [/Applications/Xcode.app/Contents/Developer/usr/bin/make  -f CMakeFiles/cmTC_74ca5.dir/build.make CMakeFiles/cmTC_74ca5.dir/build]
+        ignore line: [Building CXX object CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -arch arm64   -v -Wl -v -MD -MT CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -MF CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o.d -o CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -c /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Apple clang version 16.0.0 (clang-1600.0.26.6)]
         ignore line: [Target: arm64-apple-darwin24.6.0]
         ignore line: [Thread model: posix]
         ignore line: [InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
         ignore line: [clang++: warning: -Wl -v: 'linker' input unused [-Wunused-command-line-argument]]
         ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1"]
-        ignore line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx15.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=15.2 -fvisibility-inlines-hidden-static-local-var -fno-modulemap-allow-subdirectory-search -target-cpu apple-m1 -target-feature +v8.5a -target-feature +aes -target-feature +crc -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +sha2 -target-feature +sha3 -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-abi darwinpcs -debugger-tuning=lldb -target-linker-version 1115.7.3 -v -fcoverage-compilation-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-bHfQ9z -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16 -dependency-file CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1 -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdeprecated-macro -fdebug-compilation-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-bHfQ9z -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fno-cxx-modules -fcxx-exceptions -fexceptions -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -clang-vendor-feature=+disableAtImportPrivateFrameworkInImplementationError -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" -cc1 -triple arm64-apple-macosx15.0.0 -Wundef-prefix=TARGET_OS_ -Wdeprecated-objc-isa-usage -Werror=deprecated-objc-isa-usage -Werror=implicit-function-declaration -emit-obj -mrelax-all -disable-free -clear-ast-before-backend -disable-llvm-verifier -discard-value-names -main-file-name CMakeCXXCompilerABI.cpp -mrelocation-model pic -pic-level 2 -mframe-pointer=non-leaf -fno-strict-return -ffp-contract=on -fno-rounding-math -funwind-tables=1 -fobjc-msgsend-selector-stubs -target-sdk-version=15.2 -fvisibility-inlines-hidden-static-local-var -fno-modulemap-allow-subdirectory-search -target-cpu apple-m1 -target-feature +v8.5a -target-feature +aes -target-feature +crc -target-feature +dotprod -target-feature +fp-armv8 -target-feature +fp16fml -target-feature +lse -target-feature +ras -target-feature +rcpc -target-feature +rdm -target-feature +sha2 -target-feature +sha3 -target-feature +neon -target-feature +zcm -target-feature +zcz -target-feature +fullfp16 -target-abi darwinpcs -debugger-tuning=lldb -target-linker-version 1115.7.3 -v -fcoverage-compilation-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-krJ5V9 -resource-dir /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16 -dependency-file CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o.d -skip-unused-modulemap-deps -MT CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -sys-header-deps -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -I/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1 -internal-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include -internal-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include -internal-externc-isystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -Wno-reorder-init-list -Wno-implicit-int-float-conversion -Wno-c99-designator -Wno-final-dtor-non-final-class -Wno-extra-semi-stmt -Wno-misleading-indentation -Wno-quoted-include-in-framework-header -Wno-implicit-fallthrough -Wno-enum-enum-conversion -Wno-enum-float-conversion -Wno-elaborated-enum-base -Wno-reserved-identifier -Wno-gnu-folding-constant -fdeprecated-macro -fdebug-compilation-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/CMakeScratch/TryCompile-krJ5V9 -ferror-limit 19 -stack-protector 1 -fstack-check -mdarwin-stkchk-strong-link -fblocks -fencode-extended-block-signature -fregister-global-dtors-with-atexit -fgnuc-version=4.2.1 -fno-cxx-modules -fcxx-exceptions -fexceptions -fmax-type-align=16 -fcommon -clang-vendor-feature=+disableNonDependentMemberExprInCurrentInstantiation -fno-odr-hash-protocols -clang-vendor-feature=+enableAggressiveVLAFolding -clang-vendor-feature=+revert09abecef7bbf -clang-vendor-feature=+thisNoAlignAttr -clang-vendor-feature=+thisNoNullAttr -clang-vendor-feature=+disableAtImportPrivateFrameworkInImplementationError -D__GCC_HAVE_DWARF2_CFI_ASM=1 -o CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -x c++ /opt/homebrew/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [clang -cc1 version 16.0.0 (clang-1600.0.26.6) default target arm64-apple-darwin24.6.0]
         ignore line: [ignoring nonexistent directory "/usr/local/include"]
         ignore line: [ignoring nonexistent directory "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/local/include"]
@@ -1393,13 +1691,13 @@ events:
         ignore line: [ /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include]
         ignore line: [ /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks (framework directory)]
         ignore line: [End of search list.]
-        ignore line: [Linking CXX executable cmTC_7a58a]
-        ignore line: [/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7a58a.dir/link.txt --verbose=1]
+        ignore line: [Linking CXX executable cmTC_74ca5]
+        ignore line: [/opt/homebrew/bin/cmake -E cmake_link_script CMakeFiles/cmTC_74ca5.dir/link.txt --verbose=1]
         ignore line: [Apple clang version 16.0.0 (clang-1600.0.26.6)]
         ignore line: [Target: arm64-apple-darwin24.6.0]
         ignore line: [Thread model: posix]
         ignore line: [InstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin]
-        link line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 15.0.0 15.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -mllvm -enable-linkonceodr-outlining -o cmTC_7a58a -L/opt/homebrew/opt/tcl-tk/lib -L/usr/local/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.osx.a]
+        link line: [ "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld" -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -platform_version macos 15.0.0 15.2 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk -mllvm -enable-linkonceodr-outlining -o cmTC_74ca5 -L/opt/homebrew/opt/tcl-tk/lib -L/usr/local/lib -search_paths_first -headerpad_max_install_names -v CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o -lc++ -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.osx.a]
           arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld] ==> ignore
           arg [-demangle] ==> ignore
           arg [-lto_library] ==> ignore, skip following value
@@ -1416,13 +1714,13 @@ events:
           arg [-mllvm] ==> ignore
           arg [-enable-linkonceodr-outlining] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_7a58a] ==> ignore
+          arg [cmTC_74ca5] ==> ignore
           arg [-L/opt/homebrew/opt/tcl-tk/lib] ==> dir [/opt/homebrew/opt/tcl-tk/lib]
           arg [-L/usr/local/lib] ==> dir [/usr/local/lib]
           arg [-search_paths_first] ==> ignore
           arg [-headerpad_max_install_names] ==> ignore
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_7a58a.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_74ca5.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lc++] ==> lib [c++]
           arg [-lSystem] ==> lib [System]
           arg [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.osx.a] ==> lib [/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/lib/darwin/libclang_rt.osx.a]
@@ -1571,6 +1869,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -1585,8 +1885,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
@@ -1614,7 +1922,7 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "CMakeLists.txt:18 (find_path)"
+      - "CMakeLists.txt:31 (find_path)"
     mode: "path"
     variable: "ORT_INCLUDE_DIR"
     description: "Path to a file."
@@ -1645,6 +1953,10 @@ events:
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/onnxruntime/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/onnxruntime/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/onnxruntime/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/onnxruntime/"
       - "/opt/homebrew/sbin/"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/onnxruntime/"
@@ -1754,6 +2066,10 @@ events:
       - "/opt/homebrew/bin/onnxruntime_cxx_api.h"
       - "/Users/jrd/.codeium/windsurf/bin/onnxruntime/onnxruntime_cxx_api.h"
       - "/Users/jrd/.codeium/windsurf/bin/onnxruntime_cxx_api.h"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/onnxruntime/onnxruntime_cxx_api.h"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/onnxruntime_cxx_api.h"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/onnxruntime/onnxruntime_cxx_api.h"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/onnxruntime_cxx_api.h"
       - "/opt/homebrew/sbin/onnxruntime/onnxruntime_cxx_api.h"
       - "/opt/homebrew/sbin/onnxruntime_cxx_api.h"
       - "/Library/Frameworks/Python.framework/Versions/3.11/bin/onnxruntime/onnxruntime_cxx_api.h"
@@ -1797,6 +2113,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -1811,8 +2129,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
@@ -1842,7 +2168,7 @@ events:
   -
     kind: "find-v1"
     backtrace:
-      - "CMakeLists.txt:26 (find_library)"
+      - "CMakeLists.txt:39 (find_library)"
     mode: "library"
     variable: "ORT_LIB"
     description: "Path to a library."
@@ -1864,6 +2190,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/System/Cryptexes/App/usr/bin/"
       - "/usr/bin/"
@@ -1896,6 +2224,8 @@ events:
       - "/opt/homebrew/opt/tcl-tk/bin/"
       - "/opt/homebrew/bin/"
       - "/Users/jrd/.codeium/windsurf/bin/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand/"
+      - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli/"
       - "/opt/homebrew/sbin/"
       - "/System/Cryptexes/App/usr/bin/"
       - "/usr/bin/"
@@ -1918,6 +2248,8 @@ events:
         - "/opt/homebrew/opt/tcl-tk/bin"
         - "/opt/homebrew/bin"
         - "/Users/jrd/.codeium/windsurf/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
         - "/opt/homebrew/bin"
         - "/opt/homebrew/sbin"
         - "/Library/Frameworks/Python.framework/Versions/3.11/bin"
@@ -1932,8 +2264,16 @@ events:
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin"
         - "/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin"
         - "/Library/Apple/usr/bin"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand"
+        - "/Users/jrd/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli"
+        - "/Users/jrd/.pyenv/bin"
+        - "/Users/jrd/.nvm/versions/node/v22.17.0/bin"
+        - "/opt/homebrew/opt/ruby/bin"
+        - "/opt/homebrew/opt/tcl-tk/bin"
+        - "/Users/jrd/.codeium/windsurf/bin"
         - "/Users/jrd/.local/bin"
         - "/opt/homebrew/opt/fzf/bin"
+        - "/Users/jrd/.local/bin"
       CMAKE_INSTALL_PREFIX: "/usr/local"
       CMAKE_SYSTEM_PREFIX_PATH:
         - "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr"
