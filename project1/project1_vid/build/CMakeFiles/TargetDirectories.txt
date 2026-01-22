@@ -1,3 +1,3 @@
-/Users/jrd/cs/cs5330/projects/project1/project1_vid/build/CMakeFiles/vid.dir
-/Users/jrd/cs/cs5330/projects/project1/project1_vid/build/CMakeFiles/edit_cache.dir
-/Users/jrd/cs/cs5330/projects/project1/project1_vid/build/CMakeFiles/rebuild_cache.dir
+/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/vid.dir
+/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/edit_cache.dir
+/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/rebuild_cache.dir

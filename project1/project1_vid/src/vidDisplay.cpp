@@ -28,7 +28,8 @@ int main(int argc, char *argv[]) {
         MODE_CUSTOM_GRAY,
         MODE_BLUR,
         MODE_FLIP,
-        MODE_INVERT
+        MODE_INVERT,
+        MODE_SEPIA
     };
     Mode mode = MODE_COLOR;
 
@@ -67,7 +68,12 @@ int main(int argc, char *argv[]) {
                      1); // 1 = horizontal flip; 0 = vertical; -1 = both
         } else if (mode == MODE_INVERT) {
             cv::bitwise_not(display, display);
-        } // else MODE_COLOR: do nothing
+        } else if (mode == MODE_SEPIA) {
+            cv::Mat sepiaImg;
+            if (sepia(display, sepiaImg) == 0) {
+                display = sepiaImg;
+            }
+        }
 
         // Step 3: apply rotation (persistent, accumulative)
         // rotateQuarterTurns can be 0..3
@@ -105,6 +111,8 @@ int main(int argc, char *argv[]) {
             mode = MODE_FLIP;
         if (key == 'i')
             mode = MODE_INVERT;
+        if (key == 'p')
+            mode = MODE_SEPIA;
 
         // persistent rotation: each press adds 90 degrees clockwise
         if (key == 'r') {

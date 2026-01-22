@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/clang++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/jrd/cs/cs5330/projects/project1/project1_vid/include -I/opt/homebrew/include/onnxruntime -isystem /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4
+CXX_INCLUDES = -I/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include -I/opt/homebrew/include/onnxruntime -isystem /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4
 
 CXX_FLAGSarm64 = -g -std=gnu++20 -arch arm64
 

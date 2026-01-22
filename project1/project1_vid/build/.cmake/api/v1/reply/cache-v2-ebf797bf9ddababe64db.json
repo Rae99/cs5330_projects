@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/jrd/cs/cs5330/projects/project1/project1_vid/build"
+			"value" : "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -155,10 +155,10 @@
 				},
 				{
 					"name" : "HELPSTRING",
-					"value" : "No help, variable specified on the command line."
+					"value" : "CXX compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "/usr/bin/clang++"
 		},
 		{
@@ -407,7 +407,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/jrd/cs/cs5330/projects/project1/project1_vid/build/CMakeFiles/pkgRedirects"
+			"value" : "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -467,7 +467,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/jrd/cs/cs5330/projects/project1/project1_vid"
+			"value" : "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid"
 		},
 		{
 			"name" : "CMAKE_INSTALL_NAME_TOOL",
@@ -1143,7 +1143,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/jrd/cs/cs5330/projects/project1/project1_vid/build"
+			"value" : "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build"
 		},
 		{
 			"name" : "project1_IS_TOP_LEVEL",
@@ -1167,7 +1167,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/jrd/cs/cs5330/projects/project1/project1_vid"
+			"value" : "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid"
 		}
 	],
 	"kind" : "cache",

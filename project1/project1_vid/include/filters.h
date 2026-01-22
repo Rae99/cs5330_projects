@@ -9,4 +9,10 @@
 // return 0 on success
 int greyscale(cv::Mat &src, cv::Mat &dst);
 
+// Sepia tone filter
+// src: input BGR image (CV_8UC3)
+// dst: output sepia-toned BGR image (CV_8UC3)
+// return 0 on success
+int sepia(cv::Mat &src, cv::Mat &dst);
+
 #endif

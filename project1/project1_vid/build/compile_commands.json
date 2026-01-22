@@ -1,14 +1,14 @@
 [
 {
-  "directory": "/Users/jrd/cs/cs5330/projects/project1/project1_vid/build",
-  "command": "/usr/bin/clang++  -I/Users/jrd/cs/cs5330/projects/project1/project1_vid/include -I/opt/homebrew/include/onnxruntime -isystem /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4 -g -std=gnu++20 -arch arm64 -o CMakeFiles/vid.dir/src/vidDisplay.cpp.o -c /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/vidDisplay.cpp",
-  "file": "/Users/jrd/cs/cs5330/projects/project1/project1_vid/src/vidDisplay.cpp",
+  "directory": "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build",
+  "command": "/usr/bin/clang++  -I/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include -I/opt/homebrew/include/onnxruntime -isystem /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4 -g -std=gnu++20 -arch arm64 -o CMakeFiles/vid.dir/src/vidDisplay.cpp.o -c /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/vidDisplay.cpp",
+  "file": "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/vidDisplay.cpp",
   "output": "CMakeFiles/vid.dir/src/vidDisplay.cpp.o"
 },
 {
-  "directory": "/Users/jrd/cs/cs5330/projects/project1/project1_vid/build",
-  "command": "/usr/bin/clang++  -I/Users/jrd/cs/cs5330/projects/project1/project1_vid/include -I/opt/homebrew/include/onnxruntime -isystem /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4 -g -std=gnu++20 -arch arm64 -o CMakeFiles/vid.dir/src/filter.cpp.o -c /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/filter.cpp",
-  "file": "/Users/jrd/cs/cs5330/projects/project1/project1_vid/src/filter.cpp",
+  "directory": "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build",
+  "command": "/usr/bin/clang++  -I/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include -I/opt/homebrew/include/onnxruntime -isystem /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4 -g -std=gnu++20 -arch arm64 -o CMakeFiles/vid.dir/src/filter.cpp.o -c /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp",
+  "file": "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp",
   "output": "CMakeFiles/vid.dir/src/filter.cpp.o"
 }
 ]

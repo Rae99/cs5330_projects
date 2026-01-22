@@ -1,6 +1,6 @@
 CMakeFiles/vid.dir/src/filter.cpp.o: \
-  /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/filter.cpp \
-  /Users/jrd/cs/cs5330/projects/project1/project1_vid/include/filters.h \
+  /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp \
+  /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/filters.h \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/opencv.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/opencv_modules.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/core.hpp \

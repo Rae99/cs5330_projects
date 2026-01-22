@@ -53,10 +53,10 @@ RM = /opt/homebrew/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/jrd/cs/cs5330/projects/project1/project1_vid
+CMAKE_SOURCE_DIR = /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/jrd/cs/cs5330/projects/project1/project1_vid/build
+CMAKE_BINARY_DIR = /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/vid.dir/depend.make
@@ -73,32 +73,32 @@ CMakeFiles/vid.dir/codegen:
 .PHONY : CMakeFiles/vid.dir/codegen
 
 CMakeFiles/vid.dir/src/vidDisplay.cpp.o: CMakeFiles/vid.dir/flags.make
-CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/vidDisplay.cpp
+CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/vidDisplay.cpp
 CMakeFiles/vid.dir/src/vidDisplay.cpp.o: CMakeFiles/vid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jrd/cs/cs5330/projects/project1/project1_vid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/vid.dir/src/vidDisplay.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/vid.dir/src/vidDisplay.cpp.o -MF CMakeFiles/vid.dir/src/vidDisplay.cpp.o.d -o CMakeFiles/vid.dir/src/vidDisplay.cpp.o -c /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/vidDisplay.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/vid.dir/src/vidDisplay.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/vid.dir/src/vidDisplay.cpp.o -MF CMakeFiles/vid.dir/src/vidDisplay.cpp.o.d -o CMakeFiles/vid.dir/src/vidDisplay.cpp.o -c /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/vidDisplay.cpp
 
 CMakeFiles/vid.dir/src/vidDisplay.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/vid.dir/src/vidDisplay.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/vidDisplay.cpp > CMakeFiles/vid.dir/src/vidDisplay.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/vidDisplay.cpp > CMakeFiles/vid.dir/src/vidDisplay.cpp.i
 
 CMakeFiles/vid.dir/src/vidDisplay.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/vid.dir/src/vidDisplay.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/vidDisplay.cpp -o CMakeFiles/vid.dir/src/vidDisplay.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/vidDisplay.cpp -o CMakeFiles/vid.dir/src/vidDisplay.cpp.s
 
 CMakeFiles/vid.dir/src/filter.cpp.o: CMakeFiles/vid.dir/flags.make
-CMakeFiles/vid.dir/src/filter.cpp.o: /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/filter.cpp
+CMakeFiles/vid.dir/src/filter.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp
 CMakeFiles/vid.dir/src/filter.cpp.o: CMakeFiles/vid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jrd/cs/cs5330/projects/project1/project1_vid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/vid.dir/src/filter.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/vid.dir/src/filter.cpp.o -MF CMakeFiles/vid.dir/src/filter.cpp.o.d -o CMakeFiles/vid.dir/src/filter.cpp.o -c /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/filter.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/vid.dir/src/filter.cpp.o"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/vid.dir/src/filter.cpp.o -MF CMakeFiles/vid.dir/src/filter.cpp.o.d -o CMakeFiles/vid.dir/src/filter.cpp.o -c /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp
 
 CMakeFiles/vid.dir/src/filter.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/vid.dir/src/filter.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/filter.cpp > CMakeFiles/vid.dir/src/filter.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp > CMakeFiles/vid.dir/src/filter.cpp.i
 
 CMakeFiles/vid.dir/src/filter.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/vid.dir/src/filter.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jrd/cs/cs5330/projects/project1/project1_vid/src/filter.cpp -o CMakeFiles/vid.dir/src/filter.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp -o CMakeFiles/vid.dir/src/filter.cpp.s
 
 # Object files for target vid
 vid_OBJECTS = \
@@ -169,7 +169,7 @@ vid: /opt/homebrew/lib/libopencv_photo.4.13.0.dylib
 vid: /opt/homebrew/lib/libopencv_imgproc.4.13.0.dylib
 vid: /opt/homebrew/lib/libopencv_core.4.13.0.dylib
 vid: CMakeFiles/vid.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jrd/cs/cs5330/projects/project1/project1_vid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable vid"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable vid"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/vid.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -181,6 +181,6 @@ CMakeFiles/vid.dir/clean:
 .PHONY : CMakeFiles/vid.dir/clean
 
 CMakeFiles/vid.dir/depend:
-	cd /Users/jrd/cs/cs5330/projects/project1/project1_vid/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/jrd/cs/cs5330/projects/project1/project1_vid /Users/jrd/cs/cs5330/projects/project1/project1_vid /Users/jrd/cs/cs5330/projects/project1/project1_vid/build /Users/jrd/cs/cs5330/projects/project1/project1_vid/build /Users/jrd/cs/cs5330/projects/project1/project1_vid/build/CMakeFiles/vid.dir/DependInfo.cmake "--color=$(COLOR)" vid
+	cd /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles/vid.dir/DependInfo.cmake "--color=$(COLOR)" vid
 .PHONY : CMakeFiles/vid.dir/depend
 

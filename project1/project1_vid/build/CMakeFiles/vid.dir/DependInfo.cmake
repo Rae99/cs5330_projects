@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/jrd/cs/cs5330/projects/project1/project1_vid/src/filter.cpp" "CMakeFiles/vid.dir/src/filter.cpp.o" "gcc" "CMakeFiles/vid.dir/src/filter.cpp.o.d"
-  "/Users/jrd/cs/cs5330/projects/project1/project1_vid/src/vidDisplay.cpp" "CMakeFiles/vid.dir/src/vidDisplay.cpp.o" "gcc" "CMakeFiles/vid.dir/src/vidDisplay.cpp.o.d"
+  "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp" "CMakeFiles/vid.dir/src/filter.cpp.o" "gcc" "CMakeFiles/vid.dir/src/filter.cpp.o.d"
+  "/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/vidDisplay.cpp" "CMakeFiles/vid.dir/src/vidDisplay.cpp.o" "gcc" "CMakeFiles/vid.dir/src/vidDisplay.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
