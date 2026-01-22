@@ -59,10 +59,24 @@ int main(int argc, char *argv[]) {
                 gray3ch.copyTo(display);
             }
         } else if (mode == MODE_BLUR) {
-            cv::GaussianBlur(
-                display, display, cv::Size(15, 15),
-                0); // ksize stands for kernel size, the larger the more blur;
-                    // BORDER_DEFAULT is default, = BORDER_REFLECT_101
+            // My custom 5x5 blur implementation
+            cv::Mat blurred;
+            if (blur5x5_2(display, blurred) == 0) {
+                blurred.copyTo(display);
+            };
+
+            // test that the blur does work
+            // capdev->set(cv::CAP_PROP_FRAME_WIDTH, 640);
+            // capdev->set(cv::CAP_PROP_FRAME_HEIGHT, 480);
+            // blur5x5_1(display, blurred);
+            // blur5x5_1(blurred, display);
+
+            // built-in Gaussian blur (commented out)
+            // cv::GaussianBlur(
+            //     display, display, cv::Size(15, 15),
+            //     0); // ksize stands for kernel size, the larger the more
+            // blur;
+            // BORDER_DEFAULT is default, = BORDER_REFLECT_101
         } else if (mode == MODE_FLIP) {
             cv::flip(display, display,
                      1); // 1 = horizontal flip; 0 = vertical; -1 = both

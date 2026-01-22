@@ -121,3 +121,146 @@ int sepia(cv::Mat &src, cv::Mat &dst) {
 
     return 0;
 }
+
+// blur5x5_1: naive 5x5 using at<>
+int blur5x5_1(cv::Mat &src, cv::Mat &dst) {
+
+    // kernel weights
+    static const int k[5][5] = {{1, 2, 4, 2, 1},
+                                {2, 4, 8, 4, 2},
+                                {4, 8, 16, 8, 4},
+                                {2, 4, 8, 4, 2},
+                                {1, 2, 4, 2, 1}};
+    const int sum = 100;
+    if (src.empty())
+        return -1;
+    if (src.type() != CV_8UC3) {
+        std::printf("blur5x5_1: expected CV_8UC3, got %d\n", src.type());
+        return -2;
+    }
+
+    // We are doing a valid 5x5 blur, skip 2 pixels on each border
+    src.copyTo(dst);
+
+    int rows = src.rows;
+    int cols = src.cols;
+
+    // 5x5 kernel sum is 100
+    for (int i = 2; i < rows - 2; i++) {
+        for (int j = 2; j < cols - 2; j++) {
+            int sumB = 0, sumG = 0, sumR = 0;
+
+            for (int di = -2; di <= 2; di++) {
+                for (int dj = -2; dj <= 2; dj++) {
+                    int w = k[di + 2][dj + 2];
+                    cv::Vec3b pix = src.at<cv::Vec3b>(i + di, j + dj);
+                    sumB += w * pix[0];
+                    sumG += w * pix[1];
+                    sumR += w * pix[2];
+                }
+            }
+
+            dst.at<cv::Vec3b>(i, j)[0] = (uchar)(sumB / sum);
+            dst.at<cv::Vec3b>(i, j)[1] = (uchar)(sumG / sum);
+            dst.at<cv::Vec3b>(i, j)[2] = (uchar)(sumR / sum);
+        }
+    }
+    return 0;
+}
+
+// separable 5x5 blur: (1 2 4 2 1) vertical and horizontal
+int blur5x5_2(cv::Mat &src, cv::Mat &dst) {
+    if (src.empty())
+        return -1;
+
+    if (src.type() != CV_8UC3) {
+        std::printf("blur5x5_2: expected CV_8UC3, got %d\n", src.type());
+        return -2;
+    }
+
+    const int rows = src.rows;
+    const int cols = src.cols;
+
+    // Initialize dst to src so that border pixels already have non-zero values
+    src.copyTo(dst);
+
+    // Temporary image to hold intermediate results after horizontal pass
+    // Max per channel = 10*255 = 2550
+    // 16 bits is enough.
+    cv::Mat tmp;
+    src.convertTo(tmp, CV_16SC3);
+    // equivalent to:
+    // tmp.create(src.rows, src.cols, CV_16SC3);
+    // for each pixel:
+    //     tmp = (short)src;
+
+    // 1D kernel used for both horizontal and vertical passes
+    static const int k[5] = {1, 2, 4, 2, 1};
+
+    // horizontal pass
+    for (int i = 0; i < rows; i++) {
+        // sp points to the first pixel (Vec3b) of row i in src.
+        const cv::Vec3b *sp = src.ptr<cv::Vec3b>(i);
+
+        // tp points to the first pixel (Vec3s) of row i in tmp.
+        // Vec3s = 3 signed shorts, enough to store intermediate sums like 2550.
+        cv::Vec3s *tp = tmp.ptr<cv::Vec3s>(i);
+
+        // Compute horizontal convolution for interior columns.
+        for (int j = 2; j < cols - 2; j++) {
+            // read 5 neighboring pixels in the same row
+            const cv::Vec3b &p0 = sp[j - 2];
+            const cv::Vec3b &p1 = sp[j - 1];
+            const cv::Vec3b &p2 = sp[j];
+            const cv::Vec3b &p3 = sp[j + 1];
+            const cv::Vec3b &p4 = sp[j + 2];
+            // &p is a reference, like an alias, but not a pointer
+
+            int sumB =
+                1 * p0[0] + 2 * p1[0] + 4 * p2[0] + 2 * p3[0] + 1 * p4[0];
+            int sumG =
+                1 * p0[1] + 2 * p1[1] + 4 * p2[1] + 2 * p3[1] + 1 * p4[1];
+            int sumR =
+                1 * p0[2] + 2 * p1[2] + 4 * p2[2] + 2 * p3[2] + 1 * p4[2];
+
+            // For now, we don't divide by 10.
+            tp[j][0] = (short)sumB;
+            tp[j][1] = (short)sumG;
+            tp[j][2] = (short)sumR;
+        }
+    }
+
+    // vertical pass
+    for (int i = 2; i < rows - 2; i++) {
+        // dp points to row i of dst.
+        cv::Vec3b *dp = dst.ptr<cv::Vec3b>(i);
+
+        // 5 row pointers in tmp
+        const cv::Vec3s *tp0 = tmp.ptr<cv::Vec3s>(i - 2);
+        const cv::Vec3s *tp1 = tmp.ptr<cv::Vec3s>(i - 1);
+        const cv::Vec3s *tp2 = tmp.ptr<cv::Vec3s>(i);
+        const cv::Vec3s *tp3 = tmp.ptr<cv::Vec3s>(i + 1);
+        const cv::Vec3s *tp4 = tmp.ptr<cv::Vec3s>(i + 2);
+
+        for (int j = 2; j < cols - 2; j++) {
+            // accumulate weighted sum for each channel at column j
+            int sumB = 1 * tp0[j][0] + 2 * tp1[j][0] + 4 * tp2[j][0] +
+                       2 * tp3[j][0] + 1 * tp4[j][0];
+            int sumG = 1 * tp0[j][1] + 2 * tp1[j][1] + 4 * tp2[j][1] +
+                       2 * tp3[j][1] + 1 * tp4[j][1];
+            int sumR = 1 * tp0[j][2] + 2 * tp1[j][2] + 4 * tp2[j][2] +
+                       2 * tp3[j][2] + 1 * tp4[j][2];
+
+            // total sum = 100
+            int outB = sumB / 100;
+            int outG = sumG / 100;
+            int outR = sumR / 100;
+
+            dp[j][0] = cv::saturate_cast<uchar>(outB);
+            dp[j][1] = cv::saturate_cast<uchar>(outG);
+            dp[j][2] = cv::saturate_cast<uchar>(outR);
+        }
+    }
+
+    return 0;
+}
