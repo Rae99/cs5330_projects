@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
             // My custom grayscale implementation (output is 3-channel)
             cv::Mat gray3ch;
             if (greyscale(display, gray3ch) == 0) {
-                display = gray3ch;
+                gray3ch.copyTo(display);
             }
         } else if (mode == MODE_BLUR) {
             cv::GaussianBlur(
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
         } else if (mode == MODE_SEPIA) {
             cv::Mat sepiaImg;
             if (sepia(display, sepiaImg) == 0) {
-                display = sepiaImg;
+                sepiaImg.copyTo(display);
             }
         }
 
