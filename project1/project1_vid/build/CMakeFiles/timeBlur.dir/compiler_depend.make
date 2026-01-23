@@ -998,6 +998,7 @@ CMakeFiles/timeBlur.dir/src/filter.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/p
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdarg.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdint.h \
+  /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/faceDetect.h \
   /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/filters.h \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/imgproc/segmentation.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/calib3d.hpp \
@@ -4404,6 +4405,8 @@ CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/pointer_to_binary_function.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/ranges_move.h:
+
+/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/faceDetect.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/pstl_generate.h:
 

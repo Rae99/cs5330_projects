@@ -10,6 +10,7 @@ find_package(OpenCV REQUIRED)
 add_executable(vid
         src/vidDisplay.cpp
         src/filter.cpp
+        src/faceDetect.cpp
         )
 
 target_include_directories(vid PRIVATE ${OpenCV_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
@@ -26,6 +27,8 @@ target_include_directories(timeBlur PRIVATE
         ${CMAKE_SOURCE_DIR}/include
 )
 target_link_libraries(timeBlur PRIVATE ${OpenCV_LIBS})
+
+# 
 
 # ONNX Runtime (Homebrew)
 find_path(ORT_INCLUDE_DIR onnxruntime_cxx_api.h

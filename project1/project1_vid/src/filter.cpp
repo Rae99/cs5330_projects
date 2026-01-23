@@ -1,5 +1,6 @@
 #include "filters.h"
 #include <cstdio>
+#include "faceDetect.h"
 
 // Greyscale filter
 int greyscale(cv::Mat &src, cv::Mat &dst) {
@@ -265,6 +266,228 @@ int blur5x5_2(cv::Mat &src, cv::Mat &dst) {
     return 0;
 }
 
-int sobelX3x3(cv::Mat &src, cv::Mat &dst);
+// Sobel X: positive to the right
+// Separable: vertical smoothing [1 2 1], horizontal derivative [-1 0 1]
+// This is a valid convolution.
+int sobelX3x3(cv::Mat &src, cv::Mat &dst) {
+    if (src.empty()) {
+        std::printf("sobelX3x3(): src is empty\n");
+        return -1;
+    }
+    if (src.type() != CV_8UC3) {
+        std::printf("sobelX3x3(): expected CV_8UC3, got %d\n", src.type());
+        return -2;
+    }
 
-int sobelY3x3(cv::Mat &src, cv::Mat &dst);
+    // dst must be signed short 3-channel
+    dst.create(src.rows, src.cols, CV_16SC3);
+
+    // tmp holds result after vertical smoothing; needs to store values up to
+    // 1*255+2*255+1*255=1020
+    cv::Mat tmp(src.rows, src.cols, CV_16SC3);
+
+    static const int kSmooth[3] = {1, 2, 1};
+    static const int kDeriv[3] = {-1, 0, 1};
+
+    const int rows = src.rows;
+    const int cols = src.cols;
+
+    // initialize borders to 0
+    tmp.setTo(cv::Scalar(0, 0, 0));
+    dst.setTo(cv::Scalar(0, 0, 0));
+
+    // 1) vertical smoothing pass: use neighbors in i direction (i-1, i, i+1)
+    for (int i = 1; i < rows - 1; i++) {
+        const cv::Vec3b *sp0 = src.ptr<cv::Vec3b>(i - 1);
+        const cv::Vec3b *sp1 = src.ptr<cv::Vec3b>(i);
+        const cv::Vec3b *sp2 = src.ptr<cv::Vec3b>(i + 1);
+
+        cv::Vec3s *tp = tmp.ptr<cv::Vec3s>(i);
+
+        for (int j = 0; j < cols; j++) {
+            // BGR
+            tp[j][0] = (short)(kSmooth[0] * sp0[j][0] + kSmooth[1] * sp1[j][0] +
+                               kSmooth[2] * sp2[j][0]);
+            tp[j][1] = (short)(kSmooth[0] * sp0[j][1] + kSmooth[1] * sp1[j][1] +
+                               kSmooth[2] * sp2[j][1]);
+            tp[j][2] = (short)(kSmooth[0] * sp0[j][2] + kSmooth[1] * sp1[j][2] +
+                               kSmooth[2] * sp2[j][2]);
+        }
+    }
+
+    // 2) horizontal derivative pass: use neighbors in j direction (j-1, j, j+1)
+    for (int i = 1; i < rows - 1; i++) {
+        const cv::Vec3s *tp = tmp.ptr<cv::Vec3s>(i);
+        cv::Vec3s *dp = dst.ptr<cv::Vec3s>(i);
+
+        for (int j = 1; j < cols - 1; j++) {
+            // apply [-1 0 1] on tmp row
+            dp[j][0] = (short)(kDeriv[0] * tp[j - 1][0] + kDeriv[1] * tp[j][0] +
+                               kDeriv[2] * tp[j + 1][0]);
+            dp[j][1] = (short)(kDeriv[0] * tp[j - 1][1] + kDeriv[1] * tp[j][1] +
+                               kDeriv[2] * tp[j + 1][1]);
+            dp[j][2] = (short)(kDeriv[0] * tp[j - 1][2] + kDeriv[1] * tp[j][2] +
+                               kDeriv[2] * tp[j + 1][2]);
+        }
+    }
+
+    return 0;
+}
+
+int sobelY3x3(cv::Mat &src, cv::Mat &dst) {
+    if (src.empty()) {
+        std::printf("sobelY3x3(): src is empty\n");
+        return -1;
+    }
+    if (src.type() != CV_8UC3) {
+        std::printf("sobelY3x3(): expected CV_8UC3, got %d\n", src.type());
+        return -2;
+    }
+
+    // dst must be signed short 3-channel
+    dst.create(src.rows, src.cols, CV_16SC3);
+
+    // tmp holds result after horizontal smoothing; needs to store values up to
+    // 1*255+2*255+1*255=1020
+    cv::Mat tmp(src.rows, src.cols, CV_16SC3);
+
+    static const int kSmooth[3] = {1, 2, 1};
+    static const int kDeriv[3] = {-1, 0, 1};
+
+    const int rows = src.rows;
+    const int cols = src.cols;
+
+    // initialize borders to 0
+    tmp.setTo(cv::Scalar(0, 0, 0));
+    dst.setTo(cv::Scalar(0, 0, 0));
+
+    // 1) horizontal smoothing pass: use neighbors in j direction (j-1, j, j+1)
+    for (int i = 0; i < rows; i++) {
+        const cv::Vec3b *sp = src.ptr<cv::Vec3b>(i);
+        cv::Vec3s *tp = tmp.ptr<cv::Vec3s>(i);
+
+        for (int j = 1; j < cols - 1; j++) {
+            // BGR
+            tp[j][0] =
+                (short)(kSmooth[0] * sp[j - 1][0] + kSmooth[1] * sp[j][0] +
+                        kSmooth[2] * sp[j + 1][0]);
+            tp[j][1] =
+                (short)(kSmooth[0] * sp[j - 1][1] + kSmooth[1] * sp[j][1] +
+                        kSmooth[2] * sp[j + 1][1]);
+            tp[j][2] =
+                (short)(kSmooth[0] * sp[j - 1][2] + kSmooth[1] * sp[j][2] +
+                        kSmooth[2] * sp[j + 1][2]);
+        }
+    }
+    // 2) vertical derivative pass: use neighbors in i direction (i-1, i, i+1)
+    for (int i = 1; i < rows - 1; i++) {
+        const cv::Vec3s *tp0 = tmp.ptr<cv::Vec3s>(i - 1);
+        const cv::Vec3s *tp1 = tmp.ptr<cv::Vec3s>(i);
+        const cv::Vec3s *tp2 = tmp.ptr<cv::Vec3s>(i + 1);
+        cv::Vec3s *dp = dst.ptr<cv::Vec3s>(i);
+
+        for (int j = 0; j < cols; j++) {
+            // apply [-1 0 1] on tmp column
+            dp[j][0] = (short)(kDeriv[0] * tp0[j][0] + kDeriv[1] * tp1[j][0] +
+                               kDeriv[2] * tp2[j][0]);
+            dp[j][1] = (short)(kDeriv[0] * tp0[j][1] + kDeriv[1] * tp1[j][1] +
+                               kDeriv[2] * tp2[j][1]);
+            dp[j][2] = (short)(kDeriv[0] * tp0[j][2] + kDeriv[1] * tp1[j][2] +
+                               kDeriv[2] * tp2[j][2]);
+        }
+    }
+    return 0;
+}
+
+// magnitude: combine sx and sy to magnitude image
+// sx and sy are CV_16SC3 (from Sobel), dst is CV_8UC3
+int magnitude(cv::Mat &sx, cv::Mat &sy, cv::Mat &dst) {
+    if (sx.empty() || sy.empty()) {
+        std::printf("magnitude(): sx or sy is empty\n");
+        return -1;
+    }
+    if (sx.type() != CV_16SC3 || sy.type() != CV_16SC3) {
+        std::printf("magnitude(): expected CV_16SC3 inputs, got sx=%d sy=%d\n",
+                    sx.type(), sy.type());
+        return -2;
+    }
+    if (sx.rows != sy.rows || sx.cols != sy.cols) {
+        std::printf("magnitude(): size mismatch\n");
+        return -3;
+    }
+
+    dst.create(sx.rows, sx.cols, CV_8UC3);
+
+    const int rows = sx.rows;
+    const int cols = sx.cols;
+
+    for (int i = 0; i < rows; i++) {
+        const cv::Vec3s *spx = sx.ptr<cv::Vec3s>(i);
+        const cv::Vec3s *spy = sy.ptr<cv::Vec3s>(i);
+        cv::Vec3b *dp = dst.ptr<cv::Vec3b>(i);
+
+        for (int j = 0; j < cols; j++) {
+            // per-channel magnitude (B,G,R)
+            for (int c = 0; c < 3; c++) {
+                // gradient in x-direction and y-direction
+                int gx = spx[j][c];
+                int gy = spy[j][c];
+
+                // sqrt(gx*gx + gy*gy)
+                // use float for sqrt, then clamp to uchar
+                float mag = std::sqrt((float)gx * gx + (float)gy * gy);
+
+                dp[j][c] = cv::saturate_cast<uchar>(mag);
+            }
+        }
+    }
+
+    return 0;
+}
+
+int blurQuantize(cv::Mat &src, cv::Mat &dst, int levels) {
+    if (src.empty()) {
+        std::printf("blurQuantize(): src is empty\n");
+        return -1;
+    }
+    if (src.type() != CV_8UC3) {
+        std::printf("blurQuantize(): expected CV_8UC3, got %d\n", src.type());
+        return -2;
+    }
+    if (levels <= 0) {
+        std::printf("blurQuantize(): levels must be > 0\n");
+        return -3;
+    }
+    if (levels > 255) {
+        std::printf("blurQuantize(): levels too large (>%d)\n", 255);
+        return -4;
+    }
+
+    // 1) blur
+    cv::Mat blurred;
+    int rc = blur5x5_2(src, blurred);
+    if (rc != 0)
+        return rc;
+
+    // 2) quantize
+    dst.create(src.rows, src.cols, src.type());
+
+    int b = 255 / levels; // bucket size
+
+    for (int i = 0; i < blurred.rows; i++) {
+        const cv::Vec3b *sp = blurred.ptr<cv::Vec3b>(i);
+        cv::Vec3b *dp = dst.ptr<cv::Vec3b>(i);
+
+        for (int j = 0; j < blurred.cols; j++) {
+            // BGR channels
+            for (int c = 0; c < 3; c++) {
+                int x = sp[j][c]; // 0..255
+                int xt = x / b;   // bucket index
+                int xf = xt * b;  // bucket representative value: lower bound
+                dp[j][c] = (uchar)xf; // still in 0..255
+            }
+        }
+    }
+
+    return 0;
+}

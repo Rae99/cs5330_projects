@@ -142,6 +142,30 @@ timeBlur/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/build
 .PHONY : timeBlur/fast
 
+src/faceDetect.o: src/faceDetect.cpp.o
+.PHONY : src/faceDetect.o
+
+# target to build an object file
+src/faceDetect.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/src/faceDetect.cpp.o
+.PHONY : src/faceDetect.cpp.o
+
+src/faceDetect.i: src/faceDetect.cpp.i
+.PHONY : src/faceDetect.i
+
+# target to preprocess a source file
+src/faceDetect.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/src/faceDetect.cpp.i
+.PHONY : src/faceDetect.cpp.i
+
+src/faceDetect.s: src/faceDetect.cpp.s
+.PHONY : src/faceDetect.s
+
+# target to generate assembly for a file
+src/faceDetect.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/src/faceDetect.cpp.s
+.PHONY : src/faceDetect.cpp.s
+
 src/filter.o: src/filter.cpp.o
 .PHONY : src/filter.o
 
@@ -227,6 +251,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... timeBlur"
 	@echo "... vid"
+	@echo "... src/faceDetect.o"
+	@echo "... src/faceDetect.i"
+	@echo "... src/faceDetect.s"
 	@echo "... src/filter.o"
 	@echo "... src/filter.i"
 	@echo "... src/filter.s"

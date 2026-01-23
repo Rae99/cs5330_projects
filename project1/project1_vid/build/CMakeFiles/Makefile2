@@ -88,12 +88,12 @@ clean: CMakeFiles/timeBlur.dir/clean
 CMakeFiles/vid.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=4,5,6 "Built target vid"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=4,5,6,7 "Built target vid"
 .PHONY : CMakeFiles/vid.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/vid.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/vid.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles 0
 .PHONY : CMakeFiles/vid.dir/rule
@@ -105,7 +105,7 @@ vid: CMakeFiles/vid.dir/rule
 # codegen rule for target.
 CMakeFiles/vid.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/vid.dir/build.make CMakeFiles/vid.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=4,5,6 "Finished codegen for target vid"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=4,5,6,7 "Finished codegen for target vid"
 .PHONY : CMakeFiles/vid.dir/codegen
 
 # clean rule for target.

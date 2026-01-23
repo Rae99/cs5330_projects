@@ -1106,4 +1106,5 @@ CMakeFiles/vid.dir/src/filter.cpp.o: \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/stitching/detail/blenders.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/video.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/video/tracking.hpp \
-  /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/video/background_segm.hpp
+  /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/video/background_segm.hpp \
+  /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/faceDetect.h

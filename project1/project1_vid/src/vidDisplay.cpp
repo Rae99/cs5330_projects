@@ -1,4 +1,7 @@
+
+#include "faceDetect.h"
 #include "filters.h"
+#include <cmath>
 #include <cstdio>
 #include <opencv2/opencv.hpp>
 
@@ -29,7 +32,12 @@ int main(int argc, char *argv[]) {
         MODE_BLUR,
         MODE_FLIP,
         MODE_INVERT,
-        MODE_SEPIA
+        MODE_SEPIA,
+        MODE_SOBEL_X,
+        MODE_SOBEL_Y,
+        MODE_MAGNITUDE,
+        MODE_QUANTIZE,
+        MODE_FACE_DETECT
     };
     Mode mode = MODE_COLOR;
 
@@ -87,6 +95,43 @@ int main(int argc, char *argv[]) {
             if (sepia(display, sepiaImg) == 0) {
                 sepiaImg.copyTo(display);
             }
+        } else if (mode == MODE_SOBEL_X) {
+            cv::Mat sobelx16;
+            cv::Mat sobelx8;
+            if (sobelX3x3(frame, sobelx16) == 0) {
+                cv::convertScaleAbs(sobelx16, sobelx8);
+                sobelx8.copyTo(display);
+            }
+
+        } else if (mode == MODE_SOBEL_Y) {
+            cv::Mat sobely16;
+            cv::Mat sobely8;
+            if (sobelY3x3(frame, sobely16) == 0) {
+                cv::convertScaleAbs(sobely16, sobely8);
+                sobely8.copyTo(display);
+            }
+        } else if (mode == MODE_MAGNITUDE) {
+            // compute Sobel X and Sobel Y, then combine to magnitude
+            cv::Mat sobelx16, sobely16, magnitudeImg;
+            if (sobelX3x3(frame, sobelx16) == 0 &&
+                sobelY3x3(frame, sobely16) == 0) {
+                if (magnitude(sobelx16, sobely16, magnitudeImg) == 0) {
+                    magnitudeImg.copyTo(display);
+                }
+            }
+        } else if (mode == MODE_QUANTIZE) {
+            cv::Mat quantized;
+            if (blurQuantize(frame, quantized, 10) == 0) {
+                quantized.copyTo(display);
+            }
+        } else if (mode == MODE_FACE_DETECT) {
+
+            cv::Mat grey;
+            cv::cvtColor(display, grey, cv::COLOR_BGR2GRAY);
+
+            std::vector<cv::Rect> faces;
+            detectFaces(grey, faces);
+            drawBoxes(display, faces, 50, 1.0f);
         }
 
         // Step 3: apply rotation (persistent, accumulative)
@@ -121,16 +166,27 @@ int main(int argc, char *argv[]) {
             mode = MODE_CUSTOM_GRAY; // custom grayscale (3-channel)
         if (key == 'b')
             mode = MODE_BLUR;
-        if (key == 'f')
+        if (key == 'F')
             mode = MODE_FLIP;
-        if (key == 'i')
+        if (key == 'v')
             mode = MODE_INVERT;
         if (key == 'p')
             mode = MODE_SEPIA;
-
+        if (key == 'x')
+            mode = MODE_SOBEL_X;
+        if (key == 'y')
+            mode = MODE_SOBEL_Y;
+        if (key == 'm')
+            mode = MODE_MAGNITUDE;
         // persistent rotation: each press adds 90 degrees clockwise
         if (key == 'r') {
             rotateQuarterTurns = (rotateQuarterTurns + 1) % 4;
+        }
+        if (key == 'i') {
+            mode = MODE_QUANTIZE;
+        }
+        if (key == 'f') {
+            mode = MODE_FACE_DETECT;
         }
 
         // one-shot actions (do not change mode)
