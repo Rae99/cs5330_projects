@@ -1,1 +1,0 @@
-void imgDisplay(const char* filename);
