@@ -21,8 +21,7 @@ int main(int argc, char *argv[]) {
     DA2Network *da2 = nullptr;
     try {
         // da2 = new DA2Network("../data/model_fp16.onnx");
-        da2 = new DA2Network("/Users/jrd/cs/cs5330/cs5330_projects/project1/"
-                             "project1_vid/data/model_fp16.onnx");
+        da2 = new DA2Network("../data/model_fp16.onnx");
     } catch (const std::exception &e) {
         printf("DA2Network init failed: %s\n", e.what());
         da2Ready = false;
@@ -34,7 +33,7 @@ int main(int argc, char *argv[]) {
     // Depth output buffer (8-bit, 1-channel, 0..255)
     cv::Mat depth8;
     // Tune this for speed vs quality
-    float da2ScaleFactor = 0.6f;
+    float da2ScaleFactor = 0.4f;
 
     // get some properties of the image
     cv::Size refS((int)capdev->get(cv::CAP_PROP_FRAME_WIDTH),
