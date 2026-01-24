@@ -76,29 +76,29 @@ CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o: CMakeFiles/timeBlur.dir/flags.make
 CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/timeBlur.cpp
 CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o: CMakeFiles/timeBlur.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o -MF CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o.d -o CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o -c /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/timeBlur.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o -MF CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o.d -o CMakeFiles/timeBlur.dir/src/timeBlur.cpp.o -c /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/timeBlur.cpp
 
 CMakeFiles/timeBlur.dir/src/timeBlur.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/timeBlur.dir/src/timeBlur.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/timeBlur.cpp > CMakeFiles/timeBlur.dir/src/timeBlur.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/timeBlur.cpp > CMakeFiles/timeBlur.dir/src/timeBlur.cpp.i
 
 CMakeFiles/timeBlur.dir/src/timeBlur.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/timeBlur.dir/src/timeBlur.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/timeBlur.cpp -o CMakeFiles/timeBlur.dir/src/timeBlur.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/timeBlur.cpp -o CMakeFiles/timeBlur.dir/src/timeBlur.cpp.s
 
 CMakeFiles/timeBlur.dir/src/filter.cpp.o: CMakeFiles/timeBlur.dir/flags.make
 CMakeFiles/timeBlur.dir/src/filter.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp
 CMakeFiles/timeBlur.dir/src/filter.cpp.o: CMakeFiles/timeBlur.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/timeBlur.dir/src/filter.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/timeBlur.dir/src/filter.cpp.o -MF CMakeFiles/timeBlur.dir/src/filter.cpp.o.d -o CMakeFiles/timeBlur.dir/src/filter.cpp.o -c /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/timeBlur.dir/src/filter.cpp.o -MF CMakeFiles/timeBlur.dir/src/filter.cpp.o.d -o CMakeFiles/timeBlur.dir/src/filter.cpp.o -c /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp
 
 CMakeFiles/timeBlur.dir/src/filter.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/timeBlur.dir/src/filter.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp > CMakeFiles/timeBlur.dir/src/filter.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp > CMakeFiles/timeBlur.dir/src/filter.cpp.i
 
 CMakeFiles/timeBlur.dir/src/filter.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/timeBlur.dir/src/filter.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp -o CMakeFiles/timeBlur.dir/src/filter.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/filter.cpp -o CMakeFiles/timeBlur.dir/src/filter.cpp.s
 
 # Object files for target timeBlur
 timeBlur_OBJECTS = \

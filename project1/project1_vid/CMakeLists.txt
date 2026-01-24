@@ -6,6 +6,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(OpenCV REQUIRED)
 
+# -------- imgDisplay (image display app) --------
+add_executable(imgDisplay
+    src/imgDisplay.cpp
+)
+target_link_libraries(imgDisplay PRIVATE ${OpenCV_LIBS})
+
 # -------- vid (main app) --------
 add_executable(vid
         src/vidDisplay.cpp

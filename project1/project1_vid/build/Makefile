@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named imgDisplay
+
+# Build rule for target.
+imgDisplay: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 imgDisplay
+.PHONY : imgDisplay
+
+# fast build rule for target.
+imgDisplay/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgDisplay.dir/build.make CMakeFiles/imgDisplay.dir/build
+.PHONY : imgDisplay/fast
+
+#=============================================================================
 # Target rules for targets named vid
 
 # Build rule for target.
@@ -193,6 +206,30 @@ src/filter.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/timeBlur.dir/build.make CMakeFiles/timeBlur.dir/src/filter.cpp.s
 .PHONY : src/filter.cpp.s
 
+src/imgDisplay.o: src/imgDisplay.cpp.o
+.PHONY : src/imgDisplay.o
+
+# target to build an object file
+src/imgDisplay.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgDisplay.dir/build.make CMakeFiles/imgDisplay.dir/src/imgDisplay.cpp.o
+.PHONY : src/imgDisplay.cpp.o
+
+src/imgDisplay.i: src/imgDisplay.cpp.i
+.PHONY : src/imgDisplay.i
+
+# target to preprocess a source file
+src/imgDisplay.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgDisplay.dir/build.make CMakeFiles/imgDisplay.dir/src/imgDisplay.cpp.i
+.PHONY : src/imgDisplay.cpp.i
+
+src/imgDisplay.s: src/imgDisplay.cpp.s
+.PHONY : src/imgDisplay.s
+
+# target to generate assembly for a file
+src/imgDisplay.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/imgDisplay.dir/build.make CMakeFiles/imgDisplay.dir/src/imgDisplay.cpp.s
+.PHONY : src/imgDisplay.cpp.s
+
 src/timeBlur.o: src/timeBlur.cpp.o
 .PHONY : src/timeBlur.o
 
@@ -249,6 +286,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... imgDisplay"
 	@echo "... timeBlur"
 	@echo "... vid"
 	@echo "... src/faceDetect.o"
@@ -257,6 +295,9 @@ help:
 	@echo "... src/filter.o"
 	@echo "... src/filter.i"
 	@echo "... src/filter.s"
+	@echo "... src/imgDisplay.o"
+	@echo "... src/imgDisplay.i"
+	@echo "... src/imgDisplay.s"
 	@echo "... src/timeBlur.o"
 	@echo "... src/timeBlur.i"
 	@echo "... src/timeBlur.s"
