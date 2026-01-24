@@ -23,4 +23,10 @@ int sobelX3x3(cv::Mat &src, cv::Mat &dst);
 int sobelY3x3(cv::Mat &src, cv::Mat &dst);
 int magnitude(cv::Mat &sx, cv::Mat &sy, cv::Mat &dst);
 int blurQuantize(cv::Mat &src, cv::Mat &dst, int levels = 10);
+
+int depthGrayscale(const cv::Mat &src,     // original color image (CV_8UC3)
+                   const cv::Mat &depth8,  // depth map (CV_8UC1)
+                   cv::Mat &dst,           // output image (CV_8UC3)
+                   unsigned char threshold // depth threshold
+);
 #endif

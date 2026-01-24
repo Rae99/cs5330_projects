@@ -3045,6 +3045,7 @@ CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/pr
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/set \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/sstream \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/stack \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/stdbool.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/stdexcept \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/stdint.h \
@@ -3215,8 +3216,10 @@ CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/pr
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/float.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/limits.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdarg.h \
+  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdbool.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stddef.h \
   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdint.h \
+  /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/DA2Network.hpp \
   /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/faceDetect.h \
   /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/filters.h \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/imgproc/segmentation.hpp \
@@ -3328,8 +3331,21 @@ CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/pr
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/video.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/video/background_segm.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/video/tracking.hpp \
-  /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/videoio.hpp
+  /opt/homebrew/Cellar/opencv/4.13.0_2/include/opencv4/opencv2/videoio.hpp \
+  /opt/homebrew/include/onnxruntime/onnxruntime_c_api.h \
+  /opt/homebrew/include/onnxruntime/onnxruntime_cxx_api.h \
+  /opt/homebrew/include/onnxruntime/onnxruntime_cxx_inline.h \
+  /opt/homebrew/include/onnxruntime/onnxruntime_ep_c_api.h \
+  /opt/homebrew/include/onnxruntime/onnxruntime_float16.h
 
+
+/opt/homebrew/include/onnxruntime/onnxruntime_float16.h:
+
+/opt/homebrew/include/onnxruntime/onnxruntime_ep_c_api.h:
+
+/Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/include/DA2Network.hpp:
+
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/16/include/stdbool.h:
 
 /Users/jrd/cs/cs5330/cs5330_projects/project1/project1_vid/src/vidDisplay.cpp:
 
@@ -3614,6 +3630,8 @@ CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/pr
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_endian.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/__endian.h:
+
+/opt/homebrew/include/onnxruntime/onnxruntime_c_api.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/stdlib.h:
 
@@ -4369,6 +4387,8 @@ CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/pr
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/default_searcher.h:
 
+/opt/homebrew/include/onnxruntime/onnxruntime_cxx_inline.h:
+
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/compose.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/boyer_moore_searcher.h:
@@ -5053,6 +5073,8 @@ CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/pr
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__fwd/ios.h:
 
+/opt/homebrew/include/onnxruntime/onnxruntime_cxx_api.h:
+
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/_mb_cur_max.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/wctype.h:
@@ -5102,6 +5124,8 @@ CMakeFiles/vid.dir/src/vidDisplay.cpp.o: /Users/jrd/cs/cs5330/cs5330_projects/pr
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/ranges_unique_copy.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__utility/priority_tag.h:
+
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/stdbool.h:
 
 /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/cerrno:
 

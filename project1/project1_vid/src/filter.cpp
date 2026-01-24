@@ -1,6 +1,6 @@
+#include "faceDetect.h"
 #include "filters.h"
 #include <cstdio>
-#include "faceDetect.h"
 
 // Greyscale filter
 int greyscale(cv::Mat &src, cv::Mat &dst) {
@@ -485,6 +485,37 @@ int blurQuantize(cv::Mat &src, cv::Mat &dst, int levels) {
                 int xt = x / b;   // bucket index
                 int xf = xt * b;  // bucket representative value: lower bound
                 dp[j][c] = (uchar)xf; // still in 0..255
+            }
+        }
+    }
+
+    return 0;
+}
+
+// task11: depth-based grayscale filter
+int depthGrayscale(const cv::Mat &src, const cv::Mat &depth8, cv::Mat &dst,
+                   unsigned char threshold) {
+
+    if (src.empty() || depth8.empty())
+        return -1;
+
+    dst = src.clone();
+
+    for (int i = 0; i < src.rows; i++) {
+        const cv::Vec3b *pSrc = src.ptr<cv::Vec3b>(i);
+        const unsigned char *pD = depth8.ptr<unsigned char>(i);
+        cv::Vec3b *pOut = dst.ptr<cv::Vec3b>(i);
+
+        // note: depth8 represents disparity (inverse of depth), not actual
+        // depth Larger values (white) = closer objects Smaller values (black) =
+        // farther objects
+
+        for (int j = 0; j < src.cols; j++) {
+            if (pD[j] <= threshold) { // within threshold, far object, make gray
+                unsigned char gray =
+                    (unsigned char)(0.299f * pSrc[j][2] + 0.587f * pSrc[j][1] +
+                                    0.114f * pSrc[j][0]);
+                pOut[j] = cv::Vec3b(gray, gray, gray);
             }
         }
     }

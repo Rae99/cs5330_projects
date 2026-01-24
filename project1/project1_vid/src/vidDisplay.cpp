@@ -1,7 +1,9 @@
+#include "DA2Network.hpp"
 #include "faceDetect.h"
 #include "filters.h"
 #include <cmath>
 #include <cstdio>
+#include <exception>
 #include <opencv2/opencv.hpp>
 
 int main(int argc, char *argv[]) {
@@ -13,6 +15,26 @@ int main(int argc, char *argv[]) {
         printf("Unable to open video device\n");
         return (-1);
     }
+
+    // set up the DA2 network
+    bool da2Ready = true;
+    DA2Network *da2 = nullptr;
+    try {
+        // da2 = new DA2Network("../data/model_fp16.onnx");
+        da2 = new DA2Network("/Users/jrd/cs/cs5330/cs5330_projects/project1/"
+                             "project1_vid/data/model_fp16.onnx");
+    } catch (const std::exception &e) {
+        printf("DA2Network init failed: %s\n", e.what());
+        da2Ready = false;
+    } catch (...) {
+        printf("DA2Network init failed: unknown error\n");
+        da2Ready = false;
+    }
+
+    // Depth output buffer (8-bit, 1-channel, 0..255)
+    cv::Mat depth8;
+    // Tune this for speed vs quality
+    float da2ScaleFactor = 0.6f;
 
     // get some properties of the image
     cv::Size refS((int)capdev->get(cv::CAP_PROP_FRAME_WIDTH),
@@ -31,7 +53,9 @@ int main(int argc, char *argv[]) {
         CUSTOM_GRAY, // custom greyscale() output (3-ch)
         SOBEL_X,     // show X sobel (abs, displayable)
         SOBEL_Y,     // show Y sobel (abs, displayable)
-        MAGNITUDE    // show gradient magnitude (displayable)
+        MAGNITUDE,   // show gradient magnitude (displayable)
+        DEPTH,       // show depth map from DA2 network
+        DEPTH_EFFECT // an effect using depth map
     };
     ViewMode view = ViewMode::ORIGINAL;
 
@@ -62,6 +86,16 @@ int main(int argc, char *argv[]) {
 
         // Step 1: start from the current frame (copy)
         frame.copyTo(display);
+
+        // If we are using DA2 view/effect, compute depth ONCE per
+        // frame depth8 will be CV_8UC1 (1-channel) sized to frame.size()
+        if ((view == ViewMode::DEPTH || view == ViewMode::DEPTH_EFFECT) &&
+            da2Ready) {
+            // DA2 expects a normal BGR image (CV_8UC3)
+            // set_input does optional resizing by scale factor
+            da2->set_input(frame, da2ScaleFactor);
+            da2->run_network(depth8, frame.size());
+        }
 
         // Step 2: apply the view(mutually exclusive)
         // Note: keep 'display' as 3-channel most of the time so the later
@@ -100,6 +134,20 @@ int main(int argc, char *argv[]) {
                 if (magnitude(sobelx16, sobely16, mag8) == 0) {
                     mag8.copyTo(display); // mag8 should be 8UC3 for display
                 }
+            }
+        } else if (view == ViewMode::DEPTH) {
+            if (!da2Ready) {
+                printf("DA2 network not ready\n");
+            } else if (!depth8.empty()) {
+                // depth8 is CV_8UC1, convert to 3-channel for display
+                // consistency
+                cv::cvtColor(depth8, display, cv::COLOR_GRAY2BGR);
+            }
+        }
+        // DA2 DEPTH_EFFECT view (creative filter using depth)
+        else if (view == ViewMode::DEPTH_EFFECT) {
+            if (da2Ready && !depth8.empty()) {
+                depthGrayscale(frame, depth8, display, 96);
             }
         }
 
@@ -152,9 +200,9 @@ int main(int argc, char *argv[]) {
         } else if (rotateQuarterTurns == 2) {
             cv::rotate(display, display, cv::ROTATE_180); // 180 degrees
         } else if (rotateQuarterTurns == 3) {
-            cv::rotate(
-                display, display,
-                cv::ROTATE_90_COUNTERCLOCKWISE); // 90 degrees counterclockwise
+            cv::rotate(display, display,
+                       cv::ROTATE_90_COUNTERCLOCKWISE); // 90 degrees
+                                                        // counterclockwise
         }
 
         // Step 5: show
@@ -180,7 +228,12 @@ int main(int argc, char *argv[]) {
             toggleView(ViewMode::SOBEL_Y);
         if (key == 'm')
             toggleView(ViewMode::MAGNITUDE);
-
+        if (key == 'd')
+            toggleView(ViewMode::DEPTH);
+        if (key == 'D') {
+            toggleView(ViewMode::DEPTH_EFFECT);
+            printf("Switched to DEPTH_EFFECT\n");
+        }
         // Effect toggles (press again to turn off)
         if (key == 'b')
             blurOn = !blurOn;
@@ -201,7 +254,8 @@ int main(int argc, char *argv[]) {
         }
 
         // one-shot actions (do not change mode)
-        if (key == 'd') {
+        // type info
+        if (key == 't') {
             int channels = frame.channels();
             int depth = frame.depth(); // CV_8U, CV_16U, etc. (numeric)
             size_t elemSize =
@@ -223,6 +277,11 @@ int main(int argc, char *argv[]) {
             else
                 printf("Failed to save %s\n", outname);
         }
+    } // end of for loop
+
+    if (da2) {
+        delete da2;
+        da2 = nullptr;
     }
 
     delete capdev;
