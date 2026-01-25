@@ -576,7 +576,7 @@ void applyDepthFog(const cv::Mat &srcBGR, const cv::Mat &depth8,
         cv::Vec3b *pOutput = dstBGR.ptr<cv::Vec3b>(i);
 
         for (int j = 0; j < srcBGR.cols; j++) {
-            float d = pD[j] / 255.0f;            // 0..1
+            float d = 1.0f - pD[j] / 255.0f;     // 0..1, pD[j]: closer=larger
             float fog = 1.0f - std::exp(-k * d); // exponential fog
             float inv = 1.0f - fog;
 

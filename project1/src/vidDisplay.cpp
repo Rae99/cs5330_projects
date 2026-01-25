@@ -33,10 +33,10 @@ int main(int argc, char *argv[]) {
 
     // Depth output buffer (8-bit, 1-channel, 0..255)
     cv::Mat depth8;
-    // Tune this for speed vs quality
+    // It's a trade between speed vs quality
     float da2ScaleFactor = 0.4f; // smaller = faster but worse depth
-    int da2EveryN = 3;           // ADD: update depth once every N frames
-    int frameCount = 0;          // ADD: counter for da2EveryN
+    int da2EveryN = 3;           // update depth once every N frames
+    int frameCount = 0;          // counter for da2EveryN
 
     // get some properties of the image
     cv::Size refS((int)capdev->get(cv::CAP_PROP_FRAME_WIDTH),
@@ -77,7 +77,22 @@ int main(int argc, char *argv[]) {
 
     int saveIndex = 0;
 
-    // Helper: press same view key again and go back to ORIGINAL
+    // Extension: video recording
+    bool recording = false;
+    cv::VideoWriter writer;
+    int videoIndex = 0;
+
+    int fourcc = cv::VideoWriter::fourcc('m', 'p', '4', 'v');
+    double fps = 30.0;
+    cv::Size recordSize = refS;
+
+    // read camera FPS
+    double camFps = capdev->get(cv::CAP_PROP_FPS);
+    if (camFps > 1.0 && camFps < 240.0)
+        fps = camFps;
+    printf("Recording FPS set to: %.2f\n", fps);
+
+    // press same view key again and go back to ORIGINAL
     auto toggleView = [&](ViewMode chosen) {
         view = (view == chosen) ? ViewMode::ORIGINAL : chosen;
     };
@@ -241,6 +256,22 @@ int main(int argc, char *argv[]) {
         // Step 5: show
         cv::imshow("Video", display);
 
+        // write frame if recording
+        if (recording) {
+            // writer expects fixed size + 3-channel BGR
+            if (display.size() == recordSize && display.type() == CV_8UC3) {
+                writer.write(display);
+            } else {
+                // if rotation changed the size (e.g., 90 degrees), handle it
+                cv::Mat resized;
+                cv::resize(display, resized, recordSize);
+                if (resized.type() != CV_8UC3) {
+                    cv::cvtColor(resized, resized, cv::COLOR_GRAY2BGR);
+                }
+                writer.write(resized);
+            }
+        }
+
         // Step 6: key handling
         char key = (char)cv::waitKey(10);
 
@@ -306,10 +337,9 @@ int main(int argc, char *argv[]) {
         }
 
         if (key == 's') {
-            // Save the display(after view + effects +
-            // rotation)
+            // Save the display(after view + effects + rotation)
             char outname[256];
-            std::snprintf(outname, sizeof(outname), "frame_%04d.png",
+            std::snprintf(outname, sizeof(outname), "../output/frame_%04d.png",
                           saveIndex++);
             bool ok = cv::imwrite(outname, display);
             if (ok)
@@ -317,11 +347,43 @@ int main(int argc, char *argv[]) {
             else
                 printf("Failed to save %s\n", outname);
         }
-    } // end of for loop
+
+        // toggle video recording
+        if (key == 'V') {
+            if (!recording) {
+                // start recording
+                char outname[256];
+                std::snprintf(outname, sizeof(outname),
+                              "../output/video_%02d.mp4", videoIndex++);
+
+                // recordSize must be constant for writer
+                recordSize = refS;
+
+                bool ok = writer.open(outname, fourcc, fps, recordSize, true);
+                if (!ok) {
+                    printf("Failed to open VideoWriter for %s\n", outname);
+                } else {
+                    recording = true;
+                    printf("Recording START: %s (%.2f fps, %d x %d)\n", outname,
+                           fps, recordSize.width, recordSize.height);
+                }
+            } else {
+                // stop recording
+                recording = false;
+                writer.release();
+                printf("Recording STOP\n");
+            }
+        }
+    }
 
     if (da2) {
         delete da2;
         da2 = nullptr;
+    }
+
+    if (recording) {
+        recording = false;
+        writer.release();
     }
 
     delete capdev;
