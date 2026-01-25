@@ -17,6 +17,7 @@ add_executable(vid
         src/vidDisplay.cpp
         src/filter.cpp
         src/faceDetect.cpp
+        src/effects_face.cpp
         )
 
 target_include_directories(vid PRIVATE ${OpenCV_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)

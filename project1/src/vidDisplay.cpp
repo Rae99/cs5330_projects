@@ -1,4 +1,5 @@
 #include "DA2Network.hpp"
+#include "effects_face.h"
 #include "faceDetect.h"
 #include "filters.h"
 #include <cmath>
@@ -33,7 +34,9 @@ int main(int argc, char *argv[]) {
     // Depth output buffer (8-bit, 1-channel, 0..255)
     cv::Mat depth8;
     // Tune this for speed vs quality
-    float da2ScaleFactor = 0.4f;
+    float da2ScaleFactor = 0.4f; // smaller = faster but worse depth
+    int da2EveryN = 3;           // ADD: update depth once every N frames
+    int frameCount = 0;          // ADD: counter for da2EveryN
 
     // get some properties of the image
     cv::Size refS((int)capdev->get(cv::CAP_PROP_FRAME_WIDTH),
@@ -54,7 +57,10 @@ int main(int argc, char *argv[]) {
         SOBEL_Y,     // show Y sobel (abs, displayable)
         MAGNITUDE,   // show gradient magnitude (displayable)
         DEPTH,       // show depth map from DA2 network
-        DEPTH_EFFECT // an effect using depth map
+        DEPTH_GRAY_EFFECT, // an effect using depth map
+        EMBOSS,
+        FACE_COLOR_POP,
+        DEPTH_FOG
     };
     ViewMode view = ViewMode::ORIGINAL;
 
@@ -88,8 +94,17 @@ int main(int argc, char *argv[]) {
 
         // If we are using DA2 view/effect, compute depth ONCE per
         // frame depth8 will be CV_8UC1 (1-channel) sized to frame.size()
-        if ((view == ViewMode::DEPTH || view == ViewMode::DEPTH_EFFECT) &&
-            da2Ready) {
+        frameCount++;
+        bool needDA2 =
+            (view == ViewMode::DEPTH || view == ViewMode::DEPTH_GRAY_EFFECT ||
+             view == ViewMode::DEPTH_FOG);
+        bool updateDepthThisFrame = false;
+        if (needDA2 && da2Ready && da2 != nullptr) {
+            updateDepthThisFrame =
+                (depth8.empty() || (frameCount % da2EveryN == 0));
+        }
+
+        if (updateDepthThisFrame) {
             // DA2 expects a normal BGR image (CV_8UC3)
             // set_input does optional resizing by scale factor
             da2->set_input(frame, da2ScaleFactor);
@@ -112,11 +127,12 @@ int main(int argc, char *argv[]) {
                 gray3ch.copyTo(display);
             }
         } else if (view == ViewMode::SOBEL_X) {
-            // Keep Sobel output (16SC3) and visualization (8UC3) as separate
-            // variables
+            // Keep Sobel output (16SC3) and visualization (8UC3) as
+            // separate variables
             cv::Mat sobelx16, sobelx8;
             if (sobelX3x3(frame, sobelx16) == 0) {
-                cv::convertScaleAbs(sobelx16, sobelx8); // abs + scale to 8-bit
+                cv::convertScaleAbs(sobelx16,
+                                    sobelx8); // abs + scale to 8-bit
                 sobelx8.copyTo(display);
             }
         } else if (view == ViewMode::SOBEL_Y) {
@@ -143,10 +159,28 @@ int main(int argc, char *argv[]) {
                 cv::cvtColor(depth8, display, cv::COLOR_GRAY2BGR);
             }
         }
-        // DA2 DEPTH_EFFECT view (creative filter using depth)
-        else if (view == ViewMode::DEPTH_EFFECT) {
+        // DA2 DEPTH_GRAY_EFFECT view
+        else if (view == ViewMode::DEPTH_GRAY_EFFECT) {
             if (da2Ready && !depth8.empty()) {
                 depthGrayscale(frame, depth8, display, 96);
+            }
+        } else if (view == ViewMode::EMBOSS) {
+            cv::Mat sx16, sy16, emboss8;
+            // CV_16SC3 outputs from Sobel
+            if (sobelX3x3(frame, sx16) == 0 && sobelY3x3(frame, sy16) == 0) {
+                if (embossFromSobel(sx16, sy16, emboss8) == 0) {
+                    emboss8.copyTo(display);
+                }
+            }
+        } else if (view == ViewMode::FACE_COLOR_POP) {
+            cv::Mat tmp;
+            faceColorPop(frame, tmp);
+            tmp.copyTo(display);
+        } else if (view == ViewMode::DEPTH_FOG) {
+            if (!depth8.empty()) {
+                cv::Mat fogged;
+                applyDepthFog(frame, depth8, fogged, 2.2f);
+                fogged.copyTo(display);
             }
         }
 
@@ -230,9 +264,16 @@ int main(int argc, char *argv[]) {
         if (key == 'd')
             toggleView(ViewMode::DEPTH);
         if (key == 'D') {
-            toggleView(ViewMode::DEPTH_EFFECT);
-            printf("Switched to DEPTH_EFFECT\n");
+            toggleView(ViewMode::DEPTH_GRAY_EFFECT);
+            printf("Switched to DEPTH_GRAY_EFFECT\n");
         }
+        if (key == 'e')
+            toggleView(ViewMode::EMBOSS);
+        if (key == 'c')
+            toggleView(ViewMode::FACE_COLOR_POP);
+        if (key == 'z')
+            toggleView(ViewMode::DEPTH_FOG);
+
         // Effect toggles (press again to turn off)
         if (key == 'b')
             blurOn = !blurOn;

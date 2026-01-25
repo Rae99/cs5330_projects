@@ -29,4 +29,13 @@ int depthGrayscale(const cv::Mat &src,     // original color image (CV_8UC3)
                    cv::Mat &dst,           // output image (CV_8UC3)
                    unsigned char threshold // depth threshold
 );
+
+int embossFromSobel(const cv::Mat &sx16, const cv::Mat &sy16, cv::Mat &dst8,
+                    float dirx = 0.7071f, float diry = 0.7071f,
+                    float scale = 0.25f);
+
+
+void applyDepthFog(const cv::Mat &srcBGR, const cv::Mat &depth8,
+                   cv::Mat &dstBGR, float k = 2.2f);
+
 #endif

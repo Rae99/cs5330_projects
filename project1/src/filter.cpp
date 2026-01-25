@@ -522,3 +522,71 @@ int depthGrayscale(const cv::Mat &src, const cv::Mat &depth8, cv::Mat &dst,
 
     return 0;
 }
+
+// task 12
+// emboss from Sobel signed outputs
+// area computation
+int embossFromSobel(const cv::Mat &sx16, const cv::Mat &sy16, cv::Mat &dst8,
+                    float dirx, float diry, float scale) {
+    if (sx16.empty() || sy16.empty())
+        return -1;
+    if (sx16.type() != CV_16SC3 || sy16.type() != CV_16SC3)
+        return -1;
+    if (sx16.size() != sy16.size())
+        return -1;
+
+    // dst8 is CV_8UC3, 8 bit unsigned char
+    dst8.create(sx16.size(), CV_8UC3);
+
+    for (int i = 0; i < sx16.rows; i++) {
+        const cv::Vec3s *px = sx16.ptr<cv::Vec3s>(i);
+        const cv::Vec3s *py = sy16.ptr<cv::Vec3s>(i);
+        cv::Vec3b *pOutput = dst8.ptr<cv::Vec3b>(i);
+
+        for (int j = 0; j < sx16.cols; j++) {
+            // Dot product with a light direction in gradient space.
+            for (int c = 0; c < 3; c++) {
+                float lighting =
+                    dirx * (float)px[j][c] + diry * (float)py[j][c];
+                lighting = 128.0f + scale * lighting; // center around mid-gray
+                pOutput[j][c] = cv::saturate_cast<unsigned char>(lighting);
+            }
+        }
+    }
+    return 0;
+}
+
+// depth-based fog (exponential with distance)
+
+void applyDepthFog(const cv::Mat &srcBGR, const cv::Mat &depth8,
+                   cv::Mat &dstBGR, float k) {
+    // depth8: CV_8UC1, 0..255 (normalized each frame by DA2Network wrapper)
+    dstBGR = srcBGR.clone();
+    if (depth8.empty())
+        return;
+
+    // Fog “color” (light gray)
+    const float fogB = 220.0f;
+    const float fogG = 220.0f;
+    const float fogR = 220.0f;
+
+    for (int i = 0; i < srcBGR.rows; i++) {
+        const cv::Vec3b *pS = srcBGR.ptr<cv::Vec3b>(i);
+        const unsigned char *pD = depth8.ptr<unsigned char>(i);
+        cv::Vec3b *pOutput = dstBGR.ptr<cv::Vec3b>(i);
+
+        for (int j = 0; j < srcBGR.cols; j++) {
+            float d = pD[j] / 255.0f;            // 0..1
+            float fog = 1.0f - std::exp(-k * d); // exponential fog
+            float inv = 1.0f - fog;
+
+            float b = inv * pS[j][0] + fog * fogB;
+            float g = inv * pS[j][1] + fog * fogG;
+            float r = inv * pS[j][2] + fog * fogR;
+
+            pOutput[j][0] = cv::saturate_cast<unsigned char>(b);
+            pOutput[j][1] = cv::saturate_cast<unsigned char>(g);
+            pOutput[j][2] = cv::saturate_cast<unsigned char>(r);
+        }
+    }
+}

@@ -60,11 +60,14 @@ class DA2Network {
         std::strncpy(output_names_, output_layer_name, 255);
 
         // set up the Ort session
-        this->session_ =
-            new Ort::Session(env, network_path, Ort::SessionOptions{nullptr});
+        Ort::SessionOptions session_options;
+        session_options.SetGraphOptimizationLevel(
+            GraphOptimizationLevel::ORT_DISABLE_ALL);
+        this->session_ = new Ort::Session(env, network_path, session_options);
     }
 
-    // deconstructor
+    // deconstructorthis->session_ = new Ort::Session(env, network_path,
+    // session_options);
     ~DA2Network() {
         if (this->input_data != NULL) {
             delete[] this->input_data;
