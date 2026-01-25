@@ -1,3 +1,9 @@
+# Ding, Junrui
+# January 2026
+#
+# CMake build configuration for Project 1 (CS 5330)
+# Builds imgDisplay, vidDisplay, and timeBlur using OpenCV and ONNX Runtime.
+
 cmake_minimum_required(VERSION 3.16)
 project(project1 CXX)
 

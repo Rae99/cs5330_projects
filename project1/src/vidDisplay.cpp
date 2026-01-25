@@ -1,3 +1,43 @@
+/*
+  Ding, Junrui
+  January 2026
+
+  vidDisplay.cpp
+
+  Main webcam application for Project 1. Captures live video from the default
+  camera, applies a selected "view" mode (mutually exclusive) and optional
+  stackable effects, then displays the processed frame in real time.
+
+  Features:
+  - View modes (toggle): original, grayscale, custom grayscale, Sobel X/Y,
+    gradient magnitude, monocular depth visualization, depth-based effects,
+    emboss, face color pop, depth fog.
+  - Stackable effects (toggle): custom 5x5 blur, horizontal flip, invert,
+    sepia + vignette, blur-quantize posterize, face detection boxes.
+  - One-shot actions: save current frame, print frame info.
+  - Extension: record short MP4 video clips from the processed stream.
+
+  Dependencies / data files:
+  - OpenCV for capture, display, and basic image operations.
+  - Depth Anything v2 wrapper (DA2Network.hpp) and ONNX model file:
+      ../data/model_fp16.onnx
+  - Haar cascade for face detection:
+      ../data/haarcascade_frontalface_alt2.xml
+
+  Output:
+  - Saved frames and recordings are written to ../output/ relative to the
+    built executable.
+
+  Key bindings:
+  - Quit: q
+  - Views: o g h x y m d D e c z
+  - Effects: b F v p i f
+  - Rotate: r (adds 90 degrees clockwise each press)
+  - Save frame: s
+  - Toggle recording: V
+  - Print frame info: t
+*/
+
 #include "DA2Network.hpp"
 #include "effects_face.h"
 #include "faceDetect.h"

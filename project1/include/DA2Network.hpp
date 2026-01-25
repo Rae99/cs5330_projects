@@ -29,6 +29,19 @@
   network output.
 
 */
+
+/*
+  ------------------------------------------------------------
+  Student Modification:
+  Ding, Junrui
+  January 2026
+
+  Modified ONNX Runtime session initialization by disabling graph
+  optimizations (ORT_DISABLE_ALL) to keep runtime behavior consistent
+  with the course environment / avoid optimization-related issues.
+  ------------------------------------------------------------
+*/
+
 #include <array>
 #include <cmath>
 #include <cstdio>

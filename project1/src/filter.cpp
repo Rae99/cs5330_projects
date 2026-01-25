@@ -1,8 +1,32 @@
-#include "faceDetect.h"
+/*
+  Ding, Junrui
+  January 2026
+
+  CS5330 Project 1 - Custom image filters.
+
+  This file implements a collection of pixel- and neighborhood-based
+  image processing filters used by the provided applications.
+  All functions follow the convention:
+    - return 0 on success
+    - return a negative value on error
+*/
+
 #include "filters.h"
 #include <cstdio>
 
-// Greyscale filter
+/*
+  greyscale
+
+  Converts a BGR image to a grayscale-looking image while keeping a 3-channel
+  output (BGR) for pipeline compatibility.
+
+  Arguments:
+    cv::Mat &src - input BGR image (CV_8UC3).
+    cv::Mat &dst - output image (CV_8UC3) with all three channels equal.
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int greyscale(cv::Mat &src, cv::Mat &dst) {
     if (src.empty()) {
         std::printf("greyscale(): src is empty\n");
@@ -48,8 +72,19 @@ int greyscale(cv::Mat &src, cv::Mat &dst) {
     return 0;
 }
 
-// Sepia tone filter
-// add vignetting
+/*
+  sepia
+
+  Applies a sepia-tone transform to a BGR image and adds a simple vignette
+  (darkening toward the borders) to emphasize the image center.
+
+  Arguments:
+    cv::Mat &src - input BGR image (CV_8UC3).
+    cv::Mat &dst - output sepia-toned image (CV_8UC3).
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int sepia(cv::Mat &src, cv::Mat &dst) {
     if (src.empty()) {
         std::printf("sepia(): src is empty\n");
@@ -123,7 +158,20 @@ int sepia(cv::Mat &src, cv::Mat &dst) {
     return 0;
 }
 
-// blur5x5_1: naive 5x5 using at<>
+/*
+  blur5x5_1
+
+  Performs a 5x5 Gaussian-like blur using a full 2D kernel and direct access
+  via at<>. Border pixels are preserved by copying the source image first and
+  only filtering the interior region.
+
+  Arguments:
+    cv::Mat &src - input BGR image (CV_8UC3).
+    cv::Mat &dst - output blurred image (CV_8UC3).
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int blur5x5_1(cv::Mat &src, cv::Mat &dst) {
 
     // kernel weights
@@ -169,7 +217,23 @@ int blur5x5_1(cv::Mat &src, cv::Mat &dst) {
     return 0;
 }
 
-// separable 5x5 blur: (1 2 4 2 1) vertical and horizontal
+/*
+  blur5x5_2
+
+  Performs a separable 5x5 blur using two 1D passes:
+    1) horizontal convolution with [1 2 4 2 1]
+    2) vertical convolution with [1 2 4 2 1]
+  Intermediate results are stored in a 16-bit signed image to prevent overflow.
+  Border pixels are preserved by copying the source image first and only
+  filtering the interior region.
+
+  Arguments:
+    cv::Mat &src - input BGR image (CV_8UC3).
+    cv::Mat &dst - output blurred image (CV_8UC3).
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int blur5x5_2(cv::Mat &src, cv::Mat &dst) {
     if (src.empty())
         return -1;
@@ -266,9 +330,22 @@ int blur5x5_2(cv::Mat &src, cv::Mat &dst) {
     return 0;
 }
 
-// Sobel X: positive to the right
-// Separable: vertical smoothing [1 2 1], horizontal derivative [-1 0 1]
-// This is a valid convolution.
+/*
+  sobelX3x3
+
+  Computes the Sobel X response (horizontal intensity gradient ∂I/∂x).
+  The implementation is separable:
+    - vertical smoothing with [1 2 1]
+    - horizontal derivative with [-1 0 1]
+  Output is signed 16-bit (CV_16SC3) to preserve negative values.
+
+  Arguments:
+    cv::Mat &src - input BGR image (CV_8UC3).
+    cv::Mat &dst - output signed gradient image (CV_16SC3).
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int sobelX3x3(cv::Mat &src, cv::Mat &dst) {
     if (src.empty()) {
         std::printf("sobelX3x3(): src is empty\n");
@@ -334,6 +411,22 @@ int sobelX3x3(cv::Mat &src, cv::Mat &dst) {
     return 0;
 }
 
+/*
+  sobelY3x3
+
+  Computes the Sobel Y response (vertical intensity gradient ∂I/∂y).
+  The implementation is separable:
+    - horizontal smoothing with [1 2 1]
+    - vertical derivative with [-1 0 1]
+  Output is signed 16-bit (CV_16SC3) to preserve negative values.
+
+  Arguments:
+    cv::Mat &src - input BGR image (CV_8UC3).
+    cv::Mat &dst - output signed gradient image (CV_16SC3).
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int sobelY3x3(cv::Mat &src, cv::Mat &dst) {
     if (src.empty()) {
         std::printf("sobelY3x3(): src is empty\n");
@@ -399,8 +492,22 @@ int sobelY3x3(cv::Mat &src, cv::Mat &dst) {
     return 0;
 }
 
-// magnitude: combine sx and sy to magnitude image
-// sx and sy are CV_16SC3 (from Sobel), dst is CV_8UC3
+/*
+  magnitude
+
+  Combines Sobel X and Sobel Y signed gradient images into a displayable
+  gradient magnitude image. For each pixel and channel:
+      mag = sqrt(sx^2 + sy^2)
+  Output is clamped to 8-bit for visualization.
+
+  Arguments:
+    cv::Mat &sx  - Sobel X image (CV_16SC3).
+    cv::Mat &sy  - Sobel Y image (CV_16SC3).
+    cv::Mat &dst - output magnitude image (CV_8UC3).
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int magnitude(cv::Mat &sx, cv::Mat &sy, cv::Mat &dst) {
     if (sx.empty() || sy.empty()) {
         std::printf("magnitude(): sx or sy is empty\n");
@@ -445,6 +552,21 @@ int magnitude(cv::Mat &sx, cv::Mat &sy, cv::Mat &dst) {
     return 0;
 }
 
+/*
+  blurQuantize
+
+  Applies a blur followed by color quantization (posterization).
+  Blurring first reduces small local variations so neighboring pixels are more
+  likely to fall into the same quantization bucket.
+
+  Arguments:
+    cv::Mat &src - input BGR image (CV_8UC3).
+    cv::Mat &dst - output image (CV_8UC3).
+    int levels   - number of quantization levels per channel.
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int blurQuantize(cv::Mat &src, cv::Mat &dst, int levels) {
     if (src.empty()) {
         std::printf("blurQuantize(): src is empty\n");
@@ -492,7 +614,23 @@ int blurQuantize(cv::Mat &src, cv::Mat &dst, int levels) {
     return 0;
 }
 
-// task11: depth-based grayscale filter
+/*
+  depthGrayscale
+
+  Creates a depth-based selective grayscale effect using an 8-bit depth-like
+  map produced by the DA2Network wrapper. Note that depth8 behaves like
+  "inverse depth" (brighter = closer). Pixels considered far are converted to
+  grayscale while nearer pixels remain in color.
+
+  Arguments:
+    const cv::Mat &src    - input BGR image (CV_8UC3).
+    const cv::Mat &depth8 - depth-like map (CV_8UC1), brighter = closer.
+    cv::Mat &dst          - output image (CV_8UC3).
+    unsigned char threshold - threshold in the depth8 domain.
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int depthGrayscale(const cv::Mat &src, const cv::Mat &depth8, cv::Mat &dst,
                    unsigned char threshold) {
 
@@ -523,9 +661,24 @@ int depthGrayscale(const cv::Mat &src, const cv::Mat &depth8, cv::Mat &dst,
     return 0;
 }
 
-// task 12
-// emboss from Sobel signed outputs
-// area computation
+/*
+  embossFromSobel
+
+  Produces an emboss (relief) effect from signed Sobel gradients by simulating
+  directional lighting in gradient space. For each pixel:
+      lighting = dirx * sx + diry * sy
+  The result is centered around mid-gray (128) and scaled for visibility.
+
+  Arguments:
+    const cv::Mat &sx16 - Sobel X signed image (CV_16SC3).
+    const cv::Mat &sy16 - Sobel Y signed image (CV_16SC3).
+    cv::Mat &dst8       - output emboss image (CV_8UC3).
+    float dirx, diry    - 2D light direction components.
+    float scale         - scales the lighting response before mapping to 8-bit.
+
+  Returns:
+    0 on success, negative value on error.
+*/
 int embossFromSobel(const cv::Mat &sx16, const cv::Mat &sy16, cv::Mat &dst8,
                     float dirx, float diry, float scale) {
     if (sx16.empty() || sy16.empty())
@@ -556,8 +709,25 @@ int embossFromSobel(const cv::Mat &sx16, const cv::Mat &sy16, cv::Mat &dst8,
     return 0;
 }
 
-// depth-based fog (exponential with distance)
+/*
+  applyDepthFog
 
+  Applies a depth-based fog effect by blending each pixel with a fixed fog
+  color using an exponential falloff model:
+      fog = 1 - exp(-k * d)
+      out = (1 - fog) * src + fog * fogColor
+  Because depth8 behaves like inverse depth (brighter = closer), the value is
+  remapped so that larger d corresponds to farther regions.
+
+  Arguments:
+    const cv::Mat &srcBGR - input BGR image (CV_8UC3).
+    const cv::Mat &depth8 - depth-like map (CV_8UC1), brighter = closer.
+    cv::Mat &dstBGR       - output fogged image (CV_8UC3).
+    float k               - fog density parameter (larger = stronger fog).
+
+  Returns:
+    void (writes result into dstBGR).
+*/
 void applyDepthFog(const cv::Mat &srcBGR, const cv::Mat &depth8,
                    cv::Mat &dstBGR, float k) {
     // depth8: CV_8UC1, 0..255 (normalized each frame by DA2Network wrapper)

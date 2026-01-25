@@ -1,6 +1,14 @@
 /*
- Created by Junrui Ding
- Purpose: Read an image from a file and display it.
+  Ding, Junrui
+  January 2026
+
+  CS5330 Project 1 - imgDisplay
+
+  Simple image viewer using OpenCV. Loads a single image from the command line
+  and supports basic interactive operations via keyboard shortcuts:
+    - rotate, blur, flip, invert, grayscale
+    - print image info
+    - save image to disk
 */
 
 #include <cstdio>
