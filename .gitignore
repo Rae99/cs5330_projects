@@ -16,3 +16,6 @@ cmake-build-*/
 
 # report outputs
 report/
+
+# output data
+output/
