@@ -1,23 +1,37 @@
 # build output
 **/build/
-cmake-build-*/
+**/cmake-build-*/
 
 # IDE
 **/.idea/
 **/.vscode/
 
 # macOS
-**/.DS_Store
+.DS_Store
 # binaries
 *.o
 *.out
 *.exe
 
 # report outputs
-report/
+**/report/
 
 # output data
 **/output/
 
 # CSV feature files (generated)
-**/*.csv
+*.csv
+
+# data files
+*.data
+
+
+
+# .gitignore matching rules (quick note)
+# 	•	File names (no /)
+# → match at any directory level by default
+# (e.g. *.csv, features.csv)
+# 	•	Directory names
+# → match only at the current level by default
+# → use **/ to match recursively
+# (e.g. build/ vs **/build/)
