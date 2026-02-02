@@ -1,14 +1,13 @@
 # build output
-build/
+**/build/
 cmake-build-*/
 
 # IDE
-.idea/
-.vscode/
+**/.idea/
+**/.vscode/
 
 # macOS
-.DS_Store
-
+**/.DS_Store
 # binaries
 *.o
 *.out
@@ -18,4 +17,7 @@ cmake-build-*/
 report/
 
 # output data
-output/
+**/output/
+
+# CSV feature files (generated)
+**/*.csv

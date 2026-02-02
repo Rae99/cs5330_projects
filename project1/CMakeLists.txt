@@ -41,7 +41,17 @@ target_include_directories(timeBlur PRIVATE
 )
 target_link_libraries(timeBlur PRIVATE ${OpenCV_LIBS})
 
-# 
+# -------- main_texture (texture filtering app) --------
+add_executable(main_texture
+        src/main_texture.cpp
+        src/filter.cpp
+)
+
+target_include_directories(main_texture PRIVATE
+        ${OpenCV_INCLUDE_DIRS}
+        ${CMAKE_SOURCE_DIR}/include
+)
+target_link_libraries(main_texture PRIVATE ${OpenCV_LIBS})
 
 # ONNX Runtime (Homebrew)
 find_path(ORT_INCLUDE_DIR onnxruntime_cxx_api.h
