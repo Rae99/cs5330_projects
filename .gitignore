@@ -23,7 +23,7 @@
 *.csv
 
 # data files
-*.data
+**/data/
 
 
 
