@@ -4,10 +4,12 @@
   - Output CSV: filename, f1, f2, ... f147
 
   Usage:
-    ./build_db <image_dir> <output_csv>
+  cd to build/
+
+  ./build_db <image_dir> <output_csv>
 
   Example:
-    ./build_db ./olympus ./features_task1.csv
+    ./build_db ../data/olympus ../output/features_task1.csv
 */
 
 #include <cstdio>
@@ -22,6 +24,7 @@
 #include "../include/csv_io.h"
 #include "../include/dir_scan.h"
 #include "../include/features.h"
+#include "../include/task_registry.h"
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -36,6 +39,17 @@ int main(int argc, char *argv[]) {
     std::ofstream out(out_csv);
     if (!out.is_open()) {
         std::cerr << "Cannot open output csv: " << out_csv << "\n";
+        return -1;
+    }
+
+    // task id optional (default = 1)
+    const int task_id = (argc > 3) ? std::atoi(argv[3]) : 1;
+    TaskSpec spec;
+    try {
+        spec = get_task(task_id);
+    } catch (const std::exception &e) {
+        std::cerr << "Invalid task id: " << task_id << " (" << e.what()
+                  << ")\n";
         return -1;
     }
 
@@ -56,7 +70,7 @@ int main(int argc, char *argv[]) {
 
         cv::Mat img = cv::imread(full, cv::IMREAD_UNCHANGED);
         std::vector<float> feat;
-        if (!compute_task1_feature(img, feat)) {
+        if (!spec.feature(img, feat)) {
             std::cerr << "  [skip] failed to compute feature for " << name
                       << "\n";
             skipped++;

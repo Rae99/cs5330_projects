@@ -15,4 +15,8 @@ float ssd_distance(const std::vector<float> &a, const std::vector<float> &b);
 // sort matches in-place (ascending by dist)
 void sort_matches(std::vector<Match> &matches);
 
+// compute histogram intersection distance between two feature vectors
+float hist_intersection_distance(const std::vector<float> &a,
+                                 const std::vector<float> &b);
+
 #endif // RANKING_H

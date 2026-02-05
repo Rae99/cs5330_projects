@@ -19,7 +19,8 @@ add_library(common STATIC
         src/features.cpp
         src/dir_scan.cpp
         src/ranking.cpp
-        src/utils.cpp)
+        src/utils.cpp
+        src/task_registry.cpp)
 
 target_include_directories(common PUBLIC ${CMAKE_SOURCE_DIR}/include ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(common PUBLIC ${OpenCV_LIBS})

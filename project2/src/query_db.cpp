@@ -9,7 +9,7 @@
     ./query_db <target_image> <image_dir> <feature_csv> <topN>
 
   Notes:
-  - image_dir is used only to print full path if you want; CSV stores filenames.
+  - image_dir is used only to print full path; CSV stores filenames.
 */
 
 #include <algorithm>
@@ -24,6 +24,7 @@
 #include "../include/csv_io.h"
 #include "../include/features.h"
 #include "../include/ranking.h"
+#include "../include/task_registry.h"
 #include "../include/utils.h"
 
 int main(int argc, char **argv) {
@@ -38,12 +39,23 @@ int main(int argc, char **argv) {
     const std::string csv_path = argv[3];
     const int topN = std::max(1, std::atoi(argv[4]));
 
+    // optional task id (default = 1)
+    const int task_id = (argc > 5) ? std::atoi(argv[5]) : 1;
+    TaskSpec spec;
+    try {
+        spec = get_task(task_id);
+    } catch (const std::exception &e) {
+        std::cerr << "Invalid task id: " << task_id << " (" << e.what()
+                  << ")\n";
+        return -1;
+    }
+
     const std::string target_name = basename_only(target_path);
 
     // compute target feature
     cv::Mat target_img = cv::imread(target_path, cv::IMREAD_UNCHANGED);
     std::vector<float> target_feat;
-    if (!compute_task1_feature(target_img, target_feat)) {
+    if (!spec.feature(target_img, target_feat)) {
         std::cerr << "Failed to compute target feature for: " << target_path
                   << "\n";
         return -1;
@@ -76,7 +88,7 @@ int main(int argc, char **argv) {
         if (feat.size() != target_feat.size())
             continue;
 
-        float d = ssd_distance(target_feat, feat);
+        float d = spec.dist(target_feat, feat);
         matches.push_back({fname, d});
     }
 
