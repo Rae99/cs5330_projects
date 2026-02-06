@@ -41,4 +41,9 @@ add_executable(query_db
 target_include_directories(query_db PRIVATE ${OpenCV_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(query_db PRIVATE ${OpenCV_LIBS} common)
 
+# --------  query_task5 --------
+add_executable(query_task5
+        src/query_task5.cpp)
 
+target_include_directories(query_task5 PRIVATE ${OpenCV_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(query_task5 PRIVATE ${OpenCV_LIBS} common)

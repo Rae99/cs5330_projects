@@ -15,8 +15,19 @@ float ssd_distance(const std::vector<float> &a, const std::vector<float> &b);
 // sort matches in-place (ascending by dist)
 void sort_matches(std::vector<Match> &matches);
 
-// compute histogram intersection distance between two feature vectors
+// compute task 2 histogram intersection distance between two feature vectors
 float hist_intersection_distance(const std::vector<float> &a,
                                  const std::vector<float> &b);
+
+// compute Task 3 multi-histogram distance
+float task3_multi_hist_distance(const std::vector<float> &a,
+                                const std::vector<float> &b, float w_whole,
+                                float w_center);
+
+float task3_distance(const std::vector<float> &a, const std::vector<float> &b);
+
+float task4_distance(const std::vector<float> &a, const std::vector<float> &b);
+
+float cosine_distance(const std::vector<float> &a, const std::vector<float> &b);
 
 #endif // RANKING_H
