@@ -220,6 +220,9 @@ class ImageTile(QWidget):
     ):
         super().__init__()
 
+        # Fixed size for the whole tile
+        self.setFixedSize(size.width(), size.height() + 50)  # +50 for text
+
         self.img_label = QLabel()
         self.img_label.setFixedSize(size)
         self.img_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -228,21 +231,24 @@ class ImageTile(QWidget):
         )
 
         self.title_label = QLabel(title)
-        self.title_label.setFont(QFont("Arial", 9, QFont.Weight.Bold))
+        self.title_label.setFont(QFont("Arial", 10, QFont.Weight.Bold))
         self.title_label.setWordWrap(True)
-        self.title_label.setStyleSheet("color: #333;")
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.title_label.setStyleSheet("color: #333; padding: 3px;")
 
         self.sub_label = QLabel(subtitle)
-        self.sub_label.setFont(QFont("Arial", 8))
+        self.sub_label.setFont(QFont("Arial", 9))
         self.sub_label.setWordWrap(True)
-        self.sub_label.setStyleSheet("color: #666;")
+        self.sub_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.sub_label.setStyleSheet("color: #666; padding: 2px;")
 
         layout = QVBoxLayout()
-        layout.setContentsMargins(4, 4, 4, 4)
-        layout.setSpacing(2)
+        layout.setContentsMargins(6, 6, 6, 6)
+        layout.setSpacing(3)
         layout.addWidget(self.img_label)
         layout.addWidget(self.title_label)
         layout.addWidget(self.sub_label)
+        layout.addStretch()  # Push content to top
         self.setLayout(layout)
 
         self.setStyleSheet(
@@ -255,11 +261,13 @@ class ImageTile(QWidget):
                 self.img_label.setPixmap(pm)
             else:
                 self.img_label.setText("❌")
-                self.img_label.setStyleSheet("background: #ffebee; color: #c62828;")
+                self.img_label.setStyleSheet(
+                    "background: #ffebee; color: #c62828; font-size: 24pt;"
+                )
         else:
             self.img_label.setText("Not found")
             self.img_label.setStyleSheet(
-                "background: #fff3e0; color: #f57c00; font-size: 9pt;"
+                "background: #fff3e0; color: #f57c00; font-size: 10pt; font-family: Arial;"
             )
 
 
@@ -275,7 +283,17 @@ class MainWindow(QWidget):
         self.dataset: List[Path] = []
         self.target_idx = 0
         self.page = 0
-        self.page_size = 15
+        self.page_size = 9  # Will be updated by adjust_zoom()
+
+        # Zoom levels: [tile_width, tile_height, cols, rows_per_page]
+        # Page size calculation: row0 has (cols-1), subsequent rows have cols
+        # For 2 rows: page_size = (cols-1) + cols
+        self.zoom_levels = [
+            (160, 120, 6, 2),  # Small: 5+6 = 11/page
+            (200, 150, 5, 2),  # Medium: 4+5 = 9/page (default)
+            (230, 175, 4, 2),  # Large: 3+4 = 7/page
+        ]
+        self.zoom_index = 1  # Start at Medium
 
         # CSV cache: task_id -> csv_path
         self.csv_cache: Dict[int, Path] = {}
@@ -425,9 +443,12 @@ class MainWindow(QWidget):
             "padding: 6px; background: #e3f2fd; border: 1px solid #90caf9; border-radius: 4px; color: #1565c0;"
         )
 
-        # Results
+        # Results (NO scrollbars - strict pagination)
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(True)
+        self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.scroll.setStyleSheet("QScrollArea { border: none; background: #fafafa; }")
         self.result_container = QWidget()
         self.grid = QGridLayout()
         self.grid.setContentsMargins(6, 6, 6, 6)
@@ -436,9 +457,29 @@ class MainWindow(QWidget):
         self.result_container.setLayout(self.grid)
         self.scroll.setWidget(self.result_container)
 
-        # Page
+        # Page + Zoom controls
         page_layout = QHBoxLayout()
+
+        # Zoom controls (left side)
+        self.btn_zoom_out = QPushButton("−")
+        self.btn_zoom_out.setFixedSize(32, 32)
+        self.btn_zoom_out.setToolTip("Zoom out (smaller tiles)")
+        self.btn_zoom_out.clicked.connect(lambda: self.adjust_zoom(-1))
+        page_layout.addWidget(self.btn_zoom_out)
+
+        self.zoom_label = QLabel("100%")
+        self.zoom_label.setStyleSheet("font-weight: bold; padding: 0 8px;")
+        page_layout.addWidget(self.zoom_label)
+
+        self.btn_zoom_in = QPushButton("+")
+        self.btn_zoom_in.setFixedSize(32, 32)
+        self.btn_zoom_in.setToolTip("Zoom in (larger tiles)")
+        self.btn_zoom_in.clicked.connect(lambda: self.adjust_zoom(1))
+        page_layout.addWidget(self.btn_zoom_in)
+
         page_layout.addStretch()
+
+        # Page controls (center)
         self.btn_prev_page = QPushButton("◀ Prev")
         self.btn_prev_page.clicked.connect(lambda: self.shift_page(-1))
         page_layout.addWidget(self.btn_prev_page)
@@ -448,6 +489,8 @@ class MainWindow(QWidget):
         self.btn_next_page = QPushButton("Next ▶")
         self.btn_next_page.clicked.connect(lambda: self.shift_page(1))
         page_layout.addWidget(self.btn_next_page)
+
+        page_layout.addStretch()
 
         # Debug toggle
         self.btn_toggle_debug = QPushButton("▼ Show Program Output")
@@ -491,14 +534,56 @@ class MainWindow(QWidget):
     def apply_styles(self):
         self.setStyleSheet(
             """
-            QWidget { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10pt; }
-            QGroupBox { font-weight: bold; border: 2px solid #ddd; border-radius: 6px; margin-top: 4px; padding-top: 4px; }
-            QGroupBox::title { color: #333; padding: 0 8px; background: white; }
-            QPushButton { background: #2196F3; color: white; padding: 5px 10px; border: none; border-radius: 4px; }
+            QWidget { 
+                font-family: Arial, 'Helvetica Neue', sans-serif; 
+                font-size: 11pt; 
+            }
+            QGroupBox { 
+                font-family: Arial;
+                font-size: 11pt;
+                font-weight: bold; 
+                border: 2px solid #ddd; 
+                border-radius: 6px; 
+                margin-top: 4px; 
+                padding-top: 8px; 
+            }
+            QGroupBox::title { 
+                color: #333; 
+                padding: 0 10px; 
+                background: white; 
+                font-family: Arial;
+                font-size: 11pt;
+            }
+            QPushButton { 
+                font-family: Arial;
+                font-size: 11pt;
+                background: #2196F3; 
+                color: white; 
+                padding: 6px 12px; 
+                border: none; 
+                border-radius: 4px; 
+            }
             QPushButton:hover { background: #1976D2; }
             QPushButton:disabled { background: #BDBDBD; color: #757575; }
-            QLineEdit, QComboBox { padding: 4px; border: 1px solid #ccc; border-radius: 4px; }
-            QSpinBox { padding: 3px; border: 1px solid #ccc; border-radius: 4px; }
+            QLineEdit, QComboBox { 
+                font-family: Arial;
+                font-size: 11pt;
+                padding: 5px; 
+                border: 1px solid #ccc; 
+                border-radius: 4px; 
+            }
+            QSpinBox { 
+                font-family: Arial;
+                font-size: 11pt;
+                padding: 4px; 
+                border: 1px solid #ccc; 
+                border-radius: 4px; 
+            }
+            QLabel {
+                font-family: Arial;
+                font-size: 11pt;
+                color: #333;
+            }
         """
         )
         palette = QPalette()
@@ -599,7 +684,45 @@ class MainWindow(QWidget):
 
             self.validate_current_csv()
             self.update_ui_state()
-            QMessageBox.information(self, "Success", message)
+
+            # Custom success message (prettier than default QMessageBox)
+            msg = QMessageBox(self)
+            msg.setWindowTitle("Build Complete")
+            msg.setText(f"<b>Feature database built successfully!</b>")
+            msg.setInformativeText(
+                f"<p style='font-size: 11pt; font-family: Arial;'>"
+                f"File: <b>{csv_path.name}</b><br>"
+                f"Location: {csv_path.parent}<br>"
+                f"Task {task_id} features ready to use.</p>"
+            )
+            msg.setIcon(QMessageBox.Icon.NoIcon)  # No icon!
+            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg.setStyleSheet(
+                """
+                QMessageBox {
+                    background: white;
+                    font-family: Arial;
+                }
+                QLabel {
+                    font-family: Arial;
+                    font-size: 12pt;
+                    color: #333;
+                }
+                QPushButton {
+                    background: #4CAF50;
+                    color: white;
+                    padding: 8px 24px;
+                    border-radius: 4px;
+                    font-weight: bold;
+                    font-size: 11pt;
+                    min-width: 80px;
+                }
+                QPushButton:hover {
+                    background: #45a049;
+                }
+            """
+            )
+            msg.exec()
         else:
             QMessageBox.critical(self, "Failed", message)
 
@@ -740,6 +863,36 @@ class MainWindow(QWidget):
         self.page = max(0, self.page + delta)
         self.refresh_results()
 
+    def adjust_zoom(self, delta: int):
+        """Adjust tile size (zoom in/out)."""
+        new_index = self.zoom_index + delta
+        if 0 <= new_index < len(self.zoom_levels):
+            self.zoom_index = new_index
+
+            # Get zoom config
+            tile_w, tile_h, cols, rows = self.zoom_levels[self.zoom_index]
+
+            # Update display
+            zoom_names = ["Small", "Medium", "Large"]
+            self.zoom_label.setText(f"{zoom_names[self.zoom_index]}")
+
+            # Calculate page_size: first row has (cols-1), rest have cols
+            # For 2 rows: (cols-1) + cols = 2*cols - 1
+            self.page_size = (cols - 1) + cols if rows == 2 else cols * rows
+
+            print(
+                f"[ZOOM] {zoom_names[self.zoom_index]}: {tile_w}×{tile_h}, {cols}cols×{rows}rows → {self.page_size} results/page"
+            )
+
+            # Refresh display
+            if self.dataset and self.csv_valid:
+                self.page = 0
+                self.refresh_results()
+
+        # Update button states
+        self.btn_zoom_out.setEnabled(self.zoom_index > 0)
+        self.btn_zoom_in.setEnabled(self.zoom_index < len(self.zoom_levels) - 1)
+
     def on_run_query(self):
         self.refresh_results()
         self.btn_toggle_ctrl.setChecked(True)
@@ -851,32 +1004,31 @@ class MainWindow(QWidget):
 
         self.clear_grid()
 
-        tile_size = QSize(190, 150)
-        cols = 6
+        # Use current zoom level
+        tile_width, tile_height, cols, rows = self.zoom_levels[self.zoom_index]
+        tile_size = QSize(tile_width, tile_height)
 
-        # Target
+        # Target tile (always at 0,0)
         target_tile = ImageTile("🎯 TARGET", target_path.name, target_path, tile_size)
         target_tile.setStyleSheet(
             "background: #fff3e0; border: 3px solid #ff9800; border-radius: 6px;"
         )
         self.grid.addWidget(target_tile, 0, 0)
 
-        # Matches
+        # Result tiles - fill row 0 first (starting from column 1), then subsequent rows
         r, c = 0, 1
         for m in page_matches:
-            # Use fullpath directly if provided, otherwise construct
             p = Path(m.fullpath)
 
             print(f"[IMG] #{m.rank}: {m.filename}")
-            print(f"      fullpath from match: '{m.fullpath}'")
-            print(f"      final path: {p}")
-            print(f"      exists: {p.exists()}")
+            print(f"      path: {p}, exists: {p.exists()}")
 
             tile = ImageTile(f"#{m.rank} d={m.dist:.5f}", m.filename, p, tile_size)
             self.grid.addWidget(tile, r, c)
             c += 1
             if c >= cols:
-                r, c = r + 1, 0
+                r, c = r + 1, 0  # Next row, start from column 0
+                # (no more TARGET, so use full width)
 
         self.btn_prev_page.setEnabled(self.page > 0)
         self.btn_next_page.setEnabled((self.page + 1) * self.page_size < len(matches))
@@ -893,6 +1045,10 @@ class MainWindow(QWidget):
             self.shift_page(-1)
         elif key == Qt.Key.Key_Right:
             self.shift_page(1)
+        elif key in (Qt.Key.Key_Plus, Qt.Key.Key_Equal):  # + or =
+            self.adjust_zoom(1)
+        elif key == Qt.Key.Key_Minus:  # -
+            self.adjust_zoom(-1)
         elif key in (Qt.Key.Key_Q, Qt.Key.Key_Escape):
             self.close()
 

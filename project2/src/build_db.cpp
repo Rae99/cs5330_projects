@@ -12,6 +12,7 @@
     ./build_db ../data/olympus ../output/features_task1.csv
 */
 
+
 #include <cstdio>
 #include <cstdlib>
 #include <fstream>
