@@ -25,6 +25,11 @@
 # data files
 **/data/
 
+# Python cache files
+**/__pycache__/ 
+
+# environment files
+**/venv/
 
 
 # .gitignore matching rules (quick note)
