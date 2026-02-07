@@ -30,4 +30,7 @@ float task4_distance(const std::vector<float> &a, const std::vector<float> &b);
 
 float cosine_distance(const std::vector<float> &a, const std::vector<float> &b);
 
+// Task 7: simple distance for grass features (5D)
+float grass_distance(const std::vector<float> &a, const std::vector<float> &b);
+
 #endif // RANKING_H

@@ -21,4 +21,7 @@ bool compute_task3_feature(const cv::Mat &img, std::vector<float> &feat);
 // Task4: whole-image color hist + whole-image texture hists (mag + ori)
 bool compute_task4_feature(const cv::Mat &img, std::vector<float> &feat);
 
+// Task 7: Extract green grass features (simple 5D)
+bool extract_grass_features(const cv::Mat &img, std::vector<float> &feat);
+
 #endif // FEATURES_H

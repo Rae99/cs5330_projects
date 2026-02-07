@@ -352,3 +352,65 @@ bool compute_task4_feature(const cv::Mat &img, std::vector<float> &feat) {
 
     return true;
 }
+
+// Task 7: Extract green grass features (simple 5D)
+bool extract_grass_features(const cv::Mat &img, std::vector<float> &feat) {
+    if (img.empty())
+        return false;
+
+    cv::Mat hsv;
+    cv::cvtColor(img, hsv, cv::COLOR_BGR2HSV);
+
+    // Green range for grass
+    const int H_LOW = 35;  // 70 degrees
+    const int H_HIGH = 85; // 170 degrees
+    const int S_MIN = 20;
+    const int V_MIN = 20;
+
+    cv::Mat mask(hsv.rows, hsv.cols, CV_8UC1, cv::Scalar(0));
+    for (int i = 0; i < hsv.rows; ++i) {
+        const cv::Vec3b *p = hsv.ptr<cv::Vec3b>(i);
+        uchar *mp = mask.ptr<uchar>(i);
+        for (int j = 0; j < hsv.cols; ++j) {
+            const int H = p[j][0], S = p[j][1], V = p[j][2];
+            if (H >= H_LOW && H <= H_HIGH && S >= S_MIN && V >= V_MIN)
+                mp[j] = 255;
+        }
+    }
+
+    // Clean mask
+    cv::morphologyEx(
+        mask, mask, cv::MORPH_OPEN,
+        cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7)));
+    cv::morphologyEx(
+        mask, mask, cv::MORPH_CLOSE,
+        cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(15, 15)));
+
+    // Compute features
+    int green_pixels = cv::countNonZero(mask);
+    float green_ratio = green_pixels / (float)(mask.rows * mask.cols);
+
+    // Color statistics in green region
+    double sum_h = 0, sum_s = 0, sum_v = 0;
+    int cnt = 0;
+    for (int i = 0; i < hsv.rows; ++i) {
+        const cv::Vec3b *hp = hsv.ptr<cv::Vec3b>(i);
+        const uchar *mp = mask.ptr<uchar>(i);
+        for (int j = 0; j < hsv.cols; ++j) {
+            if (mp[j] > 0) {
+                sum_h += hp[j][0];
+                sum_s += hp[j][1];
+                sum_v += hp[j][2];
+                cnt++;
+            }
+        }
+    }
+
+    float avg_h = (cnt > 0) ? (sum_h / cnt) / 179.0f : 0.0f;
+    float avg_s = (cnt > 0) ? (sum_s / cnt) / 255.0f : 0.0f;
+    float avg_v = (cnt > 0) ? (sum_v / cnt) / 255.0f : 0.0f;
+
+    // 5D feature vector
+    feat = {green_ratio, avg_h, avg_s, avg_v, (cnt > 0) ? 1.0f : 0.0f};
+    return true;
+}

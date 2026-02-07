@@ -134,3 +134,18 @@ float cosine_distance(const std::vector<float> &a,
     const double cosv = dot / denom; // in [-1,1] typically
     return (float)(1.0 - cosv);      // cosine distance
 }
+
+// Task 7: grass feature distance
+float grass_distance(const std::vector<float> &a, const std::vector<float> &b) {
+    if (a.size() != 5 || b.size() != 5)
+        return 1e30f;
+
+    float d = 0.0f;
+    d += 2.0f * (a[0] - b[0]) * (a[0] - b[0]); // green_ratio (important!)
+    d += 5.0f * (a[1] - b[1]) * (a[1] - b[1]); // H (color, very important!)
+    d += 3.0f * (a[2] - b[2]) * (a[2] - b[2]); // S
+    d += 1.0f * (a[3] - b[3]) * (a[3] - b[3]); // V
+    d += 0.5f * (a[4] - b[4]) * (a[4] - b[4]); // has_green flag
+
+    return std::sqrt(d);
+}

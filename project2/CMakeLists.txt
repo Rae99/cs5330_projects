@@ -47,3 +47,10 @@ add_executable(query_task5
 
 target_include_directories(query_task5 PRIVATE ${OpenCV_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(query_task5 PRIVATE ${OpenCV_LIBS} common)
+
+
+# --------  query_task7 --------
+add_executable(query_task7_grass 
+        src/query_task7_grass.cpp)
+target_include_directories(query_task7_grass PRIVATE ${OpenCV_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(query_task7_grass common ${OpenCV_LIBS})
