@@ -28,8 +28,9 @@ static std::string basename_only(const std::string &path) {
 int main(int argc, char **argv) {
     // validate arguments
     if (argc < 5) {
-        std::cerr << "Usage: " << argv[0]
-                  << " <target_image> <image_dir> <emb_csv> <topN>\n";
+        std::cerr
+            << "Usage: " << argv[0]
+            << " <target_image> <image_dir> <emb_csv> <topN> [--bottom]\n";
         return -1;
     }
 
@@ -40,6 +41,7 @@ int main(int argc, char **argv) {
     const int topN =
         std::max(1,
                  std::atoi(argv[4])); // atoi: convert string to int
+    const bool show_bottom = (argc >= 6 && std::string(argv[5]) == "--bottom");
     const std::string target_name = basename_only(target_path);
 
     // Read embeddings
@@ -123,21 +125,26 @@ int main(int argc, char **argv) {
     }
 
     // Sort and print
-    std::sort(matches.begin(), matches.end(),
-              [](const Match &a, const Match &b) { return a.dist < b.dist; });
-
-    std::cout << "\nTask 7: Grass/Lawn Detection - Top " << topN
-              << " matches\n";
+    if (show_bottom) {
+        std::sort(
+            matches.begin(), matches.end(),
+            [](const Match &a, const Match &b) { return a.dist > b.dist; });
+        std::cout << "\nTask 7: Grass/Lawn Detection - Bottom " << topN
+                  << " matches\n";
+    } else {
+        std::sort(
+            matches.begin(), matches.end(),
+            [](const Match &a, const Match &b) { return a.dist < b.dist; });
+        std::cout << "\nTask 7: Grass/Lawn Detection - Top " << topN
+                  << " matches\n";
+    }
     std::cout << "Target: " << target_path << "\n\n";
 
     for (int k = 0; k < topN && k < (int)matches.size(); ++k) {
-        std::cout << (k + 1) << ". " << matches[k].filename
-                  << " (distance: " << matches[k].dist << ")\n";
-    }
-
-    for (int k = matches.size() - 5; k < matches.size(); k++) {
-        std::cout << "Bottom " << k << ": " << matches[k].filename
-                  << " (distance: " << matches[k].dist << ")\n";
+        const std::string fullpath = image_dir + "/" + matches[k].filename;
+        std::cout << (k + 1) << ") " << matches[k].filename
+                  << " dist=" << matches[k].dist << " fullpath=" << fullpath
+                  << "\n";
     }
 
     return 0;

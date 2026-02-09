@@ -60,7 +60,7 @@ class Match:
     fullpath: str
 
 
-# FIXED: 更精确的fullpath捕获
+# Regex patterns to parse output lines
 LINE_PATTERNS = [
     # Match "1) pic.jpg dist=0.5 fullpath=/path/to/pic.jpg"
     re.compile(
@@ -189,6 +189,7 @@ def run_query(
     image_dir: Path,
     csv_path: Path,
     topk: int,
+    show_bottom: bool = False,
 ) -> Tuple[str, List[Match]]:
     exe_name, _, _, _ = TASK_CONFIG[task_id]
     exe = find_exe(build_dir, exe_name)
@@ -208,6 +209,8 @@ def run_query(
         cmd = [str(exe), target.name, str(csv_path), str(topk)]
     else:
         cmd = [str(exe), str(target), str(image_dir), str(csv_path), str(topk)]
+        if task_id == 7 and show_bottom:
+            cmd.append("--bottom")
 
     print(f"[CMD] {' '.join(cmd)}")
     proc = subprocess.run(cmd, capture_output=True, text=True)
@@ -384,7 +387,7 @@ class MainWindow(QWidget):
         self.target_combo.setMinimumHeight(32)
         self.target_combo.currentIndexChanged.connect(self.on_target_changed)
 
-        # 监听文本变化 - 当用户输入完整文件名时自动匹配
+        # Handle text edits
         self.target_combo.lineEdit().editingFinished.connect(
             self.on_target_text_changed
         )
@@ -414,13 +417,43 @@ class MainWindow(QWidget):
         self.task_box.currentIndexChanged.connect(self.on_task_changed)
         compact_layout.addWidget(self.task_box)
 
-        compact_layout.addWidget(QLabel("Top K:"))
+        self.topk_label = QLabel("Top K:")
+        compact_layout.addWidget(self.topk_label)
         self.topk_spin = QSpinBox()
         self.topk_spin.setRange(1, 200)
         self.topk_spin.setValue(10)
         self.topk_spin.setFixedWidth(70)
         self.topk_spin.setMinimumHeight(32)
         compact_layout.addWidget(self.topk_spin)
+
+        # Toggle: Top ↔ Bottom
+        self.btn_top_bottom = QPushButton("⇅")
+        self.btn_top_bottom.setCheckable(True)
+        self.btn_top_bottom.setChecked(False)  # False=Top, True=Bottom
+        self.btn_top_bottom.setFixedSize(32, 32)
+        self.btn_top_bottom.setToolTip("Toggle: Top K (best) ↔ Bottom K (worst)")
+        self.btn_top_bottom.clicked.connect(self.on_toggle_top_bottom)
+        self.btn_top_bottom.setStyleSheet(
+            """
+            QPushButton {
+                background: #f5f5f5;
+                color: #666;
+                font-weight: bold;
+                font-size: 14pt;
+                border: 2px solid #ddd;
+                border-radius: 4px;
+            }
+            QPushButton:hover { background: #e0e0e0; }
+            QPushButton:checked {
+                background: #ff5722;
+                color: white;
+                border-color: #d32f2f;
+            }
+        """
+        )
+        compact_layout.addWidget(self.btn_top_bottom)
+
+        compact_layout.addSpacing(10)
 
         self.btn_run = QPushButton("▶ Run (R)")
         self.btn_run.setMinimumHeight(34)
@@ -850,6 +883,18 @@ class MainWindow(QWidget):
             self.validate_current_csv()
         self.update_ui_state()
 
+    def on_toggle_top_bottom(self, checked: bool):
+        """Toggle between Top K and Bottom K."""
+        if checked:
+            # switch to Bottom K
+            self.topk_label.setText("Bottom K:")
+            self.btn_top_bottom.setToolTip("Showing worst matches (click to show best)")
+        else:
+            # switch to Top K
+            self.topk_label.setText("Top K:")
+            self.btn_top_bottom.setToolTip("Showing best matches (click to show worst)")
+        self.status.setText("Mode changed. Click Run to refresh results.")
+
     def on_topk_changed(self):
         self.page = 0
 
@@ -931,7 +976,7 @@ class MainWindow(QWidget):
         if not self.image_dir or not self.dataset or not self.build_dir:
             return
 
-        # IMPORTANT: Check if typed text matches current selection
+        # Check if typed text matches current selection
         typed_text = self.target_combo.currentText().strip()
         current_name = self.dataset[self.target_idx].name if self.dataset else ""
 
@@ -969,6 +1014,8 @@ class MainWindow(QWidget):
         topk = self.topk_spin.value()
         target_path = self.dataset[self.target_idx]
 
+        show_bottom = self.btn_top_bottom.isChecked()
+
         try:
             text, matches = run_query(
                 self.build_dir,
@@ -977,6 +1024,7 @@ class MainWindow(QWidget):
                 self.image_dir,
                 self.csv_path or Path(""),
                 topk,
+                show_bottom=show_bottom,
             )
         except Exception as ex:
             QMessageBox.critical(self, "Query Failed", str(ex))
@@ -989,7 +1037,19 @@ class MainWindow(QWidget):
             self.status.setStyleSheet(
                 "padding: 6px; background: #fff3e0; border: 1px solid #ff9800; border-radius: 4px; color: #e65100;"
             )
+            page_matches = []
         else:
+            if show_bottom:
+                # Bottom K
+                self.status.setStyleSheet(
+                    "padding: 6px; background: #ffebee; border: 1px solid #f44336; ..."
+                )
+            else:
+                # Top K
+                self.status.setStyleSheet(
+                    "padding: 6px; background: #e8f5e9; border: 1px solid #4caf50; ..."
+                )
+
             total_pages = (len(matches) + self.page_size - 1) // self.page_size
             self.status.setText(
                 f"✓ Task {task_id} | {target_path.name} | {len(matches)} matches"
@@ -999,8 +1059,8 @@ class MainWindow(QWidget):
             )
             self.page_label.setText(f"Page {self.page + 1} of {total_pages}")
 
-        start = self.page * self.page_size
-        page_matches = matches[start : start + self.page_size]
+            start = self.page * self.page_size
+            page_matches = matches[start : start + self.page_size]
 
         self.clear_grid()
 
@@ -1016,6 +1076,8 @@ class MainWindow(QWidget):
         self.grid.addWidget(target_tile, 0, 0)
 
         # Result tiles - fill row 0 first (starting from column 1), then subsequent rows
+        show_bottom = self.btn_top_bottom.isChecked()
+
         r, c = 0, 1
         for m in page_matches:
             p = Path(m.fullpath)
@@ -1023,7 +1085,12 @@ class MainWindow(QWidget):
             print(f"[IMG] #{m.rank}: {m.filename}")
             print(f"      path: {p}, exists: {p.exists()}")
 
-            tile = ImageTile(f"#{m.rank} d={m.dist:.5f}", m.filename, p, tile_size)
+            if show_bottom:
+                label = f"Worst #{m.rank}\nd={m.dist:.5f}"
+            else:
+                label = f"#{m.rank}\nd={m.dist:.5f}"
+
+            tile = ImageTile(label, m.filename, p, tile_size)
             self.grid.addWidget(tile, r, c)
             c += 1
             if c >= cols:
