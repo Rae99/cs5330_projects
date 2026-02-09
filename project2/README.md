@@ -1,403 +1,66 @@
-# CS5330 Project 2 — Content-Based Image Retrieval (CBIR)
-
-**Author:** Junrui Ding  
-**Course:** CS5330 Pattern Recognition & Computer Vision  
-**Date:** February 2026
-
-This project implements a Content-Based Image Retrieval system using both classical computer vision features and deep learning embeddings. Given a target image, the system finds visually similar images from a database using various feature extraction and distance metric strategies.
-
----
+# Project 2 — Content-Based Image Retrieval (CBIR)
 
 ## Overview
 
-The CBIR system follows a four-step pipeline:
+- CBIR pipeline for CS5330: build feature databases, query by similarity, and view results.
+- Implements Tasks 1–4 (classical features), Task 5 (deep embeddings), and Task 7 (grass/lawn detection).
+- Includes a PyQt6 GUI for interactive querying.
 
-1. **Extract features** from the target image
-2. **Extract features** from all database images (can be pre-computed)
-3. **Compute distances** between target and database images
-4. **Sort and return** the top N most similar matches
+## Prerequisites
 
-This project implements **7 tasks** with different feature types and matching methods, plus a PyQt6 GUI for easy experimentation.
+- CMake 3.16+
+- C++20 compiler (tested with clang++)
+- OpenCV 4.x
+- Python 3.9+ (GUI only)
+- PyQt6 (GUI only)
 
----
+Install Python requirements (GUI):
 
-## Project Structure
-
-```
-project2/
-├── src/                    # Source code
-│   ├── build_db.cpp        # Feature database builder (Tasks 1-4)
-│   ├── query_db.cpp        # Query program (Tasks 1-4)
-│   ├── query_task5.cpp     # Deep embedding query (Task 5)
-│   ├── query_task7_grass.cpp  # Custom grass detection (Task 7)
-│   ├── features.cpp        # Feature extraction implementations
-│   ├── ranking.cpp         # Distance metrics
-│   ├── csv_io.cpp          # CSV file I/O
-│   ├── dir_scan.cpp        # Directory utilities
-│   ├── utils.cpp           # Helper functions
-│   ├── task_registry.cpp   # Task configuration registry
-│   └── query_gui.py        # PyQt6 graphical interface
-├── include/                # C++ headers
-│   ├── features.h
-│   ├── ranking.h
-│   ├── csv_io.h
-│   ├── dir_scan.h
-│   ├── task_registry.h
-│   └── utils.h
-├── data/                   # Datasets (not in repo)
-│   ├── olympus/           # Image database
-│   └── ResNet18_olym.csv  # Pre-computed embeddings
-├── output/                 # Generated feature CSVs
-├── CMakeLists.txt          # Build configuration
-├── README.md               # This file
-└── .gitignore
-```
-
----
-
-## Tasks Description
-
-### Task 1: Baseline Matching
-
-**Feature:** 7×7 pixel square from the center of the image (RGB values flattened)  
-**Distance Metric:** Sum of Squared Differences (SSD)  
-**Feature Dimensions:** 147 (7×7×3)
-
-Extracts a 7×7 RGB patch from the image center and compares using Euclidean distance. Simple but effective for images with similar central regions.
-
-**Expected Results (pic.1016.jpg):**
-Top matches: pic.0986.jpg, pic.0641.jpg, pic.0547.jpg, pic.1013.jpg
-
----
-
-### Task 2: Color Histogram Matching
-
-**Feature:** 2D rg chromaticity histogram (whole image)  
-**Distance Metric:** Histogram intersection  
-**Feature Dimensions:** 256 (16×16 bins)
-
-Uses normalized rg color space (r = R/(R+G+B), g = G/(R+G+B)) to create an illumination-invariant color histogram. Compares histograms using intersection distance: D = 1 - Σ min(H₁, H₂).
-
-**Expected Results (pic.0164.jpg):**
-Top matches: pic.0080.jpg, pic.1032.jpg, pic.0461.jpg
-
----
-
-### Task 3: Multi-Histogram Matching
-
-**Feature:** Two rg chromaticity histograms (whole image + center region)  
-**Distance Metric:** Weighted histogram intersection  
-**Feature Dimensions:** 512 (2×256)
-
-Combines spatial information by computing separate histograms for the entire image and the central 50%×50% region. Uses weighted combination: D = 0.4×D_whole + 0.6×D_center to emphasize central content.
-
-**Expected Results (pic.0274.jpg):**
-Top matches: pic.0273.jpg, pic.1031.jpg, pic.0409.jpg
-
----
-
-### Task 4: Texture and Color
-
-**Feature:** Color histogram + texture histograms (gradient magnitude + orientation)  
-**Distance Metric:** Weighted combination of color and texture distances  
-**Feature Dimensions:** 290 (256 color + 16 magnitude + 18 orientation)
-
-Combines color information with texture analysis:
-
-- **Color:** 16×16 rg histogram (256D)
-- **Texture:** Sobel gradient magnitudes (16 bins) + orientations (18 bins, 0-180°)
-- **Distance:** Equal weighting between color and texture components
-
-Uses Sobel operators to compute gradient magnitude and orientation, capturing edge information complementary to color.
-
-**Expected Results (pic.0535.jpg):**
-Shows improved matching compared to Tasks 2-3 by incorporating texture information.
-
----
-
-### Task 5: Deep Network Embeddings
-
-**Feature:** ResNet18 global average pooling output  
-**Distance Metric:** Cosine distance  
-**Feature Dimensions:** 512
-
-Uses features extracted from a ResNet18 network pre-trained on ImageNet (1M images, 1000 categories). The 512-dimensional embedding captures high-level semantic content learned from diverse visual patterns.
-
-Cosine distance: D(v₁, v₂) = 1 - cos(θ) = 1 - (v₁·v₂)/(||v₁|| ||v₂||)
-
-**Note:** Features must be pre-computed and provided in CSV format.
-
-**Expected Results:**
-
-- pic.0893.jpg: Finds semantically similar images
-- pic.0164.jpg: Compare results with classical features
-
----
-
-### Task 7: Custom Design (Grass/Lawn Detection)
-
-**Feature:** ResNet18 embeddings + custom green grass features  
-**Distance Metric:** Weighted fusion (40% DNN + 60% grass features)  
-**Feature Dimensions:** 512 (ResNet18) + 5 (grass)
-
-Custom algorithm for detecting grass/lawn images:
-
-**Grass Features (5D):**
-
-1. Green pixel ratio (HSV thresholding)
-2. Average hue in green regions
-3. Average saturation in green regions
-4. Average value in green regions
-5. Has-green flag
-
-**HSV Thresholds:**
-
-- Hue: 35-85 (70°-170° green range)
-- Saturation: ≥20
-- Value: ≥20
-- Morphological operations for noise removal
-
-**Distance Fusion:**
-
-- D_final = 0.4 × D_embedding + 0.6 × D_grass
-- Filters out images with <5% green content
-- Weighted grass features emphasize hue (×5) and green ratio (×2)
-
----
-
-## Requirements
-
-### C++ Dependencies
-
-- **CMake** 3.16 or higher
-- **C++20** compatible compiler (g++, clang)
-- **OpenCV** 4.x with core, imgproc, imgcodecs, highgui modules
-
-### Python Dependencies (GUI only)
-
-- **Python** 3.9+
-- **PyQt6** ≥6.4
-- **Pillow** (for additional image format support)
-
-Install Python requirements:
-
-```bash
-pip install PyQt6 Pillow
-```
-
-Or use the provided requirements.txt:
-
-```bash
+```sh
 pip install -r requirements.txt
 ```
 
----
+## Build
 
-## Build Instructions
-
-### Using CMake (Recommended)
-
-From the project root directory:
-
-```bash
-# Create build directory
+```sh
 mkdir -p build
 cd build
-
-# Configure
 cmake ..
-
-# Build
 cmake --build .
-
-# Or use make directly
-make
 ```
 
-This produces executables in `build/`:
+## Executables
 
-- `build_db` — Build feature database
-- `query_db` — Query with Tasks 1-4
-- `query_task5` — Query with Task 5 (deep embeddings)
-- `query_task7_grass` — Query with Task 7 (grass detection)
+### build_db (Tasks 1–4)
 
----
+- Usage: `./build_db <image_dir> <output_csv> [task_id]`
+- Builds a feature CSV for the selected task (default task_id = 1).
 
-## Command-Line Usage
+### query_db (Tasks 1–4)
 
-### 1. Build Feature Database (Tasks 1-4)
+- Usage: `./query_db <target_image> <image_dir> <feature_csv> <topN> [task_id]`
+- Loads the feature CSV and prints top-N matches for the target.
 
-```bash
-./build_db <image_directory> <output_csv> <task_id>
-```
+### query_task5 (Task 5)
 
-**Arguments:**
+- Usage: `./query_task5 <target_filename> <embedding_csv> <topN>`
+- Uses ResNet18 embeddings and cosine distance. Target is filename only.
 
-- `image_directory`: Directory containing image files
-- `output_csv`: Output CSV file path
-- `task_id`: Task number (1, 2, 3, or 4)
+### query_task7_grass (Task 7)
 
-**Example:**
+- Usage: `./query_task7_grass <target_image> <image_dir> <embedding_csv> <topN> [--bottom]`
+- Fuses embeddings with grass features; `--bottom` shows worst matches.
 
-```bash
-./build_db ../data/olympus ../output/features_task1.csv 1
-```
+## GUI (PyQt6)
 
-**Output:** CSV with format: `filename,feature1,feature2,...,featureN`
+- Launch: `python src/query_gui.py`
+- Supports Tasks 1–4, 5, and 7 with CSV validation, caching, and paging.
+- Keyboard shortcuts: `R` run, `P/N` previous/next target, `←/→` page, `Q` quit.
 
----
+## Notes
 
-### 2. Query Database (Tasks 1-4)
-
-```bash
-./query_db <target_image> <image_dir> <feature_csv> <topN> [task_id]
-```
-
-**Arguments:**
-
-- `target_image`: Path to target image
-- `image_dir`: Directory containing database images
-- `feature_csv`: CSV file generated by build_db
-- `topN`: Number of matches to return
-- `task_id`: (Optional) Task number, defaults to 1
-
-**Examples:**
-
-```bash
-# Task 1: Baseline
-./query_db ../data/olympus/pic.1016.jpg ../data/olympus ../output/features_task1.csv 5 1
-
-# Task 2: Color histogram
-./query_db ../data/olympus/pic.0164.jpg ../data/olympus ../output/features_task2.csv 5 2
-
-# Task 3: Multi-histogram
-./query_db ../data/olympus/pic.0274.jpg ../data/olympus ../output/features_task3.csv 5 3
-
-# Task 4: Color + Texture
-./query_db ../data/olympus/pic.0535.jpg ../data/olympus ../output/features_task4.csv 5 4
-```
-
----
-
-### 3. Query with Deep Embeddings (Task 5)
-
-```bash
-./query_task5 <target_filename> <embedding_csv> <topN>
-```
-
-**Arguments:**
-
-- `target_filename`: Filename only (e.g., `pic.0893.jpg`)
-- `embedding_csv`: CSV with ResNet18 embeddings (512D)
-- `topN`: Number of matches to return
-
-**Example:**
-
-```bash
-./query_task5 pic.0893.jpg ../data/ResNet18_olym.csv 10
-```
-
-**Note:** Target must exist in the embedding CSV.
-
----
-
-### 4. Query with Grass Detection (Task 7)
-
-```bash
-./query_task7_grass <target_image> <image_dir> <embedding_csv> <topN>
-```
-
-**Arguments:**
-
-- `target_image`: Full path to target image
-- `image_dir`: Directory containing database images
-- `embedding_csv`: CSV with ResNet18 embeddings
-- `topN`: Number of matches to return
-
-**Example:**
-
-```bash
-./query_task7_grass ../data/olympus/pic.0408.jpg ../data/olympus ../data/ResNet18_olym.csv 10
-```
-
-**Best Results:** Use images with visible grass/lawns as targets.
-
----
-
-## GUI Usage
-
-The PyQt6 graphical interface provides a user-friendly way to run queries across all tasks.
-
-### Launch GUI
-
-From the project root:
-
-```bash
-python src/query_gui.py
-```
-
-### GUI Features
-
-#### Intelligent Target Selection
-
-- **Dropdown:** Browse all images
-- **Search:** Type to filter (e.g., "pic.1016")
-- **Partial Input:** Type "0345" to match "pic.0345.jpg"
-- **Smart Matching:** Handles partial extensions ("pic.0022.j" → "pic.0022.jpg")
-- **Keyboard Navigation:** Use ◀/▶ buttons or P/N keys
-
-#### Automatic CSV Management
-
-- **Tasks 1-4:** Click "Build" to auto-generate features
-- **Tasks 5/7:** Click "Browse" to select pre-computed embeddings
-- **Smart Caching:** Remembers CSV for each task (persists across sessions)
-- **Auto-Validation:** Checks CSV dimensions match task requirements
-
-#### Collapsible Interface
-
-- **Controls Panel:** Auto-hides after running query (click to toggle)
-- **Program Output:** Hidden by default, click to view debug info
-- **Keyboard Shortcuts:**
-  - `R` — Run query
-  - `P/N` — Previous/Next target
-  - `←/→` — Page navigation
-  - `Q/ESC` — Quit
-
-#### CSV Persistence
-
-The GUI uses Qt's QSettings to remember CSV paths for each task. On macOS, settings are stored in:
-
-```
-~/Library/Preferences/CS5330/CBIR.plist
-```
-
-This means:
-
-- Switch from Task 1 → Task 2: CSV auto-updates to features_task2.csv
-- Close and reopen: All CSV associations are restored
-- No need to re-select CSVs when switching tasks
-
----
-
-## Implementation Details
-
-### Feature Extraction (features.cpp)
-
-#### Task 1: Baseline
-
-```cpp
-bool compute_task1_feature(const cv::Mat &img, std::vector<float> &feat);
-```
-
-Extracts 7×7×3 = 147 RGB values from image center.
-
-#### Task 2: Color Histogram
-
-```cpp
-bool compute_task2_feature(const cv::Mat &img, std::vector<float> &feat);
-```
-
-Computes 16×16 rg chromaticity 2D histogram, normalized to sum=1.
+- Image data and embedding CSVs are expected under `data/` (not included).
+- Generated feature CSVs can be stored under `output/`.
 
 #### Task 3: Multi-Histogram
 
