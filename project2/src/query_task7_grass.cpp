@@ -18,39 +18,47 @@
 #include "../include/ranking.h"
 
 static std::string basename_only(const std::string &path) {
+    // Find the last occurrence of '/' or '\\' in the path
     const size_t pos = path.find_last_of("/\\");
+    // If not found, return the whole path; otherwise, return the substring
+    // after the last separator
     return (pos == std::string::npos) ? path : path.substr(pos + 1);
 }
 
 int main(int argc, char **argv) {
+    // validate arguments
     if (argc < 5) {
         std::cerr << "Usage: " << argv[0]
                   << " <target_image> <image_dir> <emb_csv> <topN>\n";
         return -1;
     }
 
+    // parse arguments
     const std::string target_path = argv[1];
     const std::string image_dir = argv[2];
     const std::string emb_csv = argv[3];
-    const int topN = std::max(1, std::atoi(argv[4]));
+    const int topN =
+        std::max(1,
+                 std::atoi(argv[4])); // atoi: convert string to int
     const std::string target_name = basename_only(target_path);
 
     // Read embeddings
-    std::ifstream in(emb_csv);
+    std::ifstream in(emb_csv); // input file stream
     if (!in.is_open()) {
         std::cerr << "Cannot open " << emb_csv << "\n";
         return -1;
     }
 
+    // Parallel arrays: names[i] corresponds to embs[i]
     std::vector<std::string> names;
     std::vector<std::vector<float>> embs;
     std::vector<float> target_emb;
     bool found_target = false;
 
     std::string line;
-    while (std::getline(in, line)) {
+    while (std::getline(in, line)) { // read line by line until EOF(end of file)
         if (line.empty())
-            continue;
+            continue; // skip empty lines
         std::string fname;
         std::vector<float> feat;
         if (!parse_csv_row(line, fname, feat))
@@ -124,6 +132,11 @@ int main(int argc, char **argv) {
 
     for (int k = 0; k < topN && k < (int)matches.size(); ++k) {
         std::cout << (k + 1) << ". " << matches[k].filename
+                  << " (distance: " << matches[k].dist << ")\n";
+    }
+
+    for (int k = matches.size() - 5; k < matches.size(); k++) {
+        std::cout << "Bottom " << k << ": " << matches[k].filename
                   << " (distance: " << matches[k].dist << ")\n";
     }
 
