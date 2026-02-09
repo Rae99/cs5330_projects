@@ -3,9 +3,12 @@
 #include <opencv2/opencv.hpp>
 
 bool compute_task1_feature(const cv::Mat &img, std::vector<float> &feat) {
+    // Check if input image is valid
+    // Return false if empty to avoid processing invalid data
     if (img.empty())
         return false;
 
+    // Ensure we always have a 3-channel BGR image
     cv::Mat bgr;
     if (img.channels() == 3)
         bgr = img;
@@ -14,20 +17,29 @@ bool compute_task1_feature(const cv::Mat &img, std::vector<float> &feat) {
     else
         return false;
 
+    // Image must be at least 7×7 pixels to extract a 7×7 patch around the
+    // center
     if (bgr.rows < 7 || bgr.cols < 7)
         return false;
 
+    // Patch centered at (cx, cy) with size 7×7. Each pixel has 3 channels
+    // (BGR), so total Patch spans from (cx-3, cy-3) to (cx+3, cy+3), inclusive
     const int cy = bgr.rows / 2;
     const int cx = bgr.cols / 2;
     const int y0 = cy - 3;
     const int x0 = cx - 3;
 
+    // Boundary check: ensure the 7×7 patch is fully within the image. If not,
+    // return false.
     if (y0 < 0 || x0 < 0 || y0 + 6 >= bgr.rows || x0 + 6 >= bgr.cols)
         return false;
 
     feat.clear();
     feat.reserve(147);
 
+    // Iterate through 7×7 patch in row-major order
+    // For each pixel: store B, G, R values (0-255 range)
+    // Total 7×7×3 = 147 values
     for (int y = y0; y < y0 + 7; y++) {
         const cv::Vec3b *row = bgr.ptr<cv::Vec3b>(y);
         for (int x = x0; x < x0 + 7; x++) {
@@ -43,12 +55,18 @@ bool compute_task1_feature(const cv::Mat &img, std::vector<float> &feat) {
 
 bool compute_task2_feature_rg_hist(const cv::Mat &img, std::vector<float> &feat,
                                    int bins) {
+    // Input validation: image must be non-empty, have at least 3 channels
+    // (BGR), and bins must be positive
     if (img.empty() || img.channels() < 3 || bins <= 0)
         return false;
 
-    // 2D hist bins x bins, float counts
+    // Create 2D histogram:
+    // Size : bins×bins(default 16×16 = 256 bins total)
+    // Type: CV_32FC1(32 - bit float, single channel)
+    // Initialized to zeros
     cv::Mat hist = cv::Mat::zeros(cv::Size(bins, bins), CV_32FC1);
 
+    // Pixel iteration and extract R, G, B values
     const int rows = img.rows;
     const int cols = img.cols;
 
@@ -59,6 +77,8 @@ bool compute_task2_feature_rg_hist(const cv::Mat &img, std::vector<float> &feat,
             float G = ptr[j][1];
             float R = ptr[j][2];
 
+            // compute rg chromaticity: r = R/(R+G+B), g = G/(R+G+B)
+            // normalize by sum to reduce sensitivity to lighting intensity
             float div = R + G + B;
             if (div <= 0.0f)
                 div = 1.0f;
@@ -80,14 +100,18 @@ bool compute_task2_feature_rg_hist(const cv::Mat &img, std::vector<float> &feat,
             if (gbin < 0)
                 gbin = 0;
 
+            // Increment count for bin (rbin, gbin) Each pixel votes for one bin
+            // based on its color
             hist.at<float>(rbin, gbin) += 1.0f;
         }
     }
 
-    // normalize to probability (sum = 1)
+    // normalize to probability (sum = 1) so that comparison is invariant to
+    // image size
     hist /= (float)(rows * cols);
 
     // flatten to feature vector (row-major)
+    // Convert 2D histogram (16×16 matrix) to 1D vector (256 elements)
     feat.clear();
     feat.reserve(bins * bins);
     for (int r = 0; r < bins; r++) {
@@ -103,7 +127,7 @@ bool compute_task2_feature(const cv::Mat &img, std::vector<float> &feat) {
     return compute_task2_feature_rg_hist(img, feat, 16);
 }
 
-// Compute rg chromaticity histogram on a ROI.
+// Compute rg chromaticity histogram on a ROI(Region of Interest)
 // ROI is [x0, x0+w) x [y0, y0+h), clamped to image bounds.
 // Output is flattened bins*bins, normalized (sum=1).
 static bool compute_rg_hist_roi(const cv::Mat &img, std::vector<float> &out,
@@ -117,11 +141,16 @@ static bool compute_rg_hist_roi(const cv::Mat &img, std::vector<float> &out,
     int x1 = std::min(img.cols, x0 + w);
     int y1 = std::min(img.rows, y0 + h);
 
+    // check if ROI is valid (non-empty)
     if (x1 <= x0 || y1 <= y0)
         return false;
 
+    // Create histogram for ROI (same as whole image, but only for pixels in
+    // ROI)
     cv::Mat hist = cv::Mat::zeros(cv::Size(bins, bins), CV_32FC1);
 
+    // iterate ROI and compute histogram (same as whole image, but only for
+    // pixels in ROI)
     const int roi_rows = y1 - y0;
     const int roi_cols = x1 - x0;
 
@@ -158,6 +187,7 @@ static bool compute_rg_hist_roi(const cv::Mat &img, std::vector<float> &out,
     // normalize by ROI pixel count
     hist /= (float)(roi_rows * roi_cols);
 
+    // flatten to output vector
     out.clear();
     out.reserve(bins * bins);
     for (int r = 0; r < bins; r++) {
@@ -190,7 +220,8 @@ bool compute_task3_feature(const cv::Mat &img, std::vector<float> &feat) {
     if (!compute_rg_hist_roi(img, h_center, bins, cx0, cy0, cw, ch))
         return false;
 
-    // concatenate
+    // concatenate:
+    // Final feature is [whole_hist(256) || center_hist(256)] = 512-dim vector
     feat.clear();
     feat.reserve((int)h_whole.size() + (int)h_center.size());
     feat.insert(feat.end(), h_whole.begin(), h_whole.end());
