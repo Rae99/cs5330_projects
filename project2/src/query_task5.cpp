@@ -1,12 +1,11 @@
 /*
-  Task 5 Query Program (deep embeddings)
-  - Reads embedding CSV (filename + 512 floats)
-  - Finds target embedding by target filename
-  - Computes cosine distance to all embeddings
-  - Sorts and prints top N (excluding itself)
+    Ding, Junrui
+    Februray 2026
 
-  Usage:
-    ./query_task5 <target_filename> <embedding_csv> <topN>
+    CS5330 Project 2 - query_task5.cpp
+
+    This file implements the Task 5 query program using deep embedding
+    features and cosine distance ranking.
 */
 
 #include <algorithm>
@@ -18,7 +17,19 @@
 #include "../include/csv_io.h"
 #include "../include/ranking.h"
 
+/*
+    main
 
+    Query the embedding CSV by filename and print top cosine matches.
+    Usage: ./query_task5 <target_filename> <embedding_csv> <topN>
+
+    Arguments:
+        int argc - argument count.
+        char **argv - argument values.
+
+    Returns:
+        0 on success, negative value on error.
+*/
 int main(int argc, char **argv) {
     if (argc < 4) {
         std::cerr << "usage: " << argv[0]
@@ -26,7 +37,7 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    const std::string target_name = argv[1];   // e.g., pic.0535.jpg
+    const std::string target_name = argv[1]; // e.g., pic.0535.jpg
     const std::string csv_path = argv[2];
     const int topN = std::max(1, std::atoi(argv[3]));
 
@@ -42,7 +53,8 @@ int main(int argc, char **argv) {
 
     std::string line;
     while (std::getline(in, line)) {
-        if (line.empty()) continue;
+        if (line.empty())
+            continue;
         std::string fname;
         std::vector<float> feat;
         if (!parse_csv_row(line, fname, feat))
@@ -62,7 +74,8 @@ int main(int argc, char **argv) {
         }
     }
     if (!found) {
-        std::cerr << "Target filename not found in embedding csv: " << target_name << "\n";
+        std::cerr << "Target filename not found in embedding csv: "
+                  << target_name << "\n";
         return -1;
     }
 
@@ -83,11 +96,12 @@ int main(int argc, char **argv) {
     }
 
     // 4) sort ascending
-    std::sort(matches.begin(), matches.end(),
-              [](const Match &m1, const Match &m2) { return m1.dist < m2.dist; });
+    std::sort(
+        matches.begin(), matches.end(),
+        [](const Match &m1, const Match &m2) { return m1.dist < m2.dist; });
 
-    std::cout << "Top " << topN << " matches (Task5 cosine) for target: "
-              << target_name << "\n";
+    std::cout << "Top " << topN
+              << " matches (Task5 cosine) for target: " << target_name << "\n";
     for (int i = 0; i < topN && i < (int)matches.size(); i++) {
         std::cout << (i + 1) << ") " << matches[i].filename
                   << "  dist=" << matches[i].dist << "\n";

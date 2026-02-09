@@ -1,9 +1,30 @@
+/*
+    Ding, Junrui
+    Februray 2026
+
+    CS5330 Project 2 - ranking.cpp
+
+    This file implements distance metrics and ranking utilities for
+    comparing feature vectors across tasks.
+*/
+
 #include "../include/ranking.h"
 
 #include <algorithm>
 #include <cstddef>
 
-// Task 1: SSD distances
+/*
+    ssd_distance
+
+    Compute sum of squared differences between two vectors.
+
+    Arguments:
+        const std::vector<float> &a - first feature vector.
+        const std::vector<float> &b - second feature vector.
+
+    Returns:
+        SSD distance, or a large sentinel value on size mismatch.
+*/
 float ssd_distance(const std::vector<float> &a, const std::vector<float> &b) {
     if (a.size() != b.size())
         return 1e30f;
@@ -15,13 +36,35 @@ float ssd_distance(const std::vector<float> &a, const std::vector<float> &b) {
     return static_cast<float>(s);
 }
 
+/*
+    sort_matches
+
+    Sort matches in ascending order by distance.
+
+    Arguments:
+        std::vector<Match> &matches - match list to sort.
+
+    Returns:
+        void.
+*/
 void sort_matches(std::vector<Match> &matches) {
     std::sort(
         matches.begin(), matches.end(),
         [](const Match &m1, const Match &m2) { return m1.dist < m2.dist; });
 }
 
-// Task 2: histogram intersection distance
+/*
+    hist_intersection_distance
+
+    Compute histogram intersection distance for Task 2 features.
+
+    Arguments:
+        const std::vector<float> &a - first histogram.
+        const std::vector<float> &b - second histogram.
+
+    Returns:
+        histogram intersection distance, or a large sentinel on size mismatch.
+*/
 float hist_intersection_distance(const std::vector<float> &a,
                                  const std::vector<float> &b) {
     if (a.size() != b.size())
@@ -34,11 +77,21 @@ float hist_intersection_distance(const std::vector<float> &a,
     return (float)(1.0 - sim);
 }
 
-// Task 3: multi-histogram distance
-// Feature format: [H_whole || H_center], each histogram length = bins*bins.
-// We compute distance per segment using histogram intersection:
-//   D_k = 1 - sum_i min(hq_i, hd_i)
-// and combine with weights: D = w0*D_whole + w1*D_center
+/*
+    task3_multi_hist_distance
+
+    Compute Task 3 multi-histogram distance using weighted intersection
+    over whole-image and center-region histograms.
+
+    Arguments:
+        const std::vector<float> &a - first multi-histogram feature.
+        const std::vector<float> &b - second multi-histogram feature.
+        float w_whole - weight for whole-image histogram distance.
+        float w_center - weight for center-region histogram distance.
+
+    Returns:
+        weighted multi-histogram distance.
+*/
 float task3_multi_hist_distance(const std::vector<float> &a,
                                 const std::vector<float> &b, float w_whole,
                                 float w_center) {
@@ -68,11 +121,34 @@ float task3_multi_hist_distance(const std::vector<float> &a,
     return (float)d;
 }
 
-// Convenience wrapper with recommended weights (whole=0.4, center=0.6)
+/*
+    task3_distance
+
+    Convenience wrapper for Task 3 with recommended weights.
+
+    Arguments:
+        const std::vector<float> &a - first multi-histogram feature.
+        const std::vector<float> &b - second multi-histogram feature.
+
+    Returns:
+        weighted multi-histogram distance.
+*/
 float task3_distance(const std::vector<float> &a, const std::vector<float> &b) {
     return task3_multi_hist_distance(a, b, 0.4f, 0.6f);
 }
 
+/*
+    task4_distance
+
+    Compute Task 4 distance using combined color and texture histograms.
+
+    Arguments:
+        const std::vector<float> &a - first Task 4 feature vector.
+        const std::vector<float> &b - second Task 4 feature vector.
+
+    Returns:
+        distance value, or a large sentinel on size mismatch.
+*/
 float task4_distance(const std::vector<float> &a, const std::vector<float> &b) {
     if (a.size() != b.size())
         return 1e30f;
@@ -112,7 +188,18 @@ float task4_distance(const std::vector<float> &a, const std::vector<float> &b) {
     return (float)d;
 }
 
-// task 5: cosine distance (1 - cosine similarity)
+/*
+    cosine_distance
+
+    Compute cosine distance (1 - cosine similarity) for Task 5 embeddings.
+
+    Arguments:
+        const std::vector<float> &a - first embedding vector.
+        const std::vector<float> &b - second embedding vector.
+
+    Returns:
+        cosine distance, or a large sentinel on size mismatch.
+*/
 float cosine_distance(const std::vector<float> &a,
                       const std::vector<float> &b) {
     if (a.size() != b.size() || a.empty())
@@ -135,7 +222,18 @@ float cosine_distance(const std::vector<float> &a,
     return (float)(1.0 - cosv);      // cosine distance
 }
 
-// Task 7: grass feature distance
+/*
+    grass_distance
+
+    Compute Task 7 distance for 5D grass feature vectors.
+
+    Arguments:
+        const std::vector<float> &a - first grass feature vector.
+        const std::vector<float> &b - second grass feature vector.
+
+    Returns:
+        distance value, or a large sentinel on size mismatch.
+*/
 float grass_distance(const std::vector<float> &a, const std::vector<float> &b) {
     if (a.size() != 5 || b.size() != 5)
         return 1e30f;

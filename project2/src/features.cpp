@@ -1,7 +1,29 @@
+/*
+    Ding, Junrui
+    Februray 2026
+
+    CS5330 Project 2 - features.cpp
+
+    This file implements feature extraction routines for Tasks 1–4 and 7,
+    including color histograms, texture descriptors, and grass features.
+*/
+
 #include "../include/features.h"
 #include <algorithm>
 #include <opencv2/opencv.hpp>
 
+/*
+    compute_task1_feature
+
+    Extract Task 1 feature: 7x7 center patch (BGR), flattened to length 147.
+
+    Arguments:
+        const cv::Mat &img - input image (BGR or grayscale).
+        std::vector<float> &feat - output feature vector.
+
+    Returns:
+        true on success, false on failure.
+*/
 bool compute_task1_feature(const cv::Mat &img, std::vector<float> &feat) {
     // Check if input image is valid
     // Return false if empty to avoid processing invalid data
@@ -53,6 +75,19 @@ bool compute_task1_feature(const cv::Mat &img, std::vector<float> &feat) {
     return (feat.size() == 147);
 }
 
+/*
+    compute_task2_feature_rg_hist
+
+    Compute Task 2 rg-chromaticity histogram with configurable bin count.
+
+    Arguments:
+        const cv::Mat &img - input image (BGR).
+        std::vector<float> &feat - output feature vector.
+        int bins - number of bins per channel.
+
+    Returns:
+        true on success, false on failure.
+*/
 bool compute_task2_feature_rg_hist(const cv::Mat &img, std::vector<float> &feat,
                                    int bins) {
     // Input validation: image must be non-empty, have at least 3 channels
@@ -122,6 +157,18 @@ bool compute_task2_feature_rg_hist(const cv::Mat &img, std::vector<float> &feat,
     return true;
 }
 
+/*
+    compute_task2_feature
+
+    Task 2 wrapper using default bin count.
+
+    Arguments:
+        const cv::Mat &img - input image (BGR).
+        std::vector<float> &feat - output feature vector.
+
+    Returns:
+        true on success, false on failure.
+*/
 bool compute_task2_feature(const cv::Mat &img, std::vector<float> &feat) {
     // default to 16 bins
     return compute_task2_feature_rg_hist(img, feat, 16);
@@ -130,6 +177,23 @@ bool compute_task2_feature(const cv::Mat &img, std::vector<float> &feat) {
 // Compute rg chromaticity histogram on a ROI(Region of Interest)
 // ROI is [x0, x0+w) x [y0, y0+h), clamped to image bounds.
 // Output is flattened bins*bins, normalized (sum=1).
+/*
+    compute_rg_hist_roi
+
+    Compute an rg-chromaticity histogram over a clamped ROI.
+
+    Arguments:
+        const cv::Mat &img - input image (BGR).
+        std::vector<float> &out - output histogram vector.
+        int bins - number of bins per channel.
+        int x0 - ROI x origin.
+        int y0 - ROI y origin.
+        int w - ROI width.
+        int h - ROI height.
+
+    Returns:
+        true on success, false on failure.
+*/
 static bool compute_rg_hist_roi(const cv::Mat &img, std::vector<float> &out,
                                 int bins, int x0, int y0, int w, int h) {
     if (img.empty() || img.channels() < 3 || bins <= 0)
@@ -198,6 +262,18 @@ static bool compute_rg_hist_roi(const cv::Mat &img, std::vector<float> &out,
     return true;
 }
 
+/*
+    compute_task3_feature
+
+    Compute Task 3 multi-histogram feature (whole + center regions).
+
+    Arguments:
+        const cv::Mat &img - input image (BGR).
+        std::vector<float> &feat - output feature vector.
+
+    Returns:
+        true on success, false on failure.
+*/
 bool compute_task3_feature(const cv::Mat &img, std::vector<float> &feat) {
     // Multi-histogram: whole image + center region, rg chromaticity hist
     if (img.empty() || img.channels() < 3)
@@ -232,6 +308,19 @@ bool compute_task3_feature(const cv::Mat &img, std::vector<float> &feat) {
 }
 
 // 1D histogram of Sobel gradient magnitudes (normalized, sum=1)
+/*
+    compute_sobel_mag_hist
+
+    Compute a normalized histogram of Sobel gradient magnitudes.
+
+    Arguments:
+        const cv::Mat &img - input image.
+        std::vector<float> &hist - output histogram vector.
+        int bins - number of bins.
+
+    Returns:
+        true on success, false on failure.
+*/
 static bool compute_sobel_mag_hist(const cv::Mat &img, std::vector<float> &hist,
                                    int bins) {
     if (img.empty() || bins <= 0)
@@ -290,6 +379,19 @@ static bool compute_sobel_mag_hist(const cv::Mat &img, std::vector<float> &hist,
 // 1D histogram of Sobel gradient orientations (normalized, sum=1)
 // Orientation is "unsigned": [0,180) degrees (so edges with opposite direction
 // match)
+/*
+    compute_sobel_ori_hist
+
+    Compute a normalized histogram of unsigned Sobel orientations.
+
+    Arguments:
+        const cv::Mat &img - input image.
+        std::vector<float> &hist - output histogram vector.
+        int bins - number of bins.
+
+    Returns:
+        true on success, false on failure.
+*/
 static bool compute_sobel_ori_hist(const cv::Mat &img, std::vector<float> &hist,
                                    int bins) {
     if (img.empty() || bins <= 0)
@@ -352,6 +454,18 @@ static bool compute_sobel_ori_hist(const cv::Mat &img, std::vector<float> &hist,
 
 // Task 4 feature: whole-image color hist + whole-image texture hists (mag +
 // ori) Feature layout: [color(256) || mag(mag_bins) || ori(ori_bins)]
+/*
+    compute_task4_feature
+
+    Compute Task 4 feature: color histogram plus texture histograms.
+
+    Arguments:
+        const cv::Mat &img - input image (BGR).
+        std::vector<float> &feat - output feature vector.
+
+    Returns:
+        true on success, false on failure.
+*/
 bool compute_task4_feature(const cv::Mat &img, std::vector<float> &feat) {
     if (img.empty())
         return false;
@@ -385,6 +499,18 @@ bool compute_task4_feature(const cv::Mat &img, std::vector<float> &feat) {
 }
 
 // Task 7: Extract green grass features (simple 5D)
+/*
+    extract_grass_features
+
+    Extract Task 7 grass features (green ratio + HSV statistics).
+
+    Arguments:
+        const cv::Mat &img - input image (BGR).
+        std::vector<float> &feat - output 5D feature vector.
+
+    Returns:
+        true on success, false on failure.
+*/
 bool extract_grass_features(const cv::Mat &img, std::vector<float> &feat) {
     if (img.empty())
         return false;

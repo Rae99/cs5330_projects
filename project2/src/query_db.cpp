@@ -1,15 +1,11 @@
 /*
-  Task 1 Query Program (baseline)
-  - Reads feature CSV produced by build_db
-  - Computes Task1 feature for target image
-  - Uses SSD distance (write it yourself, no OpenCV distance function)
-  - Sort and print top N matches
+    Ding, Junrui
+    Februray 2026
 
-  Usage:
-    ./query_db <target_image> <image_dir> <feature_csv> <topN>
+    CS5330 Project 2 - query_db.cpp
 
-  Notes:
-  - image_dir is used only to print full path; CSV stores filenames.
+    This file implements the query program for Tasks 1–4, loading features
+    from a CSV, computing the target feature, and ranking top matches.
 */
 
 #include <algorithm>
@@ -27,6 +23,19 @@
 #include "../include/task_registry.h"
 #include "../include/utils.h"
 
+/*
+    main
+
+    Run a query against a feature database and print the top matches.
+    Usage: ./query_db <target_image> <image_dir> <feature_csv> <topN> [task_id]
+
+    Arguments:
+        int argc - argument count.
+        char **argv - argument values.
+
+    Returns:
+        0 on success, negative value on error.
+*/
 int main(int argc, char **argv) {
     if (argc < 5) {
         std::cerr << "usage: " << argv[0]

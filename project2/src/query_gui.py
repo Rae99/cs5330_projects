@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """
-CS5330 CBIR - Final Fixed GUI
-- Fixed fullpath parsing
-- CSV persistence across task switches
-- All features working
+Ding, Junrui
+Februray 2026
+
+CS5330 Project 2 - query_gui.py
+
+This file implements the PyQt6 GUI for CBIR querying, including CSV
+management, task selection, and result visualization.
 """
 
 import re
@@ -54,6 +57,21 @@ TASK_CONFIG = {
 
 @dataclass
 class Match:
+    """
+    Match
+
+    Data container for a ranked query result.
+
+    Arguments:
+        rank (int) - rank index in the result list.
+        filename (str) - image filename.
+        dist (float) - distance score.
+        fullpath (str) - resolved path to the image.
+
+    Returns:
+        None.
+    """
+
     rank: int
     filename: str
     dist: float
@@ -81,6 +99,18 @@ LINE_PATTERNS = [
 
 
 def parse_matches(text: str, image_dir: Path) -> List[Match]:
+    """
+    parse_matches
+
+        Parse query program output into structured `Match` objects.
+
+        Arguments:
+            text (str) - raw stdout text from the query executable.
+            image_dir (Path) - image directory used to build full paths.
+
+        Returns:
+            List[Match] containing parsed results.
+    """
     matches = []
     for line in text.splitlines():
         line = line.strip()
@@ -107,6 +137,17 @@ def parse_matches(text: str, image_dir: Path) -> List[Match]:
 
 
 def find_build_dir() -> Optional[Path]:
+    """
+    find_build_dir
+
+        Locate a build directory by checking known candidate paths.
+
+        Arguments:
+            None.
+
+        Returns:
+            Path to the build directory, or None if not found.
+    """
     for base in [Path.cwd(), Path.cwd().parent]:
         for cand in BUILD_CANDIDATES:
             p = base / cand
@@ -116,6 +157,18 @@ def find_build_dir() -> Optional[Path]:
 
 
 def find_exe(build_dir: Path, exe_name: str) -> Optional[Path]:
+    """
+    find_exe
+
+        Resolve an executable path within the build directory.
+
+        Arguments:
+            build_dir (Path) - build directory to search.
+            exe_name (str) - executable file name.
+
+        Returns:
+            Path to the executable, or None if not found.
+    """
     for p in [
         build_dir / exe_name,
         build_dir / "Debug" / exe_name,
@@ -127,6 +180,17 @@ def find_exe(build_dir: Path, exe_name: str) -> Optional[Path]:
 
 
 def list_images(image_dir: Path) -> List[Path]:
+    """
+    list_images
+
+        Enumerate image files in a directory using supported extensions.
+
+        Arguments:
+            image_dir (Path) - directory containing images.
+
+        Returns:
+            List[Path] of image files.
+    """
     exts = {".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff", ".ppm"}
     files = [p for p in image_dir.iterdir() if p.suffix.lower() in exts and p.is_file()]
     files.sort(key=lambda x: x.name)
@@ -134,6 +198,19 @@ def list_images(image_dir: Path) -> List[Path]:
 
 
 def load_pixmap(path: Path, max_w: int, max_h: int) -> QPixmap:
+    """
+    load_pixmap
+
+        Load and scale an image as a QPixmap for display tiles.
+
+        Arguments:
+            path (Path) - image path.
+            max_w (int) - maximum width.
+            max_h (int) - maximum height.
+
+        Returns:
+            QPixmap scaled to fit the target size.
+    """
     pm = QPixmap(str(path))
     if pm.isNull():
         print(f"[WARN] Cannot load: {path}")
@@ -147,6 +224,18 @@ def load_pixmap(path: Path, max_w: int, max_h: int) -> QPixmap:
 
 
 def validate_csv(csv_path: Path, expected_dims: int) -> Tuple[bool, str, int]:
+    """
+    validate_csv
+
+        Validate a feature CSV by checking the first row's dimension count.
+
+        Arguments:
+            csv_path (Path) - path to the CSV file.
+            expected_dims (int) - expected feature dimension count.
+
+        Returns:
+            Tuple[bool, str, int] containing validity flag, message, and dimension.
+    """
     try:
         with open(csv_path, "r") as f:
             first_line = f.readline().strip()
@@ -168,6 +257,19 @@ def validate_csv(csv_path: Path, expected_dims: int) -> Tuple[bool, str, int]:
 def build_features(
     build_dir: Path, image_dir: Path, task_id: int
 ) -> Tuple[bool, str, Optional[Path]]:
+    """
+    build_features
+
+        Run the build_db executable to generate a feature CSV for a task.
+
+        Arguments:
+            build_dir (Path) - build directory containing executables.
+            image_dir (Path) - image dataset directory.
+            task_id (int) - task identifier.
+
+        Returns:
+            Tuple[bool, str, Optional[Path]] indicating success, message, and CSV path.
+    """
     build_db = find_exe(build_dir, "build_db")
     if not build_db:
         return False, "build_db not found", None
@@ -191,6 +293,23 @@ def run_query(
     topk: int,
     show_bottom: bool = False,
 ) -> Tuple[str, List[Match]]:
+    """
+    run_query
+
+        Invoke the appropriate query executable and parse its output.
+
+        Arguments:
+            build_dir (Path) - build directory containing executables.
+            task_id (int) - task identifier.
+            target (Path) - target image path.
+            image_dir (Path) - image dataset directory.
+            csv_path (Path) - feature CSV path.
+            topk (int) - number of results to return.
+            show_bottom (bool) - show worst matches when True.
+
+        Returns:
+            Tuple[str, List[Match]] containing raw output and parsed matches.
+    """
     exe_name, _, _, _ = TASK_CONFIG[task_id]
     exe = find_exe(build_dir, exe_name)
     if not exe:
@@ -218,9 +337,35 @@ def run_query(
 
 
 class ImageTile(QWidget):
+    """
+    ImageTile
+
+    Small widget to display an image preview with title and subtitle text.
+
+    Arguments:
+        None.
+
+    Returns:
+        None.
+    """
+
     def __init__(
         self, title: str, subtitle: str, img_path: Optional[Path], size: QSize
     ):
+        """
+        __init__
+
+        Initialize the tile with text labels and an optional image.
+
+        Arguments:
+            title (str) - primary label text.
+            subtitle (str) - secondary label text.
+            img_path (Optional[Path]) - image path to display.
+            size (QSize) - desired image display size.
+
+        Returns:
+            None.
+        """
         super().__init__()
 
         # Fixed size for the whole tile
@@ -275,7 +420,31 @@ class ImageTile(QWidget):
 
 
 class MainWindow(QWidget):
+    """
+    MainWindow
+
+    Main GUI window that manages dataset selection, task settings,
+    and result visualization.
+
+    Arguments:
+        None.
+
+    Returns:
+        None.
+    """
+
     def __init__(self):
+        """
+        __init__
+
+        Initialize the main window state, load settings, and build the UI.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         super().__init__()
         self.setWindowTitle("CS5330 CBIR - Query Interface")
 
@@ -310,7 +479,17 @@ class MainWindow(QWidget):
         self.update_ui_state()
 
     def load_settings(self):
-        """Load CSV paths from previous session."""
+        """
+        load_settings
+
+        Load CSV paths from the previous session.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         for task_id in TASK_CONFIG.keys():
             key = f"csv_task{task_id}"
             csv_str = self.settings.value(key, "")
@@ -321,12 +500,33 @@ class MainWindow(QWidget):
                     print(f"[LOAD] Cached CSV for Task {task_id}: {csv_path.name}")
 
     def save_settings(self):
-        """Save CSV paths for future sessions."""
+        """
+        save_settings
+
+        Save CSV paths for future sessions.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         for task_id, csv_path in self.csv_cache.items():
             self.settings.setValue(f"csv_task{task_id}", str(csv_path))
         print(f"[SAVE] Saved {len(self.csv_cache)} CSV paths")
 
     def init_ui(self):
+        """
+        init_ui
+
+        Build and arrange all UI widgets and layouts.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         # Toggle button
         self.btn_toggle_ctrl = QPushButton("▼ Hide Controls")
         self.btn_toggle_ctrl.setCheckable(True)
@@ -565,6 +765,17 @@ class MainWindow(QWidget):
         self.resize(1400, 900)
 
     def apply_styles(self):
+        """
+        apply_styles
+
+        Apply the global stylesheet for the GUI.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         self.setStyleSheet(
             """
             QWidget { 
@@ -624,27 +835,81 @@ class MainWindow(QWidget):
         self.setPalette(palette)
 
     def closeEvent(self, event):
-        """Save settings on close."""
+        """
+        closeEvent
+
+        Save settings when the window is closed.
+
+        Arguments:
+            event (QCloseEvent) - close event object.
+
+        Returns:
+            None.
+        """
         self.save_settings()
         event.accept()
 
     def on_toggle_controls(self, checked: bool):
+        """
+        on_toggle_controls
+
+        Show or hide the control panel.
+
+        Arguments:
+            checked (bool) - True when controls should be hidden.
+
+        Returns:
+            None.
+        """
         self.ctrl_group.setVisible(not checked)
         self.btn_toggle_ctrl.setText(
             "▶ Show Controls" if checked else "▼ Hide Controls"
         )
 
     def on_toggle_debug(self, checked: bool):
+        """
+        on_toggle_debug
+
+        Show or hide the program output panel.
+
+        Arguments:
+            checked (bool) - True when output should be shown.
+
+        Returns:
+            None.
+        """
         self.raw_output.setVisible(checked)
         self.btn_toggle_debug.setText("▲ Hide Output" if checked else "▼ Show Output")
 
     def on_pick_dir(self):
+        """
+        on_pick_dir
+
+        Open a directory picker to select the image dataset folder.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         d = QFileDialog.getExistingDirectory(self, "Choose Image Directory")
         if not d:
             return
         QTimer.singleShot(0, lambda: self._process_directory(d))
 
     def _process_directory(self, d: str):
+        """
+        _process_directory
+
+        Load dataset images and update UI state after directory selection.
+
+        Arguments:
+            d (str) - directory path string.
+
+        Returns:
+            None.
+        """
         try:
             self.image_dir = Path(d)
             self.dir_edit.setText(str(self.image_dir))
@@ -666,12 +931,34 @@ class MainWindow(QWidget):
             QMessageBox.critical(self, "Error", str(e))
 
     def on_pick_csv(self):
+        """
+        on_pick_csv
+
+        Open a file picker to choose a feature CSV.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         f, _ = QFileDialog.getOpenFileName(self, "Choose CSV", "", "CSV (*.csv)")
         if not f:
             return
         QTimer.singleShot(0, lambda: self._process_csv(f))
 
     def _process_csv(self, f: str):
+        """
+        _process_csv
+
+        Load a CSV path, cache it for the current task, and validate it.
+
+        Arguments:
+            f (str) - CSV path string.
+
+        Returns:
+            None.
+        """
         try:
             self.csv_path = Path(f)
             self.csv_edit.setText(str(self.csv_path.name))
@@ -686,6 +973,17 @@ class MainWindow(QWidget):
             QMessageBox.critical(self, "Error", str(e))
 
     def on_build_csv(self):
+        """
+        on_build_csv
+
+        Build a feature CSV for the current task using build_db.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         if not self.image_dir or not self.build_dir:
             QMessageBox.warning(self, "Not Ready", "Select directory first.")
             return
@@ -760,6 +1058,17 @@ class MainWindow(QWidget):
             QMessageBox.critical(self, "Failed", message)
 
     def validate_current_csv(self):
+        """
+        validate_current_csv
+
+        Validate the current CSV against the expected feature dimension.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         if not self.csv_path:
             self.csv_valid = False
             self.csv_status.setText("")
@@ -780,12 +1089,33 @@ class MainWindow(QWidget):
             )
 
     def on_target_changed(self, index: int):
+        """
+        on_target_changed
+
+        Update target index when the combo box selection changes.
+
+        Arguments:
+            index (int) - new target index.
+
+        Returns:
+            None.
+        """
         if 0 <= index < len(self.dataset):
             self.target_idx = index
             self.page = 0
 
     def on_target_text_changed(self):
-        """Handle manual text input in target combo box."""
+        """
+        on_target_text_changed
+
+        Handle manual text input in the target combo box.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         text = self.target_combo.currentText().strip()
         if not text or not self.dataset:
             return
@@ -855,7 +1185,17 @@ class MainWindow(QWidget):
         print(f"[TARGET] ⚠ No match found for: '{text}'")
 
     def on_task_changed(self):
-        """Handle task change - restore cached CSV if available."""
+        """
+        on_task_changed
+
+        Handle task change and restore cached CSV if available.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         self.page = 0
 
         # Try to restore cached CSV for this task
@@ -884,7 +1224,17 @@ class MainWindow(QWidget):
         self.update_ui_state()
 
     def on_toggle_top_bottom(self, checked: bool):
-        """Toggle between Top K and Bottom K."""
+        """
+        on_toggle_top_bottom
+
+        Toggle between Top K and Bottom K modes.
+
+        Arguments:
+            checked (bool) - True for Bottom K, False for Top K.
+
+        Returns:
+            None.
+        """
         if checked:
             # switch to Bottom K
             self.topk_label.setText("Bottom K:")
@@ -896,20 +1246,63 @@ class MainWindow(QWidget):
         self.status.setText("Mode changed. Click Run to refresh results.")
 
     def on_topk_changed(self):
+        """
+        on_topk_changed
+
+        Reset paging when the Top K value changes.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         self.page = 0
 
     def shift_target(self, delta: int):
+        """
+        shift_target
+
+        Move the target selection by a delta offset.
+
+        Arguments:
+            delta (int) - offset to apply to the target index.
+
+        Returns:
+            None.
+        """
         if not self.dataset:
             return
         self.target_idx = (self.target_idx + delta) % len(self.dataset)
         self.target_combo.setCurrentIndex(self.target_idx)
 
     def shift_page(self, delta: int):
+        """
+        shift_page
+
+        Move the result page by a delta offset.
+
+        Arguments:
+            delta (int) - page offset.
+
+        Returns:
+            None.
+        """
         self.page = max(0, self.page + delta)
         self.refresh_results()
 
     def adjust_zoom(self, delta: int):
-        """Adjust tile size (zoom in/out)."""
+        """
+        adjust_zoom
+
+        Adjust tile size (zoom in/out).
+
+        Arguments:
+            delta (int) - zoom level delta.
+
+        Returns:
+            None.
+        """
         new_index = self.zoom_index + delta
         if 0 <= new_index < len(self.zoom_levels):
             self.zoom_index = new_index
@@ -939,11 +1332,33 @@ class MainWindow(QWidget):
         self.btn_zoom_in.setEnabled(self.zoom_index < len(self.zoom_levels) - 1)
 
     def on_run_query(self):
+        """
+        on_run_query
+
+        Run the query and refresh displayed results.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         self.refresh_results()
         self.btn_toggle_ctrl.setChecked(True)
         self.on_toggle_controls(True)
 
     def update_csv_visibility(self):
+        """
+        update_csv_visibility
+
+        Show or hide CSV-related controls based on the current task.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         task_id = self.task_box.currentData()
         _, needs_csv, _, can_build = TASK_CONFIG.get(task_id, (None, False, 0, False))
         self.csv_label.setVisible(needs_csv)
@@ -953,6 +1368,17 @@ class MainWindow(QWidget):
         self.csv_status.setVisible(needs_csv and self.csv_path is not None)
 
     def update_ui_state(self):
+        """
+        update_ui_state
+
+        Refresh enabled/disabled states for UI controls.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         self.update_csv_visibility()
         task_id = self.task_box.currentData()
         _, needs_csv, _, _ = TASK_CONFIG.get(task_id, (None, False, 0, False))
@@ -966,6 +1392,17 @@ class MainWindow(QWidget):
         self.btn_build_csv.setEnabled(bool(has_dir and self.build_dir))
 
     def clear_grid(self):
+        """
+        clear_grid
+
+        Remove all result tiles from the grid layout.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         while self.grid.count():
             item = self.grid.takeAt(0)
             w = item.widget()
@@ -973,6 +1410,17 @@ class MainWindow(QWidget):
                 w.deleteLater()
 
     def refresh_results(self):
+        """
+        refresh_results
+
+        Run the query (if ready) and rebuild result tiles for the page.
+
+        Arguments:
+            None.
+
+        Returns:
+            None.
+        """
         if not self.image_dir or not self.dataset or not self.build_dir:
             return
 
@@ -1101,6 +1549,17 @@ class MainWindow(QWidget):
         self.btn_next_page.setEnabled((self.page + 1) * self.page_size < len(matches))
 
     def keyPressEvent(self, event):
+        """
+        keyPressEvent
+
+        Handle keyboard shortcuts for target, paging, and zoom controls.
+
+        Arguments:
+            event (QKeyEvent) - key press event.
+
+        Returns:
+            None.
+        """
         key = event.key()
         if key == Qt.Key.Key_N:
             self.shift_target(1)
@@ -1121,6 +1580,17 @@ class MainWindow(QWidget):
 
 
 def main():
+    """
+    main
+
+    Application entry point to create and show the GUI.
+
+    Arguments:
+        None.
+
+    Returns:
+        None.
+    """
     app = QApplication(sys.argv)
     app.setOrganizationName("CS5330")
     app.setApplicationName("CBIR")

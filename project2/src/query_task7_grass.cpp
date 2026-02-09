@@ -1,8 +1,11 @@
 /*
     Ding, Junrui
-    CS5330 Project 2 - Task 7: Lawn/Grass Detection
+    Februray 2026
 
-    Uses DNN embedding + green grass features
+    CS5330 Project 2 - query_task7_grass.cpp
+
+    This file implements Task 7 querying by combining deep embeddings
+    with green grass features for lawn/grass detection.
 */
 
 #include <algorithm>
@@ -17,6 +20,17 @@
 #include "../include/features.h"
 #include "../include/ranking.h"
 
+/*
+    basename_only
+
+    Return the filename portion of a path for matching target names.
+
+    Arguments:
+        const std::string &path - input path.
+
+    Returns:
+        filename without parent directories.
+*/
 static std::string basename_only(const std::string &path) {
     // Find the last occurrence of '/' or '\\' in the path
     const size_t pos = path.find_last_of("/\\");
@@ -25,6 +39,20 @@ static std::string basename_only(const std::string &path) {
     return (pos == std::string::npos) ? path : path.substr(pos + 1);
 }
 
+/*
+    main
+
+    Query Task 7 by fusing embedding and grass-feature distances.
+    Usage: ./query_task7_grass <target_image> <image_dir> <emb_csv> <topN>
+   [--bottom]
+
+    Arguments:
+        int argc - argument count.
+        char **argv - argument values.
+
+    Returns:
+        0 on success, negative value on error.
+*/
 int main(int argc, char **argv) {
     // validate arguments
     if (argc < 5) {

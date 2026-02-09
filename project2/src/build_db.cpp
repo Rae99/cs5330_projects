@@ -1,17 +1,12 @@
 /*
-  Build DB for Task 1 (baseline):
-  - Feature: 7x7 square in the middle of the image (RGB flattened)
-  - Output CSV: filename, f1, f2, ... f147
+    Ding, Junrui
+    Februray 2026
 
-  Usage:
-  cd to build/
+    CS5330 Project 2 - build_db.cpp
 
-  ./build_db <image_dir> <output_csv>
-
-  Example:
-    ./build_db ../data/olympus ../output/features_task1.csv
+    This file builds a feature database CSV for a specified task by scanning
+    an image directory and computing per-image feature vectors.
 */
-
 
 #include <cstdio>
 #include <cstdlib>
@@ -27,6 +22,19 @@
 #include "../include/features.h"
 #include "../include/task_registry.h"
 
+/*
+    main
+
+    Build a feature database from images in a directory and write to a CSV.
+    Usage: ./build_db <image_dir> <output_csv> [task_id]
+
+    Arguments:
+        int argc - argument count.
+        char *argv[] - argument values.
+
+    Returns:
+        0 on success, negative value on error.
+*/
 int main(int argc, char *argv[]) {
     if (argc < 3) {
         std::fprintf(stderr, "usage: %s <directory path> <output csv>\n",
