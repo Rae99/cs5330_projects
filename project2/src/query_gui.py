@@ -9,7 +9,6 @@ This file implements the PyQt6 GUI for CBIR querying, including CSV
 management, task selection, and result visualization.
 """
 
-import re
 import sys
 import subprocess
 import json
@@ -45,6 +44,7 @@ BUILD_CANDIDATES = [
     Path("cmake-build-release"),
 ]
 
+# Task configuration: task_id -> (exe_name, needs_csv, expected_dims, can_build)
 TASK_CONFIG = {
     1: ("query_db", True, 147, True),
     2: ("query_db", True, 256, True),
@@ -78,24 +78,65 @@ class Match:
     fullpath: str
 
 
-# Regex patterns to parse output lines
-LINE_PATTERNS = [
-    # Match "1) pic.jpg dist=0.5 fullpath=/path/to/pic.jpg"
-    re.compile(
-        r"^\s*(\d+)\)\s+(\S+)\s+.*?dist\s*=\s*([0-9.eE+-]+)\s+fullpath\s*=\s*(.+)$",
-        re.IGNORECASE,
-    ),
-    # Match "1) pic.jpg dist=0.5" (no fullpath)
-    re.compile(
-        r"^\s*(\d+)\)\s+(\S+)\s+.*?dist\s*=\s*([0-9.eE+-]+)",
-        re.IGNORECASE,
-    ),
-    # Match "1. pic.jpg (distance: 0.5)"
-    re.compile(
-        r"^\s*(\d+)[\).]\s+(\S+)\s+.*?(?:distance|dist)\s*[:\s=]\s*([0-9.eE+-]+)",
-        re.IGNORECASE,
-    ),
-]
+def parse_line_simple(line: str) -> Optional[Match]:
+    """
+    parse_line_simple
+
+    Parse a line like: "1) pic.0986.jpg  dist=14049  fullpath=/path/pic.0986.jpg".
+
+    Arguments:
+        line (str) - input line to parse.
+
+    Returns:
+        Match on success, or None if the line cannot be parsed.
+    """
+    line = line.strip()
+
+    # Find the ")" separator
+    paren_pos = line.find(")")
+    if paren_pos == -1:
+        return None
+
+    # Extract rank
+    rank_str = line[:paren_pos].strip()
+    try:
+        rank = int(rank_str)
+    except Exception:
+        return None
+
+    # Remaining portion
+    rest = line[paren_pos + 1 :].strip()
+
+    # First token is filename
+    parts = rest.split()
+    if len(parts) < 1:
+        return None
+    filename = parts[0]
+
+    # Find dist=
+    dist_idx = line.find("dist=")
+    if dist_idx == -1:
+        return None
+
+    # Extract distance
+    after_dist = line[dist_idx + 5 :].strip()
+    dist_parts = after_dist.split()
+    if len(dist_parts) < 1:
+        return None
+
+    try:
+        dist = float(dist_parts[0])
+    except Exception:
+        return None
+
+    # Find fullpath=
+    fullpath_idx = line.find("fullpath=")
+    if fullpath_idx != -1:
+        fullpath = line[fullpath_idx + 9 :].strip()
+    else:
+        fullpath = ""
+
+    return Match(rank, filename, dist, fullpath)
 
 
 def parse_matches(text: str, image_dir: Path) -> List[Match]:
@@ -114,25 +155,18 @@ def parse_matches(text: str, image_dir: Path) -> List[Match]:
     matches = []
     for line in text.splitlines():
         line = line.strip()
+
+        # skip empty lines and header lines
         if not line or line.startswith("Top") or line.startswith("Task"):
             continue
 
-        for i, pattern in enumerate(LINE_PATTERNS):
-            m = pattern.match(line)
-            if m:
-                rank = int(m.group(1))
-                fname = m.group(2)
-                dist = float(m.group(3))
-
-                # Check if we captured fullpath
-                if len(m.groups()) >= 4 and m.group(4):
-                    fullpath = m.group(4).strip()
-                else:
-                    # Construct it ourselves
-                    fullpath = str(image_dir / fname)
-
-                matches.append(Match(rank, fname, dist, fullpath))
-                break
+        # Task 1-4 output format: "1) pic.0986.jpg  dist=14049  fullpath=/path/pic.0986.jpg"
+        # Task 5 output format: "1) pic.0986.jpg  dist=0.12345"
+        m = parse_line_simple(line)
+        if m:
+            if not m.fullpath:
+                m.fullpath = str(image_dir / m.filename)
+            matches.append(m)
     return matches
 
 
@@ -273,7 +307,9 @@ def build_features(
     build_db = find_exe(build_dir, "build_db")
     if not build_db:
         return False, "build_db not found", None
-    output_csv = image_dir.parent / f"features_task{task_id}.csv"
+    output_csv = (
+        image_dir.parent / f"features_task{task_id}.csv"
+    )  # overloading '/' for path concatenation
     cmd = [str(build_db), str(image_dir), str(output_csv), str(task_id)]
     try:
         proc = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
